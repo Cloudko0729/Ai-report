@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 新知週報 2026-W22</title>
+<style>
+  :root {
+    --bg: #f8f9fa;
+    --surface: #ffffff;
+    --border: #e2e8f0;
+    --text: #1a202c;
+    --muted: #718096;
+    --accent: #3b82f6;
+    --accent-bg: #eff6ff;
+    --accent-border: #bfdbfe;
+    --green: #059669;
+    --green-bg: #ecfdf5;
+    --amber: #d97706;
+    --amber-bg: #fffbeb;
+    --purple: #7c3aed;
+    --purple-bg: #f5f3ff;
+    --red: #dc2626;
+    --red-bg: #fef2f2;
+    --red-border: #fecaca;
+    --code-bg: #1e293b;
+    --code-text: #e2e8f0;
+    --tag-bg: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 32px 24px 80px; }
+
+  .report-header {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 32px;
+  }
+  .report-header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; }
+  .meta-tag {
+    background: var(--tag-bg);
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .meta-tag strong { color: var(--text); }
+  .meta-tag.pending {
+    background: var(--amber-bg);
+    color: var(--amber);
+  }
+
+  section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .highlight-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .highlight-card.warning {
+    border-left-color: var(--red);
+  }
+  .highlight-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 10px; }
+  .highlight-card p { margin-bottom: 8px; }
+  .highlight-card ul { padding-left: 20px; margin-bottom: 8px; }
+  .highlight-card li { margin-bottom: 4px; }
+  .significance {
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    margin-top: 12px;
+    color: #1e40af;
+  }
+  .significance::before { content: "💡 對你的意義："; font-weight: 600; }
+  .controversy {
+    background: var(--red-bg);
+    border: 1px solid var(--red-border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    margin-top: 8px;
+    color: #991b1b;
+  }
+  .controversy::before { content: "⚠️ 爭議："; font-weight: 600; }
+
+  .table-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); }
+  table { border-collapse: collapse; width: 100%; background: var(--surface); }
+  th {
+    background: #f1f5f9;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 14px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f8fafc; }
+  code {
+    font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+    font-size: 12.5px;
+    background: #f1f5f9;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+    color: #d63384;
+  }
+  .bench-table { margin: 12px 0; }
+  .bench-table td:first-child { font-weight: 600; }
+  .bench-table .best { color: var(--green); font-weight: 700; }
+
+  .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 600px) { .cat-grid { grid-template-columns: 1fr; } }
+  .cat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .cat-card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+  }
+  .cat-card ul { padding-left: 16px; }
+  .cat-card li { font-size: 13.5px; margin-bottom: 5px; }
+
+  .yt-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .yt-card.pending {
+    border-style: dashed;
+    background: #fafafa;
+  }
+  .yt-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .yt-label {
+    background: #fee2e2;
+    color: #b91c1c;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .yt-label.pending-label {
+    background: var(--amber-bg);
+    color: var(--amber);
+  }
+  .yt-card.failed {
+    border-style: dashed;
+    border-color: #fecaca;
+    background: var(--red-bg);
+  }
+  .yt-label.failed-label {
+    background: #f1f5f9;
+    color: #64748b;
+  }
+  .yt-card p { font-size: 13.5px; }
+  .yt-group-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 20px 0 10px;
+  }
+
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  .checklist li::before { content: "☐"; color: var(--muted); flex-shrink: 0; margin-top: 1px; }
+  .checklist li.urgent { border-color: var(--red); }
+  .checklist li.urgent::before { content: "🔴"; }
+
+  .deep-dive-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .deep-dive-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+  }
+  .deep-dive-card .label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  .deep-dive-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .deep-dive-card p { font-size: 13.5px; color: #4a5568; }
+
+  .run-log {
+    background: #0f172a;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-top: 36px;
+  }
+  .run-log-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+  .run-log p {
+    font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+    font-size: 12.5px;
+    color: #94a3b8;
+    line-height: 1.8;
+  }
+  .run-log p span.done { color: #34d399; }
+  .run-log p span.pending-log { color: #fbbf24; }
+  strong { font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="report-header">
+    <h1>AI 新知週報 2026-W22</h1>
+    <div class="meta">
+      <span class="meta-tag"><strong>期間</strong> 2026-05-25 ~ 2026-05-31</span>
+      <span class="meta-tag"><strong>焦點</strong> Google I/O 2026 後續</span>
+      <span class="meta-tag"><strong>蒐集</strong> Claude WebSearch</span>
+      <span class="meta-tag"><strong>撰寫</strong> Claude</span>
+      <span class="meta-tag pending"><strong>YouTube</strong> NotebookLM 待執行</span>
+    </div>
+  </div>
+
+  <!-- 本週最值得注意 -->
+  <section>
+    <div class="section-title"><span>🔥</span> 本週最值得注意</div>
+
+    <div class="highlight-card">
+      <h3>1. Google Antigravity 2.0 — Agent-First 開發平台重磅登場（Google I/O, 5/19）</h3>
+      <p>Google 發布 Antigravity 2.0，五大元件完整亮相：<strong>Desktop App</strong>、<strong>CLI</strong>、<strong>SDK</strong>、<strong>Managed Agents API</strong> 以及 <strong>Enterprise Agent Platform</strong>，底層驅動模型為 Gemini 3.5 Flash。新版核心設計是 <strong>Agent Teams 面板</strong>：可組合多個 subagent、各自在獨立 sandbox 並行執行，統一 timeline 追蹤所有 agent 事件，並支援背景排程任務。</p>
+      <p>主秀展示：Varun Mohan 用 Antigravity 2.0 的平行 agent 陣列，以不到 $1,000 token 成本從零建出一個可執行的 OS kernel。</p>
+      <p><strong>定價調整：</strong> AI Ultra $100（比 Pro 多 5x 用量）；AI Ultra 頂規從 $250 降至 $200（20x 用量）。</p>
+      <div class="controversy">
+        <ul>
+          <li><strong>Gemini CLI 強制遷移</strong>：6/18 停止服務，僅給 30 天通知；GitHub 討論串 24 小時內收到 143 個 thumbs-down vs 4 個 cheers</li>
+          <li><strong>閉源化</strong>：Gemini CLI 本來開源，Antigravity CLI 在發布時為閉源</li>
+          <li><strong>UI 自動更新事故</strong>：2.0 rollout 將 code editor 介面替換成 chat 介面，不少用戶的開發環境當場失能</li>
+        </ul>
+      </div>
+      <div class="significance">Antigravity 2.0 是 Claude Code 的直接競爭者，Agent Teams 的並行 subagent 設計模式值得深入研究；若有在用 Gemini CLI，6/18 前需完成遷移。</div>
+    </div>
+
+    <div class="highlight-card">
+      <h3>2. Gemini 3.5 Flash — Flash 級打敗 Pro 的里程碑（5/19）</h3>
+      <p>Gemini 3.5 Flash 在工具協調基準上全面超越上代 Pro，是 Google 目前最強的 agent 與 coding 模型：</p>
+      <div class="table-wrap bench-table" style="margin:12px 0;">
+        <table>
+          <thead><tr><th>基準</th><th>Gemini 3.5 Flash</th></tr></thead>
+          <tbody>
+            <tr><td>Terminal-Bench 2.1</td><td>76.2%</td></tr>
+            <tr><td>MCP Atlas（工具協調）</td><td class="best">83.6%（AI coding 工具目前最高）</td></tr>
+            <tr><td>CharXiv Reasoning（多模態）</td><td>84.2%</td></tr>
+            <tr><td>輸出速度</td><td>比同級 frontier 模型快 4x</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>規格：</strong> 1M context window、64K output ｜ <strong>定價：</strong> $1.50 input / $9.00 output per 1M tokens，<strong>$0.15 cached input</strong></p>
+      <div class="significance">MCP Atlas 83.6% 意味著 tool-heavy agentic workflow 目前的最強方案之一；$0.15 cached input 對 system prompt 重複率高的場景有顯著成本優勢。</div>
+    </div>
+
+    <div class="highlight-card">
+      <h3>3. Cursor Composer 2.5 — Kimi K2.5 平價追齊 Opus 4.7（5/18）</h3>
+      <p>基礎架構是 Moonshot AI 開源的 <strong>Kimi K2.5</strong>（MoE，1 兆總參數、約 32B 活躍參數），三大訓練改進：<strong>25x 更多合成訓練任務</strong>（含「功能刪除後重建」難題）、<strong>Textual Feedback RL</strong>（工具呼叫失敗時給局部提示）、以及 <strong>MoE 規模基礎設施</strong>（sharded Muon optimizers、dual-mesh HSDP）。</p>
+      <div class="table-wrap bench-table" style="margin:12px 0;">
+        <table>
+          <thead><tr><th>基準</th><th>Composer 2.5</th><th>Claude Opus 4.7</th></tr></thead>
+          <tbody>
+            <tr><td>SWE-Bench Multilingual</td><td>79.8%</td><td class="best">80.5%</td></tr>
+            <tr><td>CursorBench v3.1</td><td class="best">63.2%</td><td>61.6%</td></tr>
+            <tr><td>Terminal-Bench 2.0</td><td>69.3%</td><td>69.4%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>定價：</strong> Standard $0.50/$2.50、Fast $3.00/$15.00 per 1M tokens — <strong>約為 Opus 4.7 的 1/10</strong></p>
+      <div class="significance">效能幾乎追齊 Opus 4.7 且成本只有 1/10，MoE + 大規模合成資料訓練路線正在追上 frontier closed model。</div>
+    </div>
+  </section>
+
+  <!-- 工具更新速覽 -->
+  <section>
+    <div class="section-title"><span>🛠</span> 工具更新速覽</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>工具</th><th>版本 / 日期</th><th>重點</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Google Antigravity</strong></td><td>2.0（5/19）</td><td>Desktop App、CLI、SDK、Managed Agents、Enterprise；Gemini 3.5 Flash 驅動</td></tr>
+          <tr><td><strong>Gemini 3.5 Flash</strong></td><td>5/19</td><td>4x 速度、MCP Atlas 83.6%、1M context、$1.50/$9.00 per 1M tokens</td></tr>
+          <tr><td><strong>Cursor Composer</strong></td><td>2.5（5/18）</td><td>Kimi K2.5 MoE，SWE-Bench 79.8%，成本約 1/10 Opus 4.7</td></tr>
+          <tr><td><strong>Devstral</strong></td><td>2（5月）</td><td>Mistral 24B dense，256K context，Apache 2.0，本地可跑，agentic coding 專用</td></tr>
+          <tr style="background:#fef2f2;"><td><strong>Gemini CLI</strong></td><td>終止 6/18</td><td>停止服務，必須遷移至 Antigravity CLI</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 依你背景的分類 -->
+  <section>
+    <div class="section-title"><span>🗂</span> 依你背景的分類</div>
+    <div class="cat-grid">
+      <div class="cat-card">
+        <h4>AI Coding Assistant</h4>
+        <ul>
+          <li><strong>Antigravity 2.0</strong> Google 全面應戰 Claude Code / Cursor，Agent Teams 架構是最大亮點</li>
+          <li><strong>Composer 2.5</strong> 效能追平 Opus 4.7，成本 1/10，Cursor 用戶值得優先升級</li>
+          <li>三大工具功能收斂，轉換成本高，繼續用熟悉的最合理</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>Local LLM</h4>
+        <ul>
+          <li><strong>Devstral 2（Mistral）</strong> 24B 本地可跑，agentic coding 專用</li>
+          <li><code>ollama pull devstral-2</code> 即可試用</li>
+          <li>Apache 2.0，商業可用</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>Agent 架構</h4>
+        <ul>
+          <li><strong>Antigravity Agent Teams</strong> 明確角色分工 + 各自 sandbox + 統一 timeline + 背景排程</li>
+          <li>Gemini CLI → Antigravity CLI 遷移：Hooks、Subagents、Extensions 架構保留</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>AI 社會 / 基礎建設</h4>
+        <ul>
+          <li><strong>Google Search AI 重塑</strong>：25 年最大改變，影響 SEO 與內容消費</li>
+          <li><strong>NextEra $67B 收購 Dominion</strong>：AI 電力需求推動史上最大能源並購</li>
+          <li><strong>教宗 AI 通諭</strong>：首部教義文件討論 AI 與人類尊嚴（5/25）</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- YouTube 候選 -->
+  <section>
+    <div class="section-title"><span>▶</span> YouTube 影片摘要（NotebookLM 待執行）</div>
+
+    <p class="yt-group-title">Google Antigravity 2.0 — 評測 &amp; 深度分析</p>
+
+    <div class="yt-card">
+      <h4><span class="yt-label">NotebookLM</span><a href="https://www.youtube.com/watch?v=yvEAD22uy1w" target="_blank">I Tried Google's New Antigravity 2.0 (Full Build)</a></h4>
+      <p>Google 在 I/O 2026 針對開發者發布全新的 <strong>AntiGravity 2.0</strong> 桌面應用程式與 <strong>AntiGravity CLI</strong>。工具內建最新輕量化 <strong>Gemini 3.5 Flash</strong> 模型，並支援 sub agents 與伺服器端環境；Gemini 3.5 Flash 生成速度大幅領先現有競品，Pro 版預計下個月推出。經實測使用其建立 <strong>Next.js</strong> 健身 App，雖成功整合 AI 功能，但 UI/UX 精緻度仍不如 Claude 等對手，短期內恐難促使開發者轉換工作流程。</p>
+    </div>
+
+    <div class="yt-card failed">
+      <h4><span class="yt-label failed-label">無法取得</span><a href="https://www.youtube.com/watch?v=0Ej08fUb5TI" target="_blank">Antigravity 2.0 &amp; Gemini 3.5 Flash (Fully Tested): SO BAD!</a></h4>
+      <p>NotebookLM API 無法取得此影片內容（可能為私人或地區限制）。批判性評測，完整測試後給出負面結論 — 了解反方觀點的重要來源。</p>
+    </div>
+
+    <div class="yt-card">
+      <h4><span class="yt-label">NotebookLM</span><a href="https://www.youtube.com/watch?v=r5ZPO_O1ql4" target="_blank">Google's AntiGravity 2.0 Just Dropped, and…</a></h4>
+      <p>本週 Google 釋出三大 AI 更新：<strong>Gemini 3.5 Flash</strong>（速度比 Pro 快 4 倍、成本降低 40%）；<strong>AntiGravity 2.0</strong> 分拆成專注於 parallel agents 的純 Google 環境，以及保留擴充彈性的 <strong>AntiGravity IDE</strong>；<strong>AntiGravity CLI</strong> 取代舊版，開發者能透過 <code>agy</code> 指令在 Claude Code 等工具中調用模型，實現多腦策略（Multi-brain strategy）與子代理協作。</p>
+    </div>
+
+    <div class="yt-card">
+      <h4><span class="yt-label">NotebookLM</span><a href="https://www.youtube.com/watch?v=juR2hQL5ShI" target="_blank">Google Antigravity 2.0 (CRAZY Updates &amp; FULLY FREE)</a></h4>
+      <p>近期 Google Antigravity 迎來實用更新，大幅修復 bug 並提升開發體驗，據傳未來將與 Jewels 合併並整合至 Google AI Studio。三大重點：(1) <strong>透明化配額管理</strong>——新增 Models 介面顯示各模型 Rate limits，Free tier 即可規劃；(2) <strong>強化 Agent 安全</strong>——引入 Strict mode、Terminal sandboxing 與詳細 Browser 權限設定；(3) <strong>開發者工具升級</strong>——支援整合 MCP servers 與自訂技能，已具備應用於實際專案的穩定度。</p>
+    </div>
+  </section>
+
+  <!-- 下週觀察清單 -->
+  <section>
+    <div class="section-title"><span>📋</span> 下週觀察清單</div>
+    <ul class="checklist">
+      <li class="urgent">Gemini CLI → Antigravity CLI 遷移（6/18 截止，剩 &lt; 4 週）</li>
+      <li>Antigravity CLI 閉源議題後續（社群壓力是否促使 Google 開源）</li>
+      <li>Gemini 3.5 Pro 發布時間（I/O 上宣布 Pro 版延後）</li>
+      <li>Devstral 2 實測：<code>ollama pull devstral-2</code> 跑 agentic coding 任務效果</li>
+      <li>Cursor Composer 2.5 實際使用體驗</li>
+    </ul>
+  </section>
+
+  <!-- 深入研究 -->
+  <section>
+    <div class="section-title"><span>🎯</span> 本週 3 個與你高度相關的項目（請選一個深入研究）</div>
+    <div class="deep-dive-grid">
+      <div class="deep-dive-card">
+        <div class="label">A · Agent 架構</div>
+        <h4>Google Antigravity 2.0 — Agent Teams 並行 subagent 架構</h4>
+        <p>你在研究 agent workflow，Antigravity 的 Agent Teams（明確角色 + 各自 sandbox + 統一 timeline + 背景排程）是目前市面上最完整的 multi-agent orchestration 設計之一，值得拆解其架構邏輯與 SDK 設計。</p>
+      </div>
+      <div class="deep-dive-card">
+        <div class="label">B · 緊急遷移</div>
+        <h4>Gemini CLI → Antigravity CLI 遷移規劃</h4>
+        <p>6/18 截止，若有在用 Gemini CLI，現在開始評估 hooks / subagents 配置能否直接搬移，避免臨時踩坑。Antigravity CLI 保留 Skills、Hooks、Subagents 主架構。</p>
+      </div>
+      <div class="deep-dive-card">
+        <div class="label">C · Local LLM</div>
+        <h4>Devstral 2 本地 agentic coding 實測</h4>
+        <p>你在跑 local LLM，Devstral 2 是目前最強的本地 agentic coding 專用模型（24B，Apache 2.0）。<code>ollama pull devstral-2</code> 即可試用，值得測試在常見 coding task 上的表現。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Run log -->
+  <div class="run-log">
+    <div class="run-log-title">Run Log</div>
+    <p><span class="done">✓</span> Claude WebSearch：完成</p>
+    <p><span class="done">✓</span> NotebookLM：3/4 完成（0Ej08fUb5TI 無法取得，已標注）</p>
+    <p><span class="pending-log">○</span> Codex QA：待執行</p>
+  </div>
+
+</div>
+</body>
+</html>

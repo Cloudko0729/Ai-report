@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 新知週報 2026-W24</title>
+<style>
+  :root {
+    --bg: #f8f9fa;
+    --surface: #ffffff;
+    --border: #e2e8f0;
+    --text: #1a202c;
+    --muted: #718096;
+    --accent: #3b82f6;
+    --accent-bg: #eff6ff;
+    --accent-border: #bfdbfe;
+    --green: #059669;
+    --green-bg: #ecfdf5;
+    --amber: #d97706;
+    --amber-bg: #fffbeb;
+    --purple: #7c3aed;
+    --purple-bg: #f5f3ff;
+    --red: #dc2626;
+    --red-bg: #fef2f2;
+    --red-border: #fecaca;
+    --code-bg: #1e293b;
+    --code-text: #e2e8f0;
+    --tag-bg: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 32px 24px 80px; }
+
+  .report-header {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 32px;
+  }
+  .report-header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; }
+  .meta-tag {
+    background: var(--tag-bg);
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .meta-tag strong { color: var(--text); }
+  .meta-tag.urgent {
+    background: var(--red-bg);
+    color: var(--red);
+    border: 1px solid var(--red-border);
+    font-weight: 600;
+  }
+
+  section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .highlight-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .highlight-card.urgent-card {
+    border-left-color: var(--red);
+    background: #fff8f8;
+  }
+  .highlight-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 10px; }
+  .highlight-card p { margin-bottom: 8px; }
+  .highlight-card ul { padding-left: 20px; margin-bottom: 8px; }
+  .highlight-card li { margin-bottom: 4px; }
+  .significance {
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    margin-top: 12px;
+    color: #1e40af;
+  }
+  .significance::before { content: "💡 對你的意義："; font-weight: 600; }
+  .action-box {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    margin-top: 8px;
+    color: #9a3412;
+  }
+  .action-box::before { content: "🔴 立即行動："; font-weight: 600; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+  .mini-card {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .mini-card h5 { font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 3px; }
+
+  .table-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); }
+  table { border-collapse: collapse; width: 100%; background: var(--surface); }
+  th {
+    background: #f1f5f9;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 14px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f8fafc; }
+  tr.urgent-row td { background: #fff8f8; }
+  code {
+    font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+    font-size: 12.5px;
+    background: #f1f5f9;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+    color: #d63384;
+  }
+  .bench-table td:first-child { font-weight: 600; }
+  .bench-table .best { color: var(--green); font-weight: 700; }
+
+  .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 600px) { .cat-grid { grid-template-columns: 1fr; } }
+  .cat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .cat-card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+  }
+  .cat-card ul { padding-left: 16px; }
+  .cat-card li { font-size: 13.5px; margin-bottom: 5px; }
+
+  .yt-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .yt-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .yt-label {
+    background: #fee2e2;
+    color: #b91c1c;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .yt-card p { font-size: 13.5px; }
+  .yt-card em { font-size: 12.5px; color: var(--muted); }
+
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  .checklist li::before { content: "☐"; color: var(--muted); flex-shrink: 0; margin-top: 1px; }
+  .checklist li.urgent { border-color: var(--red); background: #fff8f8; }
+  .checklist li.urgent::before { content: "🔴"; }
+
+  .deep-dive-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .deep-dive-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+  }
+  .deep-dive-card.urgent-card { border-color: var(--red); background: #fff8f8; }
+  .deep-dive-card .label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  .deep-dive-card.urgent-card .label { color: var(--red); }
+  .deep-dive-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .deep-dive-card p { font-size: 13.5px; color: #4a5568; }
+
+  .run-log {
+    background: #0f172a;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-top: 36px;
+  }
+  .run-log-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+  .run-log p {
+    font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+    font-size: 12.5px;
+    color: #94a3b8;
+    line-height: 1.8;
+  }
+  .run-log p span.done { color: #34d399; }
+  .run-log p span.pending-log { color: #fbbf24; }
+  strong { font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="report-header">
+    <h1>AI 新知週報 2026-W24</h1>
+    <div class="meta">
+      <span class="meta-tag"><strong>期間</strong> 2026-06-01 ~ 2026-06-08</span>
+      <span class="meta-tag"><strong>焦點</strong> Anthropic Billing + Dynamic Workflows + IPO</span>
+      <span class="meta-tag"><strong>蒐集</strong> Claude WebSearch</span>
+      <span class="meta-tag"><strong>撰寫</strong> Claude</span>
+      <span class="meta-tag"><strong>YouTube</strong> NotebookLM 完成</span>
+      <span class="meta-tag urgent">⚠️ June 15 計費變更</span>
+    </div>
+  </div>
+
+  <!-- 本週最值得注意 -->
+  <section>
+    <div class="section-title"><span>🔥</span> 本週最值得注意</div>
+
+    <div class="highlight-card urgent-card">
+      <h3>1. 🚨 Anthropic June 15 計費變更 — Agent SDK 強制分池（直接影響 Claude Code 用法）</h3>
+      <p>Anthropic 宣布自 <strong>2026-06-15</strong> 起，Agent SDK 相關用量從訂閱池分離，移至獨立月費 credit pool，以<strong>全額 API 費率</strong>計費，無 rollover。</p>
+      <div class="two-col">
+        <div class="mini-card">
+          <h5>受影響（新 credit pool）</h5>
+          <ul>
+            <li>Claude Agent SDK</li>
+            <li><code>claude -p</code>（headless CLI）</li>
+            <li>Claude Code GitHub Actions</li>
+            <li>第三方 Agent SDK 應用</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h5>不受影響（維持訂閱池）</h5>
+          <ul>
+            <li>Claude.ai web / desktop / mobile</li>
+            <li>Claude Code 在 terminal 互動式使用</li>
+            <li>Claude Cowork</li>
+          </ul>
+        </div>
+      </div>
+      <div class="table-wrap bench-table" style="margin:12px 0;">
+        <table>
+          <thead><tr><th>方案</th><th>月 credit</th><th>約可用量估算</th></tr></thead>
+          <tbody>
+            <tr><td>Pro</td><td><strong>$20</strong></td><td>~4M tokens（Sonnet 級）</td></tr>
+            <tr><td>Max 5x</td><td><strong>$100</strong></td><td>~20M tokens</td></tr>
+            <tr><td>Max 20x</td><td><strong>$200</strong></td><td>~40M tokens</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>重要細節：</strong> credit 按人頭計（不共池）、月底清零不滾入、用完後自動停擋（除非手動開啟 overflow billing）。原本訂閱隱性補貼了 <strong>15~30x</strong> API 費差，此次等同取消補貼。</p>
+      <div class="action-box">在 6/15 前登入 Claude 帳號確認 credit 申領信件，並決定是否開啟 overflow billing。若每月 <code>claude -p</code> 用量超過 $20 等值，需開啟 overflow 或升級 Max 方案。</div>
+      <div class="significance">此變更從 IPO 動機角度可理解：在 IPO 前最大化 API 收益。<code>claude -p</code> 和 GitHub Actions 自動化任務直接受影響，本週確認額度後制定預算。</div>
+    </div>
+
+    <div class="highlight-card">
+      <h3>2. Claude Code：Dynamic Workflows 預設開啟 + Ultracode 新設定（2026-06-02~03）</h3>
+      <p>兩個重要 Claude Code 行為更新同步落地：</p>
+      <p><strong>Dynamic Workflows 預設狀態變更：</strong></p>
+      <ul>
+        <li><strong>Max 和 Team 方案：</strong> Dynamic Workflows 現在<strong>預設開啟</strong>，無需任何設定</li>
+        <li><strong>Enterprise：</strong> 預設關閉，管理員可在 Claude Code settings 啟用</li>
+        <li><strong>Pro：</strong> 需手動在 <code>/config → Dynamic Workflows</code> 啟用</li>
+      </ul>
+      <p><strong>新設定：<code>/effort ultracode</code></strong> — 結合 <code>xhigh</code> 推理力度 + 自動判斷何時啟動 Dynamic Workflows。Claude 自動評估任務複雜度，決定是否啟動大規模並行處理。使用方式：session 開始時輸入 <code>/effort ultracode</code>。</p>
+      <p><strong>其他更新：</strong> Fallback models 支援、更廣的 deny-rule glob 規則、跨 session 訊息安全性強化、20+ 法律 MCP connector + 12 個 practice-area plugin（企業向）。</p>
+      <p><strong>Managed Agents 升級：</strong> 現在可在自管 sandbox（Cloudflare、Daytona、Modal、Vercel）中運作，並連接私有 MCP server。</p>
+      <div class="significance">如果你在 Max 方案，Dynamic Workflows 已自動開啟。下次跑複雜任務時可嘗試 <code>/effort ultracode</code>，觀察 Claude 是否自動拆分 subagent 及 orchestration script 結構。</div>
+    </div>
+
+    <div class="highlight-card">
+      <h3>3. Anthropic 機密 IPO S-1 遞交 SEC（2026-06-01）</h3>
+      <p>Anthropic 於 2026-06-01 向 SEC 遞交機密 Form S-1，正式啟動 IPO 程序：</p>
+      <ul>
+        <li><strong>估值：</strong> ~$965B（距 Series H 融資 $65B 不到 1 週）</li>
+        <li><strong>月營收 run-rate：</strong> ~$47B（May 2026），前一年同期約 $10B，YoY 成長 4.7x</li>
+        <li><strong>競爭背景：</strong> OpenAI（$852B 估值）、SpaceX 同年預計三家 $1T 級 IPO</li>
+        <li>S-1 機密遞交代表財務細節尚未公開，尚未定股數或發行價</li>
+      </ul>
+      <div class="significance">Anthropic 作為商業主體的透明度將大幅提升。June 15 billing change 可從 IPO 動機理解：在 IPO 前最大化 API 收益、讓財務模型更清晰。</div>
+    </div>
+  </section>
+
+  <!-- 工具更新速覽 -->
+  <section>
+    <div class="section-title"><span>🛠</span> 工具更新速覽</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>工具</th><th>版本 / 日期</th><th>重點</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Claude Code</strong></td><td>2026-06-02~03</td><td>Dynamic Workflows 預設 Max/Team、<code>/effort ultracode</code>、fallback models</td></tr>
+          <tr class="urgent-row"><td><strong>Claude Agent SDK</strong></td><td>2026-06-15 生效</td><td>獨立 credit pool，全額 API 費率，Pro $20/月</td></tr>
+          <tr><td><strong>Microsoft MAI-Code-1</strong></td><td>2026-06-02</td><td>推理效能優化 coding 模型，已部署 GitHub Copilot + VS Code</td></tr>
+          <tr><td><strong>Microsoft Scout</strong></td><td>2026-06-02</td><td>首個 Autopilot agent，獨立 Entra identity，experimental（Frontier program）</td></tr>
+          <tr><td><strong>Google Gemma 4 12B</strong></td><td>2026-06-03</td><td>開源多模態（text+image+video+音頻），encoder-free，Apache 2.0，8GB GPU 可跑</td></tr>
+          <tr><td><strong>Qwen3-Coder-Next</strong></td><td>2026-06-06</td><td>SWE-bench Verified 70.6~71.3%，MoE 3B active，Ollama 可用</td></tr>
+          <tr><td><strong>GPT-5.5 Instant</strong></td><td>2026-06 rollout</td><td>所有 ChatGPT 用戶推送，取代 GPT-5.3 Instant 為預設</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Microsoft Build 後續細節 -->
+  <section>
+    <div class="section-title"><span>🏗</span> Microsoft Build 2026 後續細節</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div class="mini-card" style="background:var(--surface);border:1px solid var(--border);">
+        <h5>MAI-Code-1（推理效能 coding 模型）</h5>
+        <ul>
+          <li>微軟自研，以 inference 效率為核心</li>
+          <li>已整合 GitHub Copilot + VS Code</li>
+          <li>另可在 Fireworks AI、Baseten、OpenRouter 使用</li>
+          <li>Project Polaris 的同期快速補全模型（非主力推理）</li>
+        </ul>
+      </div>
+      <div class="mini-card" style="background:var(--surface);border:1px solid var(--border);">
+        <h5>Microsoft Scout（第一個 Autopilot）</h5>
+        <ul>
+          <li><strong>Autopilot</strong> = 持久背景執行 + 自有 Entra 身份 + 主動行動</li>
+          <li>整合 Teams、Outlook，自主處理會議準備、排程衝突</li>
+          <li>底層：OpenClaw + WorkIQ</li>
+          <li>狀態：experimental，透過 Frontier program 申請</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 依你背景的分類 -->
+  <section>
+    <div class="section-title"><span>🗂</span> 依你背景的分類</div>
+    <div class="cat-grid">
+      <div class="cat-card">
+        <h4>AI Coding Assistant</h4>
+        <ul>
+          <li><strong>June 15 billing change</strong> 是本週最緊急事項，<code>claude -p</code> 用戶直接受影響</li>
+          <li><strong><code>/effort ultracode</code></strong> 是 Dynamic Workflows 的最便捷入口，無需手動設定 orchestration</li>
+          <li><strong>MAI-Code-1</strong> 已入 VS Code：非 Polaris 主模型，而是 inference-efficient 快速補全</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>Local LLM</h4>
+        <ul>
+          <li><strong>Gemma 4 12B</strong>（Apache 2.0）encoder-free 原生多模態，8GB VRAM 可跑；<code>ollama pull gemma4:12b</code></li>
+          <li><strong>Qwen3-Coder-Next</strong>（3B active / 80B total MoE）SWE-bench 70.6%；<code>ollama pull qwen3-coder-next</code></li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>Agent 架構</h4>
+        <ul>
+          <li><strong>Microsoft Scout Autopilot 範式</strong>：agent 有 Entra identity = agent 作為組織成員而非工具，企業 agent 部署新方向</li>
+          <li><strong>Dynamic Workflows + Ultracode</strong> 組合：session 級別自動 orchestration 正在成熟</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>AI 產業 / 商業</h4>
+        <ul>
+          <li><strong>Anthropic IPO</strong>：S-1 機密遞交，$965B 估值，月收 $47B，AI IPO 競賽正式開跑</li>
+          <li>Billing change = IPO 前財務優化訊號，訂價策略後續可能持續調整</li>
+          <li>OpenAI $852B 估值，GPT-5.6 傳言持續，產業估值泡沫風險值得關注</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- YouTube 摘要 -->
+  <section>
+    <div class="section-title"><span>▶</span> 來源摘要（NotebookLM 繁中）</div>
+
+    <div class="yt-card">
+      <h4><span class="yt-label">NotebookLM</span><a href="https://www.youtube.com/watch?v=srlhW4H-Gtg" target="_blank">Anthropic drops Claude Code with ultracode &amp; Dynamic Workflows and it delivers</a></h4>
+      <p>介紹 Claude Code 進階功能，重點展示如何利用 <strong>Ultracode 模式</strong>與 <strong>Dynamic Workflows</strong> 打造「數位分身（Digital Twin）」。透過實作示範讓 AI 根據需求規格書自動調度多個子代理人開發，包含負責除錯的<strong>對抗性代理人</strong>。數位分身透過 <strong>RAG</strong> 精準回答問題，無法回應時發送推播通知讓真人開發者介入三方對話。</p>
+      <p><em>Keywords：Claude Code、動態工作流、數位分身、Ultracode 模式、代理式 RAG</em></p>
+    </div>
+
+    <div class="yt-card">
+      <h4><span class="yt-label">NotebookLM</span><a href="https://www.youtube.com/watch?v=2rhZOisVXZM" target="_blank">Claude Ultracode will 10x your workflows</a></h4>
+      <p>介紹 <strong>Claude Opus 4.8</strong> 更新，指出真正突破在於編程工具鏈強化。深度解析：<strong>Dynamic Workflows</strong> 讓模型化身協調者，自動調度數十個子代理人處理如電商審計等複雜任務；<strong>Ultracode 模式</strong>提升執行深度，自主決定是否啟動大規模並行處理。強調高強度運算會<strong>劇烈消耗 token 額度</strong>，需在效率與成本間取得平衡。</p>
+      <p><em>Keywords：Opus 4.8、動態工作流、Ultracode 模式、多智能體協作、token 消耗率</em></p>
+    </div>
+
+    <div class="yt-card">
+      <h4><span class="yt-label">NotebookLM</span><a href="https://www.youtube.com/watch?v=jZgcWCzxh1I" target="_blank">Claude Code Dynamic Workflows Clearly Explained</a></h4>
+      <p>技術層級解析 <strong>Dynamic Workflows</strong>：透過「階梯圖」區分從簡單對話到複雜自動化的不同模式。工作流與傳統 agent team 的關鍵差異：<strong>不具備內部對話機制</strong>，由 Claude 生成 JavaScript 腳本驅動大量子代理獨立執行後彙整。特別警示<strong>極高 token 消耗</strong>，最適合程式碼庫全面審核或大規模數據分析。提供決策框架：Skills → Subagents → Agent Teams → Dynamic Workflows。</p>
+      <p><em>Keywords：動態工作流、代理團隊比較、token 消耗成本、Claude Code 功能、自動化技術架構</em></p>
+    </div>
+  </section>
+
+  <!-- 下週觀察清單 -->
+  <section>
+    <div class="section-title"><span>📋</span> 下週觀察清單</div>
+    <ul class="checklist">
+      <li class="urgent"><strong>June 15 前必做：</strong> 確認 Anthropic credit 申領，決定是否開啟 overflow billing</li>
+      <li><code>/effort ultracode</code> 實測：在當前 Claude Code session 跑複雜任務，觀察是否自動啟動 Dynamic Workflows</li>
+      <li>Gemma 4 12B 本地跑：<code>ollama pull gemma4:12b</code> + 音頻/圖片輸入測試</li>
+      <li>Qwen3-Coder-Next 測試：<code>ollama pull qwen3-coder-next</code> + coding task 比較</li>
+      <li>Microsoft Scout Frontier program 申請（若有 M365 Enterprise 帳號）</li>
+      <li>GPT-5.6 正式發布確認（目前仍為傳言）</li>
+    </ul>
+  </section>
+
+  <!-- 深入研究 -->
+  <section>
+    <div class="section-title"><span>🎯</span> 本週 3 個與你高度相關的項目（請選一個深入研究）</div>
+    <div class="deep-dive-grid">
+      <div class="deep-dive-card urgent-card">
+        <div class="label">A · 緊急 · Billing</div>
+        <h4>🚨 June 15 Billing 緊急確認 — 評估你的 <code>claude -p</code> 用量</h4>
+        <p>在 June 15 前登入 Claude 帳號、申領 credit、評估你用 <code>claude -p</code> 的月用量（從 Claude 帳號用量頁面確認）。決定：$20 夠不夠？是否開 overflow？還是減少自動化腳本使用？</p>
+      </div>
+      <div class="deep-dive-card">
+        <div class="label">B · Claude Code 升級</div>
+        <h4>Ultracode 實戰測試 — 看 Dynamic Workflows 怎麼自動分派任務</h4>
+        <p>用 <code>/effort ultracode</code> 跑一個你以前覺得太複雜的任務（如重構 nb.py、幫 weekly_notes 目錄建交叉引用索引）。觀察 Claude 是否自動啟動 Dynamic Workflows、分幾個 subagent、orchestration script 長什麼樣。</p>
+      </div>
+      <div class="deep-dive-card">
+        <div class="label">C · Local LLM</div>
+        <h4>Gemma 4 12B 本地音頻多模態測試</h4>
+        <p>Gemma 4 12B 是第一個 encoder-free 原生音頻/視覺模型，8GB GPU 可跑。測試：圖片理解、直接送音頻（非 Whisper 路線）——這是本地 multimodal agent 的新可能性。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Run log -->
+  <div class="run-log">
+    <div class="run-log-title">Run Log</div>
+    <p><span class="done">✓</span> Claude WebSearch：完成</p>
+    <p><span class="done">✓</span> NotebookLM：完成（3 YouTube 全部匯入）</p>
+    <p><span class="done">✓</span> NotebookLM Briefing Doc：完成（<code>2026-W24-briefing.md</code>）</p>
+    <p><span class="done">✓</span> QA：完成</p>
+  </div>
+
+</div>
+</body>
+</html>

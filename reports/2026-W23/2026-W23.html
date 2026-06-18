@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 新知週報 2026-W23</title>
+<style>
+  :root {
+    --bg: #f8f9fa;
+    --surface: #ffffff;
+    --border: #e2e8f0;
+    --text: #1a202c;
+    --muted: #718096;
+    --accent: #3b82f6;
+    --accent-bg: #eff6ff;
+    --accent-border: #bfdbfe;
+    --green: #059669;
+    --green-bg: #ecfdf5;
+    --amber: #d97706;
+    --amber-bg: #fffbeb;
+    --purple: #7c3aed;
+    --purple-bg: #f5f3ff;
+    --red: #dc2626;
+    --red-bg: #fef2f2;
+    --red-border: #fecaca;
+    --code-bg: #1e293b;
+    --code-text: #e2e8f0;
+    --tag-bg: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 32px 24px 80px; }
+
+  .report-header {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 32px;
+  }
+  .report-header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; }
+  .meta-tag {
+    background: var(--tag-bg);
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .meta-tag strong { color: var(--text); }
+  .meta-tag.pending {
+    background: var(--amber-bg);
+    color: var(--amber);
+  }
+
+  section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .highlight-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .highlight-card.warning {
+    border-left-color: var(--red);
+  }
+  .highlight-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 10px; }
+  .highlight-card p { margin-bottom: 8px; }
+  .highlight-card ul { padding-left: 20px; margin-bottom: 8px; }
+  .highlight-card li { margin-bottom: 4px; }
+  .significance {
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    margin-top: 12px;
+    color: #1e40af;
+  }
+  .significance::before { content: "💡 對你的意義："; font-weight: 600; }
+
+  .table-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); }
+  table { border-collapse: collapse; width: 100%; background: var(--surface); }
+  th {
+    background: #f1f5f9;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 14px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f8fafc; }
+  code {
+    font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+    font-size: 12.5px;
+    background: #f1f5f9;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+    color: #d63384;
+  }
+  .bench-table { margin: 12px 0; }
+  .bench-table td:first-child { font-weight: 600; }
+  .bench-table .best { color: var(--green); font-weight: 700; }
+
+  .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 600px) { .cat-grid { grid-template-columns: 1fr; } }
+  .cat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .cat-card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+  }
+  .cat-card ul { padding-left: 16px; }
+  .cat-card li { font-size: 13.5px; margin-bottom: 5px; }
+
+  .yt-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .yt-card.pending {
+    border-style: dashed;
+    background: #fafafa;
+  }
+  .yt-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .yt-label {
+    background: #fee2e2;
+    color: #b91c1c;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .yt-label.pending-label {
+    background: var(--amber-bg);
+    color: var(--amber);
+  }
+  .yt-card.failed {
+    border-style: dashed;
+    border-color: #fecaca;
+    background: var(--red-bg);
+  }
+  .yt-label.failed-label {
+    background: #f1f5f9;
+    color: #64748b;
+  }
+  .yt-card p { font-size: 13.5px; }
+  .yt-group-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 20px 0 10px;
+  }
+
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  .checklist li::before { content: "☐"; color: var(--muted); flex-shrink: 0; margin-top: 1px; }
+  .checklist li.urgent { border-color: var(--red); }
+  .checklist li.urgent::before { content: "🔴"; }
+
+  .deep-dive-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .deep-dive-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+  }
+  .deep-dive-card .label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  .deep-dive-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .deep-dive-card p { font-size: 13.5px; color: #4a5568; }
+
+  .run-log {
+    background: #0f172a;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-top: 36px;
+  }
+  .run-log-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+  .run-log p {
+    font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+    font-size: 12.5px;
+    color: #94a3b8;
+    line-height: 1.8;
+  }
+  .run-log p span.done { color: #34d399; }
+  .run-log p span.pending-log { color: #fbbf24; }
+  strong { font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="report-header">
+    <h1>AI 新知週報 2026-W23</h1>
+    <div class="meta">
+      <span class="meta-tag"><strong>期間</strong> 2026-05-25 ~ 2026-06-01</span>
+      <span class="meta-tag"><strong>焦點</strong> Claude Opus 4.8 + Codex + Microsoft Build 2026</span>
+      <span class="meta-tag"><strong>蒐集</strong> Claude WebSearch</span>
+      <span class="meta-tag"><strong>撰寫</strong> Claude</span>
+      <span class="meta-tag"><strong>YouTube</strong> NotebookLM 完成</span>
+    </div>
+  </div>
+
+  <!-- 本週最值得注意 -->
+  <section>
+    <div class="section-title"><span>🔥</span> 本週最值得注意</div>
+
+    <div class="highlight-card">
+      <h3>1. Claude Code Opus 4.8 + Dynamic Workflows — 百 agent 並行正式可用（2026-05-28）</h3>
+      <p>Anthropic 於 2026-05-28 發布 <strong>Opus 4.8</strong>，距 Opus 4.7 僅 41 天，是史上最短 Opus 迭代週期。核心亮點是 Claude Code 同步推出的 <strong>Dynamic Workflows</strong>（研究預覽）：Claude 在單一 session 內自動撰寫 orchestration script，動態啟動最多 <strong>1,000 個 subagent</strong>（同時最多 16 個並行），各 subagent 從獨立角度攻克問題，答案收斂後才回報。</p>
+      <p><strong>實際案例：</strong> 將 Bun 專案從 Zig 移植到 Rust，75 萬行程式碼、99.8% 測試通過、首次 commit 到合併僅耗時 11 天。計畫存於 JavaScript 腳本變數中，不佔用對話 context window。</p>
+      <div class="table-wrap bench-table" style="margin:12px 0;">
+        <table>
+          <thead><tr><th>項目</th><th>Opus 4.7</th><th>Opus 4.8</th></tr></thead>
+          <tbody>
+            <tr><td>SWE-bench Pro</td><td>64.3%</td><td class="best">69.2%</td></tr>
+            <tr><td>USAMO 2026（數學）</td><td>69.3%</td><td class="best">96.7%</td></tr>
+            <tr><td>程式碼缺陷漏報率</td><td>基準</td><td class="best">降低 4x</td></tr>
+            <tr><td>Fast mode 速度</td><td>標準</td><td class="best">2.5x（費率 2x 標準）</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>同步更新：</strong> <code>.claude/skills</code> 目錄內的 Plugin 現在<strong>自動載入</strong>，無需 Marketplace 手動配置；新增 <code>/effort xhigh</code> 指令強制高推理負荷；Auto mode 上線 Bedrock、Vertex、Foundry。</p>
+      <p><strong>定價不變：</strong> $5/1M input、$25/1M output（標準）；Fast mode $10/$50。</p>
+      <div class="significance">Dynamic Workflows 直接影響你的 Claude Code 使用方式——多個平行 subagent 可同時研究、撰寫、驗證，與週報 multi-agent 流程概念完全契合。<code>.claude/skills</code> 自動載入讓自訂技能設定更簡便。</div>
+    </div>
+
+    <div class="highlight-card">
+      <h3>2. OpenAI Codex — Goal Mode GA + Windows Computer Use（2026-05-21~29）</h3>
+      <p><strong>Goal Mode（2026-05-21 GA）：</strong> 從 beta 升為正式版，在 Codex App、IDE Extension、CLI 全面可用。設定 <code>/goal</code> 定義目標與成功條件，Codex 自主推進<strong>數小時甚至數天</strong>，處理子任務、撰寫程式碼、迭代修正，無需持續提示；跨 session 持久化，budget reset 後目標不丟失。</p>
+      <p><strong>Windows Computer Use（2026-05-29）：</strong> Codex 現在可在 <strong>Windows 桌面</strong>直接操控應用程式：看、點擊、輸入。前景模式下使用者需讓出螢幕，支援 <strong>Mobile Remote Control</strong>（從 iPhone / Android 啟動 Windows 上的任務並遠端監控）。限制：歐盟、英國、瑞士目前不可用。</p>
+      <p><strong>Appshots（macOS 同期）：</strong> 快捷鍵捕捉任何前景視窗（截圖 + 擷取文字），直接注入當前 Codex thread 作為 live context。</p>
+      <div class="significance">Windows Computer Use 對你最直接——Codex 可操作 Windows 11 上的 GUI 應用（瀏覽器、Obsidian、本機服務），不再局限於 terminal/file 操作。Goal Mode vs Dynamic Workflows：前者長期自主跑，後者短期密集並行，路線不同值得對比。</div>
+    </div>
+
+    <div class="highlight-card">
+      <h3>3. Microsoft Build 2026 — Project Polaris 宣告 GitHub Copilot 獨立（2026-06-02~03）</h3>
+      <p>微軟發布 <strong>Project Polaris</strong>，自研 coding 專用 MoE 大模型，從 <strong>2026 年 8 月</strong>起取代 GPT-4 Turbo 成為 GitHub Copilot 預設模型（現有用戶可選三個月 fallback 期）。架構採 Mixture-of-Experts，含針對不同語言/框架的專屬 sub-module；推理時加入 chain-of-thought + tree-of-thought search；在 HumanEval、MBPP 超越 GPT-4 Turbo，Rust、Haskell 等低資源語言尤其明顯。跑在微軟自研 <strong>Maia AI accelerator</strong> 上。</p>
+      <p><strong>同場發布：</strong></p>
+      <ul>
+        <li><strong>Windows Agent Framework (WAF)</strong>：MIT 授權開源，YAML 定義可跨本地、雲端、邊緣無縫遷移的 agent</li>
+        <li><strong>DirectML 2.0</strong>：抽象化 Intel/AMD/Qualcomm NPU 差異，啟用本地 AI 推理</li>
+        <li><strong>WSL 3</strong>：提升 Linux 工具鏈在 Windows 上的速度</li>
+        <li><strong>MAI 模型套件</strong>：MAI-Transcribe-1、MAI-Voice-1、MAI-Image-2 首次開放商業使用</li>
+      </ul>
+      <div class="significance">若有在用 GitHub Copilot，8 月前留意遷移通知；Polaris MoE 在 Rust/Haskell 的提升值得關注。WAF 的 MIT 開源 YAML 規範值得研究，避免重造 agent 基礎設施輪子。微軟與 OpenAI 解耦訊號強化——Copilot 未來可能不再是「GPT 的前端」。</div>
+    </div>
+  </section>
+
+  <!-- 工具更新速覽 -->
+  <section>
+    <div class="section-title"><span>🛠</span> 工具更新速覽</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>工具</th><th>版本 / 日期</th><th>重點</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Claude Opus 4.8</strong></td><td>2026-05-28</td><td>Dynamic Workflows（最多 1,000 subagent）、SWE-bench Pro 69.2%、Fast mode 降價</td></tr>
+          <tr><td><strong>Claude Code</strong></td><td>2026-05-28</td><td><code>.claude/skills</code> 自動載入、<code>/effort xhigh</code>、Auto mode 上 Bedrock/Vertex/Foundry</td></tr>
+          <tr><td><strong>OpenAI Codex</strong></td><td>2026-05-21~29</td><td>Goal Mode GA、Windows Computer Use、Appshots（macOS）、Mobile Remote</td></tr>
+          <tr><td><strong>GitHub Copilot</strong></td><td>宣告 8 月</td><td>Project Polaris（自研 MoE）取代 GPT-4 Turbo 為預設模型</td></tr>
+          <tr><td><strong>Kimi K2.6</strong></td><td>2026-05</td><td>MoE，42B 活躍/1T 總參數，MIT 授權，coding benchmark Tier A（87/100）</td></tr>
+          <tr><td><strong>Qwen 3.6 27B</strong></td><td>2026-05</td><td>SWE-bench 77.2%，MTP 頭支援 2x 推理吞吐量</td></tr>
+          <tr><td><strong>Ollama</strong></td><td>v0.24.0</td><td>Codex App 支援、Gemma 4 MTP 解碼、MLX sampler 重構</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 依你背景的分類 -->
+  <section>
+    <div class="section-title"><span>🗂</span> 依你背景的分類</div>
+    <div class="cat-grid">
+      <div class="cat-card">
+        <h4>AI Coding Assistant</h4>
+        <ul>
+          <li><strong>Dynamic Workflows + Goal Mode</strong> 標誌 agentic coding 進入「設定目標、放手讓跑」新階段，兩者路線不同：Dynamic Workflows 爆發式並行（百 agent 短時間），Goal Mode 持久型追蹤（數日自主）</li>
+          <li><strong>Project Polaris</strong> 代表 GitHub Copilot 徹底與 OpenAI 解耦，下半年使用者體驗可能出現較大變化</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>Local LLM</h4>
+        <ul>
+          <li><strong>Kimi K2.6</strong>（MIT 授權）目前最強可商用本地 coding 模型，42B 活躍參數在多數消費級 GPU 可跑；<code>ollama pull kimi-k2.6</code> 可試</li>
+          <li><strong>Qwen 3.6 27B</strong> + MTP：搭配 Ollama v0.24.0 可獲得約 2x 生成速度提升</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>Agent 架構</h4>
+        <ul>
+          <li><strong>Dynamic Workflows</strong> 是目前最完整的 agentic orchestration 實作：自動生成 orchestration script → 平行 subagent → 對抗驗證 → 收斂回報，不需手動設計 DAG</li>
+          <li><strong>Goal Mode</strong> 的 <code>/goal</code> 機制：persistent goal across sessions = 輕量狀態管理方案</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>Windows / 本機自動化</h4>
+        <ul>
+          <li><strong>Windows Computer Use</strong> 讓 Codex 可操作本機 GUI 應用（前景模式）</li>
+          <li><strong>WAF + DirectML 2.0</strong> 降低本地 AI 推理門檻，NPU 支援更廣</li>
+          <li><strong>WSL 3</strong> 提升 Windows 下 Linux 工具鏈效能</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- YouTube 摘要 -->
+  <section>
+    <div class="section-title"><span>▶</span> 來源摘要（NotebookLM 繁中）</div>
+
+    <p class="yt-group-title">YouTube 影片</p>
+
+    <div class="yt-card">
+      <h4><span class="yt-label">NotebookLM</span><a href="https://www.youtube.com/watch?v=dqc4QH4X82k" target="_blank">OpenAI Codex is Insane: Browser Use, Computer Use, /goal, and Auto Approval Reviews</a></h4>
+      <p>OpenAI Codex 從程式碼編輯器轉型為具備高度自治能力的<strong>工程工作空間</strong>。核心演進：引入 <strong><code>/goal</code> 指令</strong>與自動化循環，讓 AI 持續執行數日乃至數週的複雜任務，無需開發者持續提示。透過 <strong>Atlas 瀏覽器技術</strong>與 macOS 電腦操控，Codex 能像人類一樣點擊介面、測試視覺漏洞並操作原生軟體。同步推出 <strong>AI 代理自動化審查</strong>機制、長期記憶與外掛程式市場。</p>
+      <p><em>Keywords：OpenAI Codex 更新、自動化長程目標、電腦控制功能、插件市場系統、代理審核機制</em></p>
+    </div>
+
+    <div class="yt-card failed">
+      <h4><span class="yt-label failed-label">無法取得</span><a href="https://www.youtube.com/watch?v=ReTx6ku4_dc" target="_blank">Opus 4.8 Dynamic Workflows Full Walkthrough</a></h4>
+      <p>NotebookLM API 無資料（可能為私人或地區限制）。已以文章來源補充。</p>
+    </div>
+
+    <div class="yt-card failed">
+      <h4><span class="yt-label failed-label">無法取得</span><a href="https://www.youtube.com/watch?v=MPIAB-8VmCo" target="_blank">Windows Computer Use and mobile access for Codex</a></h4>
+      <p>NotebookLM API 無資料（可能為私人或地區限制）。已以文章來源補充。</p>
+    </div>
+
+    <div class="yt-card failed">
+      <h4><span class="yt-label failed-label">無法取得</span><a href="https://www.youtube.com/watch?v=uXotETQZymI" target="_blank">Codex just dropped the new Goal Command</a></h4>
+      <p>NotebookLM API 無資料（可能為私人或地區限制）。已以文章來源補充。</p>
+    </div>
+
+    <p class="yt-group-title">補充文章來源（YouTube 失敗 3 支 → 補充 5 篇文章）</p>
+
+    <div class="yt-card">
+      <h4><span class="yt-label" style="background:#dcfce7;color:#166534;">文章</span>Anthropic Ships Claude Opus 4.8 Alongside Dynamic Workflows（MarkTechPost）</h4>
+      <p>報導 Anthropic 發佈 <strong>Claude Opus 4.8</strong> 及兩項重大更新：<strong>動態工作流</strong>與<strong>廉價快速模式</strong>。動態工作流自動撰寫腳本並指揮最多 1,000 個並行 subagent，在不佔用對話上下文的情況下處理大規模程式碼遷移。新快速模式速度提升 2.5 倍且大幅降低成本。實例：Bun 專案 Zig→Rust 移植，75 萬行，99.8% 測試通過，11 天完成。</p>
+      <p><em>Keywords：Claude Opus 4.8、動態工作流、快速模式優化、子代理協作、軟體工程自動化</em></p>
+    </div>
+
+    <div class="yt-card">
+      <h4><span class="yt-label" style="background:#dcfce7;color:#166534;">文章</span>Anthropic releases Opus 4.8 with new 'dynamic workflow' tool（TechCrunch）</h4>
+      <p>聚焦 Opus 4.8 的<strong>可靠性提升</strong>：比 Opus 4.7 減少 4 倍程式碼缺陷漏報，能主動標記不確定性而非盲目給出錯誤答案。分析 Anthropic 如何在競爭壓力下加速開發週期（41 天更新一次），並預告更高階模型在安全防護完善後即將問世。</p>
+      <p><em>Keywords：Anthropic 軟體更新、Opus 4.8、動態工作流、人工智慧模型、模型安全防護</em></p>
+    </div>
+
+    <div class="yt-card">
+      <h4><span class="yt-label" style="background:#dcfce7;color:#166534;">文章</span>Microsoft Build 2026 Recap: Windows Is Now an Agent Platform（ChatForest）</h4>
+      <p>核心宣告：<strong>Windows 轉型為全方位 AI 代理平台</strong>，透過 <strong>Project Polaris</strong> 取代 OpenAI 技術核心。重點：<strong>Windows Agent Framework (WAF)</strong> 以 MIT 授權開源、<strong>Azure 代理網格</strong>支援跨裝置自動化部署、<strong>DirectML 2.0</strong> 抽象化不同晶片 NPU 差異、<strong>WSL 3</strong> 提升 Linux 工具鏈效能。引導開發者從「輔助編程」轉向 AI 自主執行的「委託編程」。</p>
+      <p><em>Keywords：Project Polaris 發表、Windows 代理程式平台、GitHub Copilot 升級、Azure 代理網格、本地 AI 基礎設施</em></p>
+    </div>
+
+    <div class="yt-card">
+      <h4><span class="yt-label" style="background:#dcfce7;color:#166534;">文章</span>OpenAI Codex Goal Mode GA（TechJack Solutions）</h4>
+      <p>Codex Goal Mode 於 2026-05-21 正式進入 <strong>GA（一般可用）</strong>，代理式工作流達到生產等級穩定度。<code>/goal</code> 指令讓 AI 開發工具在無需逐步指令的情況下自主達成任務目標，並持續循環修復直到成功。文章強調企業應針對這些自主化代理工具重新評估治理政策與安全性。</p>
+      <p><em>Keywords：OpenAI Codex、目標模式正式版、自主代理工作流、人工智慧治理、企業工具導入</em></p>
+    </div>
+  </section>
+
+  <!-- 下週觀察清單 -->
+  <section>
+    <div class="section-title"><span>📋</span> 下週觀察清單</div>
+    <ul class="checklist">
+      <li>Dynamic Workflows 實測：在 Claude Code 嘗試跑百 subagent 任務（週報蒐集？程式碼重構？）</li>
+      <li>Codex Windows Computer Use 實測：嘗試讓 Codex 操作本機 GUI 應用</li>
+      <li>Kimi K2.6 本地跑：<code>ollama pull kimi-k2.6</code> + coding task 比較</li>
+      <li class="urgent">Project Polaris 正式上線前追蹤：GitHub Copilot 用戶 8 月前確認遷移計畫</li>
+      <li>Gemini 3.5 Pro 發布（I/O 宣布延後，持續觀察）</li>
+    </ul>
+  </section>
+
+  <!-- 深入研究 -->
+  <section>
+    <div class="section-title"><span>🎯</span> 本週 3 個與你高度相關的項目（請選一個深入研究）</div>
+    <div class="deep-dive-grid">
+      <div class="deep-dive-card">
+        <div class="label">A · Claude Code 升級</div>
+        <h4>Claude Code Dynamic Workflows — 直接升級你的週報流程</h4>
+        <p>Dynamic Workflows 最多 1,000 subagent 並行，你現在的週報流程（WebSearch 蒐集 + Claude 撰寫 + NotebookLM 摘要）可以整合進單一 Dynamic Workflow session。值得拆解它的 orchestration script 結構，評估是否能自動化每週流程。</p>
+      </div>
+      <div class="deep-dive-card">
+        <div class="label">B · Windows 本機自動化</div>
+        <h4>Codex Windows Computer Use — 解鎖本機 GUI 自動化</h4>
+        <p>你在 Windows 11 上，Codex 現在可以操作你的桌面應用。若工作流有 GUI 瓶頸（如操作 NotebookLM 網頁介面、瀏覽器操作），這是最直接的解法。</p>
+      </div>
+      <div class="deep-dive-card">
+        <div class="label">C · Local LLM</div>
+        <h4>Kimi K2.6 本地 Coding 模型實測</h4>
+        <p>MIT 授權、42B 活躍參數、coding benchmark Tier A（87/100）。若你有 24GB+ VRAM 或願意用 Q4，這是目前最強的本地 coding agent 選項。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Run log -->
+  <div class="run-log">
+    <div class="run-log-title">Run Log</div>
+    <p><span class="done">✓</span> Claude WebSearch：完成</p>
+    <p><span class="done">✓</span> NotebookLM：完成（1 YouTube + 5 篇文章；3 支 YouTube 無法匯入，已以文章補充）</p>
+    <p><span class="done">✓</span> NotebookLM Briefing Doc：完成（<code>2026-W23-briefing.md</code>）</p>
+    <p><span class="pending-log">○</span> Codex QA：待執行</p>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 新知週報 2026-W21</title>
+<style>
+  :root {
+    --bg: #f8f9fa;
+    --surface: #ffffff;
+    --border: #e2e8f0;
+    --text: #1a202c;
+    --muted: #718096;
+    --accent: #3b82f6;
+    --accent-bg: #eff6ff;
+    --accent-border: #bfdbfe;
+    --green: #059669;
+    --green-bg: #ecfdf5;
+    --amber: #d97706;
+    --amber-bg: #fffbeb;
+    --purple: #7c3aed;
+    --purple-bg: #f5f3ff;
+    --code-bg: #1e293b;
+    --code-text: #e2e8f0;
+    --tag-bg: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 32px 24px 80px; }
+
+  .report-header {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 32px;
+  }
+  .report-header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; }
+  .meta-tag {
+    background: var(--tag-bg);
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .meta-tag strong { color: var(--text); }
+
+  section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .highlight-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .highlight-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 10px; }
+  .highlight-card p { margin-bottom: 8px; }
+  .highlight-card ul { padding-left: 20px; margin-bottom: 8px; }
+  .highlight-card li { margin-bottom: 4px; }
+  .significance {
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    margin-top: 12px;
+    color: #1e40af;
+  }
+  .significance::before { content: "💡 對你的意義："; font-weight: 600; }
+
+  .table-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); }
+  table { border-collapse: collapse; width: 100%; background: var(--surface); }
+  th {
+    background: #f1f5f9;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 14px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f8fafc; }
+  code {
+    font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+    font-size: 12.5px;
+    background: #f1f5f9;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+    color: #d63384;
+  }
+
+  .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 600px) { .cat-grid { grid-template-columns: 1fr; } }
+  .cat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .cat-card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+  }
+  .cat-card ul { padding-left: 16px; }
+  .cat-card li { font-size: 13.5px; margin-bottom: 5px; }
+
+  .yt-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .yt-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .yt-label {
+    background: #fee2e2;
+    color: #b91c1c;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .yt-card p { font-size: 13.5px; }
+  .yt-group-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 20px 0 10px;
+  }
+
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  .checklist li::before { content: "☐"; color: var(--muted); flex-shrink: 0; margin-top: 1px; }
+
+  .run-log {
+    background: #0f172a;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-top: 36px;
+  }
+  .run-log-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+  .run-log p {
+    font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+    font-size: 12.5px;
+    color: #94a3b8;
+    line-height: 1.8;
+  }
+  .run-log p span { color: #34d399; }
+  strong { font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="report-header">
+    <h1>AI 新知週報 2026-W21</h1>
+    <div class="meta">
+      <span class="meta-tag"><strong>期間</strong> 2026-05-11 ~ 2026-05-18</span>
+      <span class="meta-tag"><strong>蒐集</strong> Codex WebSearch</span>
+      <span class="meta-tag"><strong>撰寫</strong> Claude</span>
+      <span class="meta-tag"><strong>YouTube</strong> NotebookLM</span>
+    </div>
+  </div>
+
+  <!-- 本週最值得注意 -->
+  <section>
+    <div class="section-title"><span>🔥</span> 本週最值得注意</div>
+
+    <div class="highlight-card">
+      <h3>1. vLLM v0.21.0 — 本週最重量級 inference 更新</h3>
+      <p>vLLM 釋出 v0.21.0，帶來三個核心升級：<strong>KV Offload + Hybrid Memory Allocator</strong>（將 KV cache 卸載至 CPU RAM 或 NVMe，大幅提升長 context 容量）、<strong>Thinking Budget Speculative Decoding</strong>（可在推理品質與速度間動態平衡）、以及 <strong>Transformers v5 遷移</strong>（統一模型載入路徑，降低維護成本）。</p>
+      <div class="significance">local LLM serving 的長 context 瓶頸有直接解法；KV Offload 讓有限 VRAM 的機器也能跑更大 context。</div>
+    </div>
+
+    <div class="highlight-card">
+      <h3>2. Anthropic Opus 4.7 + Claude Design</h3>
+      <p>Anthropic 本週雙管齊下：<strong>Opus 4.7</strong> 新增 Model Router（自動依問題難度切換底層模型，平衡成本與效能），Fast mode 現在 Opus 4.7 驅動，Claude Code 受益；<strong>Claude Design</strong> 是 AI 視覺設計工具（視為 Figma 競爭者），由前 Instagram 創辦人主導。另外 <strong>Claude Platform 正式上線 AWS</strong>，支援 IAM 整合與全套 API。</p>
+      <div class="significance">Claude Code 的 Fast mode 更聰明了，Opus 4.7 的自適應思考在非程式任務明顯改善。</div>
+    </div>
+
+    <div class="highlight-card">
+      <h3>3. GitHub Copilot 全面 Agent 化</h3>
+      <p>本週兩個重大進展：(1) <strong>GitHub Copilot app</strong> 進入 Technical Preview（GitHub-native desktop agentic dev）；(2) <strong>GPT-5.3-Codex 成為 Copilot Business/Enterprise base model</strong>。Copilot coding agent 新增 Agents Panel、預設整合 <strong>Playwright + GitHub MCP servers</strong>，可執行網頁測試與截圖。每次建 PR 只扣一次 premium request，適合清理 tech debt 或預建 70~80% 功能骨架。</p>
+      <div class="significance">Copilot 現在可以像 Claude Code 一樣跑 agentic 任務，且已整合 Playwright MCP。</div>
+    </div>
+  </section>
+
+  <!-- 工具更新速覽 -->
+  <section>
+    <div class="section-title"><span>🛠</span> 工具更新速覽</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>工具</th><th>版本</th><th>重點</th></tr></thead>
+        <tbody>
+          <tr><td><strong>vLLM</strong></td><td>v0.21.0</td><td>KV Offload、Thinking Budget Speculative Decoding、Transformers v5 遷移</td></tr>
+          <tr><td><strong>Ollama</strong></td><td>v0.23.3</td><td>MLX imagegen runner thread affinity、macOS inference timeout 修正</td></tr>
+          <tr><td><strong>Ollama</strong></td><td>v0.23.4</td><td><code>ollama launch opencode</code> 支援 vision models，修正 Claude tool results 格式</td></tr>
+          <tr><td><strong>OpenAI Codex CLI</strong></td><td>0.131.0-alpha</td><td>本週連續 alpha 迭代，Rust 版本高頻更新中</td></tr>
+          <tr><td><strong>GitHub Copilot</strong></td><td>Technical Preview</td><td>Desktop agentic dev，GPT-5.3-Codex 為 Business/Enterprise base model</td></tr>
+          <tr><td><strong>Anthropic Platform</strong></td><td>2026-05-11</td><td>Claude Platform on AWS：IAM 整合、Files、Batches、Managed Agents</td></tr>
+          <tr><td><strong>Anthropic Platform</strong></td><td>2026-05-12</td><td>Fast mode research preview 升級 Opus 4.7</td></tr>
+          <tr><td><strong>LangChain Core</strong></td><td>~1.3.x</td><td>Streaming v2、agent/HITL 更新（確切版本待確認）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 依你背景的分類 -->
+  <section>
+    <div class="section-title"><span>🗂</span> 依你背景的分類</div>
+    <div class="cat-grid">
+      <div class="cat-card">
+        <h4>Local LLM / Inference</h4>
+        <ul>
+          <li><strong>vLLM v0.21.0</strong> KV Offload 是本週重點，長 context + 有限 VRAM 場景直接受益</li>
+          <li><strong>Ollama v0.23.4</strong> 整合 opencode，vision model 更穩定</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>AI Coding Assistant</h4>
+        <ul>
+          <li><strong>GitHub Copilot</strong> Playwright + MCP 整合，tech debt 清理自動化</li>
+          <li><strong>Codex CLI 0.131</strong> alpha 高頻迭代，Rust 版本架構重寫進行中</li>
+          <li><strong>Claude Fast mode</strong> 升級 Opus 4.7，日常 Claude Code 使用有感提升</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>Agent 架構</h4>
+        <ul>
+          <li><strong>GitHub Copilot coding agent</strong> Agents Panel + MCP = agentic 任務標配</li>
+          <li><strong>LangChain</strong> 自訂串流事件（<code>config.writer</code>）讓 agent 進度可即時推送前端</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>Cloud / Platform</h4>
+        <ul>
+          <li><strong>Anthropic on AWS</strong> IAM 整合上線，企業部署路徑更完整</li>
+          <li><strong>Claude Design</strong> 視覺 AI 新賽道，後續值得觀察</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- YouTube 影片摘要 -->
+  <section>
+    <div class="section-title"><span>▶</span> YouTube 影片摘要（NotebookLM）</div>
+
+    <p class="yt-group-title">Anthropic · Opus 4.7 &amp; Claude Design</p>
+    <div class="yt-card">
+      <h4><span class="yt-label">YT</span>Anthropic Launches Claude Design and Opus 4.7</h4>
+      <p>Claude Design 是 AI 視覺設計工具（網頁/簡報/社群素材），前 Instagram 創辦人主導，定位 Figma 競爭者。Opus 4.7 加入 Model Router 自動切換底層模型平衡成本，並快速根據測試回饋強化自適應思考（增加深度思考與網路搜尋觸發頻率），非程式任務輸出品質明顯提升。</p>
+    </div>
+
+    <p class="yt-group-title">LangChain · Agent UX Streaming</p>
+    <div class="yt-card">
+      <h4><span class="yt-label">YT</span>Build Better Agent UX: Streaming Progress with LangChain</h4>
+      <p>技術教學：耗時 tool call 如何用 <code>config.writer</code> 向前端發送自訂串流事件（帶類型標籤與 <code>tool_call_id</code>），前端用 <code>use_stream</code> hook 的 <code>oncustom</code> 處理器接收，搭配 TypeScript 型別驗證，可同步渲染多個工具的即時進度卡片。</p>
+    </div>
+
+    <p class="yt-group-title">GitHub Copilot · Agent Mode</p>
+    <div class="yt-card">
+      <h4><span class="yt-label">YT</span>GitHub Copilot Agent Mode + Copilot Coding Agent（官方 GitHub Checkout）</h4>
+      <p>Copilot Agent Mode 指派任務給 Copilot Cloud Agent；coding agent 新增 Agents Panel、預設啟用 Playwright + GitHub MCP servers（網頁測試、截圖、讀 issue）。適合 tech debt 清理或 70~80% 初期功能預建，全付費方案開放，每次 PR 扣一次 premium request。未來將推 Public API 並支援自動修復 GitHub Actions 失敗。</p>
+    </div>
+  </section>
+
+  <!-- 下週觀察清單 -->
+  <section>
+    <div class="section-title"><span>📋</span> 下週觀察清單</div>
+    <ul class="checklist">
+      <li>vLLM v0.21 KV Offload 實際設定方式（CPU RAM vs NVMe 卸載比較）</li>
+      <li>GitHub Copilot Public API 發布時間</li>
+      <li>Ollama opencode vision model 實測</li>
+      <li>Anthropic AWS 平台定價與 IAM 整合細節</li>
+    </ul>
+  </section>
+
+  <!-- Run log -->
+  <div class="run-log">
+    <div class="run-log-title">Run Log</div>
+    <p><span>✓</span> Codex WebSearch：完成</p>
+    <p><span>✓</span> NotebookLM：完成（4 個 YouTube 影片匯入，notebook ID：64045e31-61fa-4807-8e33-e11165be9b94）</p>
+    <p><span>✓</span> 完整 YouTube 摘要：weekly_notes/2026-W21-youtube.md</p>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 新知週報 2026-W20</title>
+<style>
+  :root {
+    --bg: #f8f9fa;
+    --surface: #ffffff;
+    --border: #e2e8f0;
+    --text: #1a202c;
+    --muted: #718096;
+    --accent: #3b82f6;
+    --accent-bg: #eff6ff;
+    --accent-border: #bfdbfe;
+    --green: #059669;
+    --green-bg: #ecfdf5;
+    --amber: #d97706;
+    --amber-bg: #fffbeb;
+    --purple: #7c3aed;
+    --purple-bg: #f5f3ff;
+    --code-bg: #1e293b;
+    --code-text: #e2e8f0;
+    --tag-bg: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Layout */
+  .container { max-width: 860px; margin: 0 auto; padding: 32px 24px 80px; }
+
+  /* Header */
+  .report-header {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 32px;
+  }
+  .report-header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; }
+  .meta-tag {
+    background: var(--tag-bg);
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .meta-tag strong { color: var(--text); }
+
+  /* Section */
+  section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title .icon { font-size: 1.1rem; }
+
+  /* Highlight cards */
+  .highlight-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .highlight-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text);
+  }
+  .highlight-card p { color: var(--text); margin-bottom: 8px; }
+  .highlight-card ul { padding-left: 20px; margin-bottom: 8px; }
+  .highlight-card li { margin-bottom: 4px; }
+  .significance {
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    margin-top: 12px;
+    color: #1e40af;
+  }
+  .significance::before { content: "💡 對你的意義："; font-weight: 600; }
+
+  /* Table */
+  .table-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); margin-bottom: 8px; }
+  table { border-collapse: collapse; width: 100%; background: var(--surface); }
+  th {
+    background: #f1f5f9;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 14px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f8fafc; }
+  code {
+    font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+    font-size: 12.5px;
+    background: #f1f5f9;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+    color: #d63384;
+  }
+
+  /* Category grid */
+  .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 600px) { .cat-grid { grid-template-columns: 1fr; } }
+  .cat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .cat-card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+  }
+  .cat-card ul { padding-left: 16px; }
+  .cat-card li { font-size: 13.5px; margin-bottom: 5px; color: var(--text); }
+
+  /* YouTube summaries */
+  .yt-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  .yt-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .yt-label {
+    background: #fee2e2;
+    color: #b91c1c;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .yt-card p, .yt-card li { font-size: 13.5px; }
+  .yt-group-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 20px 0 10px;
+  }
+
+  /* Checklist */
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  .checklist li::before {
+    content: "☐";
+    color: var(--muted);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Run log */
+  .run-log {
+    background: #0f172a;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-top: 36px;
+  }
+  .run-log-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+  .run-log p {
+    font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+    font-size: 12.5px;
+    color: #94a3b8;
+    line-height: 1.8;
+  }
+  .run-log p span { color: #34d399; }
+  strong { font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="report-header">
+    <h1>AI 新知週報 2026-W20</h1>
+    <div class="meta">
+      <span class="meta-tag"><strong>期間</strong> 2026-05-06 ~ 2026-05-13</span>
+      <span class="meta-tag"><strong>蒐集</strong> Codex WebSearch</span>
+      <span class="meta-tag"><strong>撰寫</strong> Claude</span>
+      <span class="meta-tag"><strong>YouTube</strong> NotebookLM</span>
+    </div>
+  </div>
+
+  <!-- 本週最值得注意 -->
+  <section>
+    <div class="section-title"><span class="icon">🔥</span> 本週最值得注意</div>
+
+    <div class="highlight-card">
+      <h3>1. Anthropic Agent "Dreaming" 機制</h3>
+      <p>Anthropic 發表 agent <strong>dreaming</strong> 機制，讓 agent 回顧過去 sessions、找出行為 pattern 並改善後續決策。目前整合進 Claude Managed Agents，sub-agent delegation 進入 public beta。</p>
+      <div class="significance">若你在追蹤 agentic workflow、multi-agent orchestration，這是本週最重要的架構更新。</div>
+    </div>
+
+    <div class="highlight-card">
+      <h3>2. OpenAI Realtime API：三個 Audio Models 上線</h3>
+      <ul>
+        <li><code>GPT-Realtime-2</code>：GPT-5 等級 reasoning voice</li>
+        <li><code>GPT-Realtime-Translate</code>：即時多語言翻譯</li>
+        <li><code>GPT-Realtime-Whisper</code>：streaming speech-to-text</li>
+      </ul>
+      <div class="significance">Whisper 替代方案出現，streaming transcription 工程路徑多一條，值得與現有 faster-whisper pipeline 比較成本與延遲。</div>
+    </div>
+
+    <div class="highlight-card">
+      <h3>3. Claude Code rate limits 提高</h3>
+      <p>Anthropic 提高五小時 rate limits，移除部分 peak-hour 限制，並宣布 SpaceX Colossus 1 compute 合作。</p>
+      <div class="significance">Claude Code 長任務被中斷的頻率應該會降低，agentic coding 可以跑更長的工作。</div>
+    </div>
+  </section>
+
+  <!-- 工具更新速覽 -->
+  <section>
+    <div class="section-title"><span class="icon">🛠</span> 工具更新速覽</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>工具</th><th>版本</th><th>重點</th></tr></thead>
+        <tbody>
+          <tr><td><strong>llama.cpp</strong></td><td>b9127</td><td>OpenCL Adreno xmem F16xF32 GEMM prefill，多平台 binaries</td></tr>
+          <tr><td><strong>Ollama</strong></td><td>v0.23.3</td><td>MLX imagegen runner 更新，macOS inference timeout 修復</td></tr>
+          <tr><td><strong>vLLM</strong></td><td>v0.20.2</td><td>DeepSeek V4 sparse attention、MXFP4 + torch.compile 修復</td></tr>
+          <tr><td><strong>Codex CLI</strong></td><td>0.129.0</td><td>TUI 加入 modal Vim editing，支援 <code>/vim</code> 指令</td></tr>
+          <tr><td><strong>Cursor</strong></td><td>3.3</td><td>PR Review、parallel build plan、split PRs</td></tr>
+          <tr><td><strong>LangGraph CLI</strong></td><td>0.4.25</td><td>Studio deploy 支援</td></tr>
+          <tr><td><strong>Milvus</strong></td><td>v3.0-beta</td><td>External Collection、Snapshot、zero-copy lake 查詢</td></tr>
+          <tr><td><strong>GPT-5.5 Instant</strong></td><td>—</td><td>取代 GPT-5.3 成為 ChatGPT 預設模型，降低 hallucination</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 依你背景的分類 -->
+  <section>
+    <div class="section-title"><span class="icon">🗂</span> 依你背景的分類</div>
+    <div class="cat-grid">
+      <div class="cat-card">
+        <h4>Python / 自動化</h4>
+        <ul>
+          <li>vLLM v0.20.2 修復 production serving 穩定性問題</li>
+          <li>LlamaIndex 修正 async <code>contextvars</code> 傳遞，RAG pipeline 更穩</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>Local LLM / Whisper</h4>
+        <ul>
+          <li>llama.cpp b9127 支援 Android / embedded edge inference</li>
+          <li>OpenAI Realtime Whisper 值得對比 faster-whisper 延遲與成本</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>AI Coding Assistant</h4>
+        <ul>
+          <li>Codex CLI 0.129.0 加入 Vim modal editing</li>
+          <li>Cursor 3.3 的 parallel subagent plan 對大型重構很有用</li>
+          <li>GitHub Copilot CLI Enterprise plugin management 進入 public preview</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>RAG / 知識庫</h4>
+        <ul>
+          <li>Milvus v3.0-beta 的 External Collection 可 zero-copy 查詢 lake tables</li>
+          <li>Gemini File Search 加入 multimodal + page-level citations</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>Agent 架構</h4>
+        <ul>
+          <li>Anthropic dreaming：agent 自我學習機制，值得持續追蹤</li>
+          <li>OpenAI GPT-Realtime-2 voice-to-action pattern</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- YouTube 影片摘要 -->
+  <section>
+    <div class="section-title"><span class="icon">▶</span> YouTube 影片摘要（NotebookLM）</div>
+
+    <p class="yt-group-title">Anthropic · Dreaming &amp; Managed Agents</p>
+    <div class="yt-card">
+      <h4><span class="yt-label">YT</span>UPDATE: Anthropic's New 'Dreaming' Feature Makes Claude Dangerously Smart</h4>
+      <p>Anthropic 為 Claude 推出「Dreaming」功能，賦予 AI 長期記憶與自我反思能力。三大重點：(1) Claude 能非同步回顧 100 個對話並清除 Memory rot；(2) 無需重訓基礎模型即可自我提升，法律 AI 任務完成率提升近 6 倍；(3) 主 agent 可將任務拆解並指派子 agent 平行處理。</p>
+    </div>
+
+    <p class="yt-group-title">Cursor 3 · Agentic Coding</p>
+    <div class="yt-card">
+      <h4><span class="yt-label">YT</span>Cursor 3 Changes Everything for Agentic Coding</h4>
+      <p>Cursor 3 進化為 agents 的 orchestration layer：支援多模型 multi-agent 並行（Claude / Gemini / OpenAI）、視覺化 Design Mode 直接點選 UI 元素修改、Cloud Agents 可徹夜運行並透過 Slack 遠端指令，所有修改一鍵建立 PR。</p>
+    </div>
+    <div class="yt-card">
+      <h4><span class="yt-label">YT</span>Cursor 3 is Not What You Think</h4>
+      <p>全視角 Agent 工作區支援跨專案多 agent 同時運行，Composer 2 推論速度快且 API 成本低，支援本地任務一鍵移交雲端執行，Marketplace 擴充 MCP servers 與 Skills。</p>
+    </div>
+
+    <p class="yt-group-title">OpenAI Realtime API</p>
+    <div class="yt-card">
+      <h4><span class="yt-label">YT</span>Introducing gpt-realtime in the API（官方）</h4>
+      <p>原生 end-to-end 語音模型，強化 Instruction Following 與 Function Calling，首度支援 Image Input，新增 SIP 與 MCP 支援。T-Mobile 導入打造高擬真 AI 客服。</p>
+    </div>
+    <div class="yt-card">
+      <h4><span class="yt-label">YT</span>GPT Realtime 2 Explained</h4>
+      <p>GPT Realtime 2 內建 GPT-5 等級 Chain of Thought reasoning，延遲 &lt; 400ms，128K context window，GPT Realtime Translate 提供同步翻譯並還原說話者語氣，支援 Parallel Tool Execution。</p>
+    </div>
+
+    <p class="yt-group-title">llama.cpp</p>
+    <div class="yt-card">
+      <h4><span class="yt-label">YT</span>Build and Run Llama.cpp with CUDA Support / Windows 11 CUDA 13 &amp; RTX 50-Series Guide</h4>
+      <p>從源碼編譯支援 CUDA 的 llama.cpp：需 CUDA Toolkit、CMake、Visual Studio Build Tools；RTX 50 系列需指定 <code>CMAKE_CUDA_ARCHITECTURES=100</code>；<code>-ngl</code> 參數控制 GPU 層數；純聊天用途推薦 KoboldCPP。</p>
+    </div>
+
+    <p class="yt-group-title">vLLM</p>
+    <div class="yt-card">
+      <h4><span class="yt-label">YT</span>vLLM Office Hours #48 + Top 5 Features @ Ray Summit</h4>
+      <p>v0.20 升級 PyTorch 2.11 + CUDA 13，首發 DeepSeek V4 支援（百萬 context + 極致 KV cache 壓縮），v1 核心引擎重構帶來 2x 效率提升，新增 Anthropic Messages API 支援（可直接驅動 Claude Code），plug-in 系統支援 Google TPU / Intel Gaudi。</p>
+    </div>
+  </section>
+
+  <!-- 下週觀察清單 -->
+  <section>
+    <div class="section-title"><span class="icon">📋</span> 下週觀察清單</div>
+    <ul class="checklist">
+      <li>Anthropic dreaming 實際 API / SDK 整合方式</li>
+      <li>OpenAI Realtime Whisper vs faster-whisper 實測比較</li>
+      <li>Milvus v3.0-beta External Collection 文件</li>
+      <li>faster-whisper 本週是否有新 release</li>
+    </ul>
+  </section>
+
+  <!-- Run log -->
+  <div class="run-log">
+    <div class="run-log-title">Run Log</div>
+    <p><span>✓</span> Codex WebSearch：完成，找到 10 個 YouTube URL</p>
+    <p><span>✓</span> NotebookLM：完成（9 個影片成功匯入，1 個 URL 不存在跳過）</p>
+    <p><span>✓</span> 完整摘要：weekly_notes/2026-W20-youtube.md</p>
+  </div>
+
+</div>
+</body>
+</html>
