@@ -15,6 +15,14 @@
 
 每個週次資料夾內，除主報告（`.md` / `.html`）外，亦附帶 NotebookLM 來源摘要（`-youtube.md`）與結構化簡報文件（`-briefing.md`，若有產出）。
 
+## 深度分析（非週次）
+
+針對使用者提供的外部報告/文件進行深度解讀，不在每週固定排程內。
+
+| 主題 | 來源 | 報告 |
+|------|------|------|
+| Sensor Tower《State of AI Report 2026》解讀 | 使用者上傳 PDF（74頁），分析 ChatGPT/Gemini/Claude 市佔率變化、Agentic Shopping、AI 廣告化、區域市場趨勢 | [草稿](analysis/2026-sensor-tower-state-of-ai/sensor_tower_report_draft.md) ｜ [完整摘要](analysis/2026-sensor-tower-state-of-ai/sensor_tower_state_of_ai_2026_analysis.md) ｜ [最終版（含 Codex 討論）](analysis/2026-sensor-tower-state-of-ai/sensor_tower_state_of_ai_2026_final.md) |
+
 ## 系統說明
 
 - **蒐集：** Claude WebSearch
