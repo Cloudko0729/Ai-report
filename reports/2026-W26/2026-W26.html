@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 新知週報 2026-W26</title>
+<style>
+  :root {
+    --bg: #f8f9fa;
+    --surface: #ffffff;
+    --border: #e2e8f0;
+    --text: #1a202c;
+    --muted: #718096;
+    --accent: #3b82f6;
+    --accent-bg: #eff6ff;
+    --accent-border: #bfdbfe;
+    --green: #059669;
+    --green-bg: #ecfdf5;
+    --amber: #d97706;
+    --amber-bg: #fffbeb;
+    --purple: #7c3aed;
+    --purple-bg: #f5f3ff;
+    --red: #dc2626;
+    --red-bg: #fef2f2;
+    --red-border: #fecaca;
+    --code-bg: #1e293b;
+    --code-text: #e2e8f0;
+    --tag-bg: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 32px 24px 80px; }
+
+  .report-header {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 32px;
+  }
+  .report-header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; }
+  .meta-tag {
+    background: var(--tag-bg);
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .meta-tag strong { color: var(--text); }
+  .meta-tag.urgent {
+    background: var(--red-bg);
+    color: var(--red);
+    border: 1px solid var(--red-border);
+    font-weight: 600;
+  }
+  .meta-tag.info {
+    background: var(--accent-bg);
+    color: #1e40af;
+    border: 1px solid var(--accent-border);
+    font-weight: 600;
+  }
+
+  section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .highlight-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .highlight-card.urgent-card {
+    border-left-color: var(--red);
+    background: #fff8f8;
+  }
+  .highlight-card.new-card {
+    border-left-color: var(--green);
+    background: #f0fdf4;
+  }
+  .highlight-card.codex-card {
+    border-left-color: var(--purple);
+    background: var(--purple-bg);
+  }
+  .highlight-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 10px; }
+  .highlight-card p { margin-bottom: 8px; }
+  .highlight-card ul { padding-left: 20px; margin-bottom: 8px; }
+  .highlight-card li { margin-bottom: 4px; }
+  .significance {
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    margin-top: 12px;
+    color: #1e40af;
+  }
+  .significance::before { content: "💡 對你的意義："; font-weight: 600; }
+  .codex-try {
+    background: var(--purple-bg);
+    border: 1px solid #ddd6fe;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    margin-top: 8px;
+    color: #5b21b6;
+  }
+  .codex-try::before { content: "⚡ Codex 本週可試："; font-weight: 600; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+  .mini-card {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .mini-card h5 { font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 3px; }
+
+  .table-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); }
+  table { border-collapse: collapse; width: 100%; background: var(--surface); }
+  th {
+    background: #f1f5f9;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 14px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f8fafc; }
+  tr.urgent-row td { background: #fff8f8; }
+  tr.new-row td { background: #f0fdf4; }
+  code {
+    font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+    font-size: 12.5px;
+    background: #f1f5f9;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+    color: #d63384;
+  }
+
+  .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 600px) { .cat-grid { grid-template-columns: 1fr; } }
+  .cat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .cat-card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+  }
+  .cat-card ul { padding-left: 16px; }
+  .cat-card li { font-size: 13.5px; margin-bottom: 5px; }
+
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  .checklist li::before { content: "☐"; color: var(--muted); flex-shrink: 0; margin-top: 1px; }
+  .checklist li.urgent { border-color: var(--red); background: #fff8f8; }
+  .checklist li.urgent::before { content: "🔴"; }
+
+  .deep-dive-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .deep-dive-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+  }
+  .deep-dive-card .label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  .deep-dive-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .deep-dive-card p { font-size: 13.5px; color: #4a5568; }
+
+  .run-log {
+    background: #0f172a;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-top: 36px;
+  }
+  .run-log-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+  .run-log p {
+    font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+    font-size: 12.5px;
+    color: #94a3b8;
+    line-height: 1.8;
+  }
+  .run-log p span.done { color: #34d399; }
+  .run-log p span.pending-log { color: #fbbf24; }
+  strong { font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="report-header">
+    <h1>AI 新知週報 2026-W26</h1>
+    <div class="meta">
+      <span class="meta-tag"><strong>期間</strong> 2026-06-19 ~ 2026-06-26</span>
+      <span class="meta-tag"><strong>焦點</strong> Claude Tag Slack Beta + Codex v0.142.0 + EUROPA 歐盟主權 AI</span>
+      <span class="meta-tag"><strong>蒐集</strong> Claude WebSearch</span>
+      <span class="meta-tag"><strong>撰寫</strong> Claude</span>
+      <span class="meta-tag urgent">⚠️ Fable 5 / Mythos 5 仍未恢復</span>
+      <span class="meta-tag info">🇪🇺 歐盟主權 AI 模型啟動</span>
+    </div>
+  </div>
+
+  <!-- 本週最值得注意 -->
+  <section>
+    <div class="section-title"><span>🔥</span> 本週最值得注意</div>
+
+    <div class="highlight-card new-card">
+      <h3>1. Claude Tag 進駐 Slack：頻道級 AI 隊友公開 Beta（2026-06-23）</h3>
+      <p>Anthropic 在 <strong>2026-06-23</strong> 正式對 Claude Enterprise 與 Claude Team 用戶開放 <strong>Claude Tag</strong> 公開 Beta——把 Claude 以「頻道成員」形式放進 Slack，底層跑 <strong>Opus 4.8</strong>。</p>
+      <p><strong>關鍵架構：一個頻道一個 Claude 實例</strong>（不是每人各一個 bot），同頻道所有成員共用同一 Claude context，可以接手彼此未完成的任務繼續做。Anthropic 稱之為「making AI multiplayer」。</p>
+      <p><strong>使用方式：</strong></p>
+      <ul>
+        <li>在頻道裡 <code>@Claude</code> 委派任務，Claude 自動分解為多步驟並非同步執行，完成後在 Slack 回報</li>
+        <li>多人接力：A 開始 → B 繼續 → C 收尾，同一個 Claude 上下文全程保留</li>
+        <li>Claude 會「學習公司脈絡」，隨時間累積頻道知識</li>
+      </ul>
+      <p><strong>目前限制（Beta 初版）：</strong></p>
+      <ul>
+        <li>僅限 Enterprise 和 Team 計畫</li>
+        <li>每頻道一個實例 = 同頻道所有人共享 context 配額</li>
+        <li>暫未支援主動通知（Claude 不會在沒被 @ 的情況下主動發言）</li>
+      </ul>
+      <div class="significance">若你有 Claude Enterprise 帳號，這是目前最低門檻的 Slack-native AI 協作方式。對週報流程的潛在用途：把每週觸發訊息貼在 Slack → Claude Tag 自動執行初稿撰寫，不需手動在 Claude Code 輸入「開始本週報告」。</div>
+    </div>
+
+    <div class="highlight-card codex-card">
+      <h3>2. Codex CLI v0.142.0：Multi-Agent 授權模式 + 索引式網頁搜尋（2026-06-22）</h3>
+      <p>OpenAI 在 <strong>2026-06-22</strong> 發布 Codex CLI <strong>v0.142.0</strong>（stable），帶來幾項對 agent 工作流有直接影響的更新：</p>
+      <p><strong>Multi-Agent Delegation 模式（新）：</strong></p>
+      <ul>
+        <li><code>disabled</code> — 不允許派生子代理</li>
+        <li><code>explicit-request-only</code> — 只有使用者明確要求時才委派</li>
+        <li><code>proactive</code> — Codex 自主判斷何時派生子代理協助（最強模式）</li>
+      </ul>
+      <p><strong>Indexed Web-Search Mode（新）：</strong></p>
+      <ul>
+        <li>Codex 在 session 中可以進行即時網頁搜尋，限存取 server 核准 URL 列表</li>
+        <li>適合 QA 任務：讓 Codex 邊查文件邊做事實核查，而非只根據 training data 判斷</li>
+      </ul>
+      <p><strong>其他更新：</strong></p>
+      <ul>
+        <li><code>/usage</code> 現可顯示並兌換已累積的額度重置積分</li>
+        <li><code>/plugins</code> 依「OpenAI Curated / Workspace / Shared with me」三類整理遠端外掛</li>
+        <li>可設定 rollout token budget：跨 agent threads 追蹤用量，快耗盡時提醒，超出後中止 turn</li>
+        <li>Codex 可接收排程 UTC 時間提醒，也可主動查詢目前時間</li>
+      </ul>
+      <p><strong>Codex CLI 本週可嘗試功能：</strong></p>
+      <ul>
+        <li><strong>Indexed Web-Search Mode</strong> — 下次跑 W26 QA 時，開啟 web search mode 讓 Codex 直接查證引用的版本號、日期、模型名稱。在提示中說「開啟索引搜尋確認以下事實：...」</li>
+        <li><strong>Multi-Agent Proactive Delegation</strong> — QA 任務設成 <code>proactive</code> delegation，觀察 Codex 是否自動分出子代理分散處理多段落查核，縮短總 QA 時間</li>
+        <li><strong><code>/plugins</code> 探索</strong> — 執行 <code>/plugins</code> 查看目前 Workspace 中有哪些外掛，特別留意 Shared with me 分類（Jira、Notion、Linear 等可能已有 beta plugin）</li>
+      </ul>
+    </div>
+
+    <div class="highlight-card">
+      <h3>3. 歐盟 EUROPA 聯盟：打造 400B+ 參數歐洲主權 AI 模型（2026-06-19）</h3>
+      <p>歐盟委員會在 <strong>2026-06-19</strong> 公布 Frontier AI Grand Challenge 評選結果，選定由義大利新創 <strong>Domyn</strong> 主導的 <strong>EUROPA 聯盟</strong>（聯合 Fraunhofer-Gesellschaft 等歐洲研究機構）執行這項計畫。</p>
+      <p><strong>計畫規格：</strong></p>
+      <ul>
+        <li>目標：打造超過 <strong>4000 億（400B+）參數</strong>的開源 AI 模型，覆蓋 <strong>24 種 EU 官方語言</strong></li>
+        <li>算力：獲配 EuroHPC 超算資源一年（最高佔 EuroHPC 總算力 2.5%）</li>
+        <li>Domyn 是相對新興的義大利 AI 新創，此次勝出顯示歐盟願意押注非傳統研究機構</li>
+      </ul>
+      <p><strong>策略意義：</strong> 歐盟正式進入「主權 AI 模型」建造階段，不再依賴美國廠商授權（ChatGPT Enterprise、Claude API）。開源設計：成果公開，歐洲公私部門皆可使用。</p>
+      <div class="significance">短期內不影響你日常使用的 AI 工具；但若該模型在 2027-2028 年達到目標，歐洲企業可能轉向本土模型，影響 Anthropic/OpenAI 在歐洲的市場格局。值得建立追蹤清單。</div>
+    </div>
+
+    <div class="highlight-card urgent-card">
+      <h3>4. Gemini 3.5 Pro 確認延至 7 月，Claude Fable 5 仍下架中</h3>
+      <p><strong>Gemini 3.5 Pro（延遲）：</strong> 本週（2026-06-23）Google 確認 Gemini 3.5 Pro 延至 2026-07 正式 GA，目前僅對部分 Vertex AI 企業客戶提供有限 preview。</p>
+      <ul>
+        <li>等待的功能：<strong>2M token 上下文窗口</strong>（目前生產環境最大）、<strong>Deep Think</strong> 推理模式</li>
+        <li>Gemini 3.5 Flash（已 GA，5 月）：$1.50/1M input，Terminal-Bench 2.1 76.2%，比 3.1 Pro 快 4x、便宜 40%</li>
+      </ul>
+      <p><strong>Claude Fable 5 / Mythos 5（持續）：</strong> 截至 W26，仍無任何恢復公告。Anthropic 本週未就此發布新聲明。Opus 4.8 繼續為當前最高可用版本。</p>
+      <div class="significance">若目前在評估是否把 Gemini 3.5 Flash 納入週報 pipeline，等 7 月 Pro 版正式 GA 後再做比較。Fable 5 若在 7 月搭 Pro 上線可能觸發新一輪前沿模型比較週報。</div>
+    </div>
+
+    <div class="highlight-card">
+      <h3>5. 本地模型更新：Ollama v0.30.10、gpt-oss:20b 上架</h3>
+      <p><strong>Ollama v0.30.10</strong>（2026-06-17）最新穩定版主要改善：</p>
+      <ul>
+        <li>Prompt caching 優化（解耦 KV cache 與 context shift，提升重複使用率）</li>
+        <li>MLX inference 強化（hardened linear 和 embedding 層，減少 Apple Silicon 偶發錯誤）</li>
+        <li>新增 thinking capability 自動偵測、Claude Code + opencode auto-install 支援</li>
+      </ul>
+      <p><strong>新上架模型：</strong></p>
+      <ul>
+        <li><strong>gpt-oss:20b</strong> — OpenAI 開源 20B 小模型，16GB VRAM 可跑，Ollama 排行「最佳小型模型」</li>
+        <li><strong>glm-5.1</strong> — 智譜 AI 新版，coding 能力接近 Kimi K2.6</li>
+      </ul>
+
+      <div class="two-col" style="margin-top:12px">
+        <div class="mini-card">
+          <h5>本地 coding agent（24GB+）</h5>
+          <ul>
+            <li>首選：<strong>Qwen 3.6 27B</strong>（Q4）</li>
+            <li>備選：Kimi K2.6（MoE INT4）</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h5>16GB 環境</h5>
+          <ul>
+            <li>首選：<strong>gpt-oss:20b</strong>（新上架）</li>
+            <li>備選：GLM-5.1</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 工具更新速覽 -->
+  <section>
+    <div class="section-title"><span>🛠</span> 工具更新速覽</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>工具</th><th>版本 / 日期</th><th>重點</th></tr></thead>
+        <tbody>
+          <tr class="new-row"><td><strong>Claude Tag（Slack）</strong></td><td>2026-06-23 公開 Beta</td><td>Enterprise/Team，Opus 4.8，頻道 AI 隊友，multiplayer context</td></tr>
+          <tr class="new-row"><td><strong>Codex CLI</strong></td><td>v0.142.0（06-22）</td><td>multi-agent delegation 三模式、indexed web search、/plugins 三分類、token budget</td></tr>
+          <tr><td><strong>Gemini 3.5 Pro</strong></td><td>延至 2026-07 GA</td><td>2M context、Deep Think；Flash 已 GA（$1.50/1M input）</td></tr>
+          <tr><td><strong>Ollama</strong></td><td>v0.30.10（06-17）</td><td>prompt caching 優化、MLX 強化、Claude Code auto-install</td></tr>
+          <tr class="new-row"><td><strong>gpt-oss:20b</strong></td><td>Ollama library 上架</td><td>16GB VRAM 可跑，OpenAI 開源 20B，最佳 16GB 選項</td></tr>
+          <tr><td><strong>OpenAI Partner Network</strong></td><td>2026-06-14 啟動</td><td>$150M、300K 顧問認證目標、Accenture/BCG/McKinsey 首批</td></tr>
+          <tr class="new-row"><td><strong>EUROPA Consortium</strong></td><td>2026-06-19 選定</td><td>歐盟開源主權模型，400B+，24 EU 語言，Domyn 主導</td></tr>
+          <tr class="urgent-row"><td><strong>Claude Fable 5 / Mythos 5</strong></td><td>出口管制中（持續）</td><td>截至 W26 仍未恢復，無新公告</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 依你背景的分類 -->
+  <section>
+    <div class="section-title"><span>🗂</span> 依你背景的分類</div>
+    <div class="cat-grid">
+      <div class="cat-card">
+        <h4>AI Coding Assistant</h4>
+        <ul>
+          <li><strong>Claude Tag in Slack</strong>：Enterprise 帳號可立即申請 beta，最低門檻 Slack-native AI 協作</li>
+          <li><strong>Codex v0.142.0 indexed web search + proactive delegation</strong>：直接強化 Codex QA 能力，本週值得實測</li>
+          <li><strong>Claude Fable 5 仍下架</strong>：Opus 4.8 繼續是當前最高可用 Claude，無新進展</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>Local LLM</h4>
+        <ul>
+          <li><strong>gpt-oss:20b 上架 Ollama</strong>：16GB 環境的新選項，比之前更適合 coding</li>
+          <li><strong>Ollama v0.30.10</strong> prompt caching 改善：對有固定系統提示的 session（如 QA）有實際加速效益</li>
+          <li><strong>Qwen 3.6 27B</strong> 仍為 24GB+ 首選，tool calling 穩定性仍是瓶頸</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>Agent 架構</h4>
+        <ul>
+          <li><strong>Claude Tag 的 multiplayer 設計</strong>：同一 agent context 被多人共用，是 W24/W25 追蹤的 Managed Agents 產品方向在 consumer 層的落地</li>
+          <li><strong>Codex multi-agent delegation</strong>：proactive 模式下，一個 session 可自動分出子代理，降低主代理認知負擔</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>地緣政治 / 生態</h4>
+        <ul>
+          <li><strong>EUROPA 主權 AI</strong>：歐盟正式進入自建模型階段，長期影響 US 廠商歐洲市場份額</li>
+          <li><strong>OpenAI Partner Network $150M</strong>：Anthropic Claude Partner Network（3 月，$100M）三個月後 OpenAI 跟進，顯示企業 AI 實施質量競爭加劇</li>
+          <li><strong>Claude Fable 5 出口管制持續</strong>：美國政府 AI 出口管制框架尚未解決，Fable 5 案例是先例</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 下週觀察清單 -->
+  <section>
+    <div class="section-title"><span>📋</span> 下週觀察清單</div>
+    <ul class="checklist">
+      <li class="urgent">Claude Fable 5 / Mythos 5 恢復進展（目前仍無公告，已下架 2+ 週）</li>
+      <li>Gemini 3.5 Pro 正式 GA（預計 7 月，留意 release date 及 2M context 定價）</li>
+      <li>實測 Codex v0.142.0 indexed web-search 模式（W26 QA 時試一次）</li>
+      <li>Claude Tag Slack beta 若你有 Enterprise 帳號可申請體驗</li>
+      <li>gpt-oss:20b 本地跑看看（<code>ollama run gpt-oss:20b</code>）</li>
+    </ul>
+  </section>
+
+  <!-- 本週深入研究選項 -->
+  <section>
+    <div class="section-title"><span>🎯</span> 本週 3 個深入研究選項（擇一）</div>
+    <div class="deep-dive-grid">
+      <div class="deep-dive-card">
+        <div class="label">選項 A — Codex</div>
+        <h4>Codex v0.142.0 Indexed Web-Search QA 實測</h4>
+        <p>用 v0.142.0 的 <code>--web-search indexed</code> 模式跑一次 W26 週報 QA，比較：開 web search 時 Codex 能查到哪些額外資訊、錯誤糾正率有無提升、token 用量是否顯著增加。</p>
+      </div>
+      <div class="deep-dive-card">
+        <div class="label">選項 B — Claude / Slack</div>
+        <h4>Claude Tag Slack 架構深入研究</h4>
+        <p>如果你有 Enterprise 帳號，申請 Claude Tag beta，評估它是否能替代目前「手動說開始本週報告」的觸發方式。重點測試：把週報觸發訊息貼在 Slack → Claude 能否自動做 WebSearch 初稿。</p>
+      </div>
+      <div class="deep-dive-card">
+        <div class="label">選項 C — Local LLM</div>
+        <h4>gpt-oss:20b 本地 Coding 能力評估</h4>
+        <p><code>ollama run gpt-oss:20b</code> 跑幾個 coding 任務，對比同 VRAM 的 Qwen 3.6（7B）在速度和品質上的取捨，確認在 16GB 環境下是否值得取代目前選用的模型。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- YouTube 來源摘要 -->
+  <section>
+    <div class="section-title"><span>▶</span> 來源摘要（NotebookLM 繁中）</div>
+
+    <div class="yt-card">
+      <h4><span class="yt-label">YT</span>BREAKING: Anthropic's Claude Tag for Slack Is Now Your Team's AI Developer</h4>
+      <p>Anthropic 推出全新功能 <strong>Claude Tag</strong>，讓企業團隊能直接在 Slack 頻道中指派任務給 AI。Claude Tag 將 AI 視為頻道共享成員，團隊標記後在背景非同步執行任務；Anthropic 內部產品團隊目前約有 <strong>65% 的程式碼</strong>由此系統自動生成；工作流程從「人類操作軟體」轉變為「人類委派任務」，AI 自然累積專案 context 並調用工具完成工作。</p>
+      <em>Keywords：Claude Tag、Slack 整合、multiplayer AI、async task delegation、企業 AI 協作</em>
+    </div>
+
+    <div class="yt-card">
+      <h4><span class="yt-label">YT</span>Best AI Models You Can Run Locally with Ollama (2026 Guide)</h4>
+      <p>透過 Ollama 在本地端運行的精選 AI 模型指南，依硬體與任務需求靈活配置：全能首選為 <strong>Llama 3.1</strong>（日常對話與邏輯推理），Gemma 2 專精結構化寫作；專項工具包含 DeepSeek Coder（程式除錯）、LLaVA（圖像轉文字）、Qwen（多語翻譯）；Mistral 體積小速度快，適合舊型筆電；初學者應避免 70B+ 大型模型以防記憶體過載。</p>
+      <em>Keywords：Ollama、本地 LLM、Llama 3.1、Gemma 2、DeepSeek Coder、Qwen、模型選擇建議</em>
+    </div>
+
+    <div class="yt-card">
+      <h4><span class="yt-label">YT</span>How to Run and Use OpenAI Open Source Models GPT-OSS 120b and 20b LOCALLY</h4>
+      <p>在 Windows 系統上本地運行 OpenAI 開源模型 <strong>GPT-OSS</strong> 的完整教學：需先安裝 Ollama（Windows 版約 700MB），再選擇下載 <strong>20B</strong>（約 12.8GB）或 120B 版本；GPT-OSS 20B 在 16GB 記憶體環境可順暢運行，支援 function calling、python tool calls、structured output，且推理深度可設定（low/medium/high）。</p>
+      <em>Keywords：GPT-OSS、OpenAI 開源模型、Ollama Windows、gpt-oss:20b、本地 AI agent、function calling</em>
+    </div>
+  </section>
+
+  <!-- Run Log -->
+  <div class="run-log">
+    <div class="run-log-title">Run Log</div>
+    <p>
+      <span class="done">✓</span> Claude WebSearch：完成<br>
+      <span class="done">✓</span> 撰寫 .md：完成（2026-W26.md）<br>
+      <span class="done">✓</span> 撰寫 .html：完成（2026-W26.html）<br>
+      <span class="done">✓</span> NotebookLM YouTube 來源：完成（3 支全部匯入）<br>
+      <span class="done">✓</span> NotebookLM Briefing Doc：完成（2026-W26-briefing.md）<br>
+      <span class="done">✓</span> Codex QA：完成（2 處修正）
+    </p>
+  </div>
+
+</div>
+</body>
+</html>
