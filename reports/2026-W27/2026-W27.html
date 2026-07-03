@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 新知週報 2026-W27</title>
+<style>
+  :root {
+    --bg: #f8f9fa;
+    --surface: #ffffff;
+    --border: #e2e8f0;
+    --text: #1a202c;
+    --muted: #718096;
+    --accent: #3b82f6;
+    --accent-bg: #eff6ff;
+    --accent-border: #bfdbfe;
+    --green: #059669;
+    --green-bg: #ecfdf5;
+    --amber: #d97706;
+    --amber-bg: #fffbeb;
+    --purple: #7c3aed;
+    --purple-bg: #f5f3ff;
+    --red: #dc2626;
+    --red-bg: #fef2f2;
+    --red-border: #fecaca;
+    --code-bg: #1e293b;
+    --code-text: #e2e8f0;
+    --tag-bg: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 32px 24px 80px; }
+
+  .report-header {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 32px;
+  }
+  .report-header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; }
+  .meta-tag {
+    background: var(--tag-bg);
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .meta-tag strong { color: var(--text); }
+  .meta-tag.urgent {
+    background: var(--red-bg);
+    color: var(--red);
+    border: 1px solid var(--red-border);
+    font-weight: 600;
+  }
+  .meta-tag.info {
+    background: var(--accent-bg);
+    color: #1e40af;
+    border: 1px solid var(--accent-border);
+    font-weight: 600;
+  }
+  .meta-tag.success {
+    background: var(--green-bg);
+    color: var(--green);
+    border: 1px solid #a7f3d0;
+    font-weight: 600;
+  }
+
+  section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .highlight-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .highlight-card.urgent-card {
+    border-left-color: var(--red);
+    background: #fff8f8;
+  }
+  .highlight-card.new-card {
+    border-left-color: var(--green);
+    background: #f0fdf4;
+  }
+  .highlight-card.codex-card {
+    border-left-color: var(--purple);
+    background: var(--purple-bg);
+  }
+  .highlight-card.amber-card {
+    border-left-color: var(--amber);
+    background: var(--amber-bg);
+  }
+  .highlight-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 10px; }
+  .highlight-card p { margin-bottom: 8px; }
+  .highlight-card ul { padding-left: 20px; margin-bottom: 8px; }
+  .highlight-card li { margin-bottom: 4px; }
+  .significance {
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    margin-top: 12px;
+    color: #1e40af;
+  }
+  .significance::before { content: "💡 對你的意義："; font-weight: 600; }
+
+  .pricing-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: 13.5px;
+  }
+  .pricing-table th {
+    background: #f1f5f9;
+    padding: 7px 12px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  .pricing-table td {
+    padding: 7px 12px;
+    border: 1px solid var(--border);
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
+  .mini-card {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .mini-card h5 { font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .mini-card ul { padding-left: 16px; }
+  .mini-card li { font-size: 13.5px; margin-bottom: 3px; }
+
+  .table-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); }
+  table { border-collapse: collapse; width: 100%; background: var(--surface); }
+  th {
+    background: #f1f5f9;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 14px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f8fafc; }
+  tr.urgent-row td { background: #fff8f8; }
+  tr.new-row td { background: #f0fdf4; }
+  code {
+    font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+    font-size: 12.5px;
+    background: #f1f5f9;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+    color: #d63384;
+  }
+
+  .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 600px) { .cat-grid { grid-template-columns: 1fr; } }
+  .cat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .cat-card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+  }
+  .cat-card ul { padding-left: 16px; }
+  .cat-card li { font-size: 13.5px; margin-bottom: 5px; }
+
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  .checklist li::before { content: "☐"; color: var(--muted); flex-shrink: 0; margin-top: 1px; }
+  .checklist li.urgent { border-color: var(--red); background: #fff8f8; }
+  .checklist li.urgent::before { content: "🔴"; }
+
+  .deep-dive-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .deep-dive-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+  }
+  .deep-dive-card .label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  .deep-dive-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .deep-dive-card p { font-size: 13.5px; color: #4a5568; }
+
+  .yt-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+  .yt-card h4 { font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .yt-card p { color: #4a5568; margin-bottom: 6px; }
+  .yt-card em { font-size: 12.5px; color: var(--muted); }
+  .yt-label {
+    background: #ff0000;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+
+  .run-log {
+    background: #0f172a;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-top: 36px;
+  }
+  .run-log-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+  .run-log p {
+    font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+    font-size: 12.5px;
+    color: #94a3b8;
+    line-height: 1.8;
+  }
+  .run-log p span.done { color: #34d399; }
+  .run-log p span.pending-log { color: #fbbf24; }
+  strong { font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="report-header">
+    <h1>AI 新知週報 2026-W27</h1>
+    <div class="meta">
+      <span class="meta-tag"><strong>期間</strong> 2026-06-27 ~ 2026-07-03</span>
+      <span class="meta-tag"><strong>焦點</strong> Claude Sonnet 5 發佈 + Fable 5 出口管制解除 + GPT-5.6 限量預覽</span>
+      <span class="meta-tag"><strong>蒐集</strong> Claude WebSearch</span>
+      <span class="meta-tag"><strong>撰寫</strong> Claude</span>
+      <span class="meta-tag success">✅ Fable 5 恢復（07-01）</span>
+      <span class="meta-tag info">🚀 Claude Sonnet 5 已上線</span>
+    </div>
+  </div>
+
+  <!-- 本週最值得注意 -->
+  <section>
+    <div class="section-title"><span>🔥</span> 本週最值得注意</div>
+
+    <!-- Card 1: Sonnet 5 -->
+    <div class="highlight-card new-card">
+      <h3>1. Claude Sonnet 5 發佈：最具 Agentic 能力的 Sonnet，接近 Opus 4.8（2026-06-30）</h3>
+      <p>Anthropic 在 <strong>2026-06-30</strong> 推出 <strong>Claude Sonnet 5</strong>，定位為「史上最具 agentic 能力的 Sonnet」——計畫、工具呼叫、自主執行能力大幅躍進，且僅需 Sonnet 等級的定價。</p>
+
+      <p><strong>技術規格：</strong></p>
+      <ul>
+        <li>上下文窗口：<strong>1M tokens</strong>（與 Opus 4.8 相同）</li>
+        <li>最大輸出：<strong>128K tokens</strong></li>
+        <li>Token 計算：相同輸入文字產生的 token 數約比 Sonnet 4.6 多 <strong>30%</strong>（需注意用量預算）</li>
+        <li>工具集與平台功能與 Sonnet 4.6 相同，但 agentic 執行穩定性大幅改善</li>
+      </ul>
+
+      <table class="pricing-table" style="margin:12px 0">
+        <thead><tr><th>計費項目</th><th>優惠期（至 2026-08-31）</th><th>標準價（9 月起）</th></tr></thead>
+        <tbody>
+          <tr><td>Input</td><td><strong>$2</strong> / 1M tokens</td><td>$3 / 1M tokens</td></tr>
+          <tr><td>Output</td><td><strong>$10</strong> / 1M tokens</td><td>$15 / 1M tokens</td></tr>
+        </tbody>
+      </table>
+
+      <p><strong>能力提升亮點：</strong></p>
+      <ul>
+        <li><strong>Agentic 規劃</strong>：接近 Opus 4.8，原本需要更大更貴模型才能完成的自主任務現在 Sonnet 5 就能跑</li>
+        <li><strong>Coding 全生命週期</strong>：從需求解析、實作、測試到 PR 均有改善</li>
+        <li><strong>推理與知識工作</strong>：複雜多步驟推理明顯提升</li>
+      </ul>
+      <p><strong>可用性：</strong> 即日起 Free / Pro / Max / Team / Enterprise 全計畫預設模型</p>
+      <div class="significance">Claude Code 的底層已自動升級至 Sonnet 5——你現在用的就是它。注意：token 多 30% 意味著同樣的輸入成本會比 Sonnet 4.6 高，若有設定 token 預算上限需調整。</div>
+    </div>
+
+    <!-- Card 2: Fable 5 export control lifted -->
+    <div class="highlight-card new-card">
+      <h3>2. Claude Fable 5 + Mythos 5 出口管制解除，全球恢復存取（2026-06-30 → 07-01）</h3>
+      <p>本週最具戲劇性的進展：<strong>Claude Fable 5 和 Mythos 5 的出口管制在 18 天後正式解除</strong>。</p>
+
+      <p><strong>事件時間軸（W25/W26 持續追蹤）：</strong></p>
+      <ul>
+        <li>2026-06-09：Anthropic 推出 Fable 5 和 Mythos 5</li>
+        <li>2026-06-12：Amazon 研究人員發現 Fable 5 jailbreak，可讓模型繞過安全規則、揭露並生成漏洞利用程式碼</li>
+        <li>2026-06-12：美國商務部發緊急出口管制令，要求暫停「所有外籍人士的存取，包含 Anthropic 外籍員工」</li>
+        <li><strong>2026-06-30</strong>：商務部正式解除出口管制</li>
+        <li><strong>2026-07-01</strong>：Fable 5 + Mythos 5 重新上線（claude.ai、Claude Platform API、Claude Code、Claude Cowork）</li>
+      </ul>
+
+      <p><strong>為何重要：</strong></p>
+      <ul>
+        <li>首個「AI 模型因 jailbreak 觸發安全疑慮」被政府緊急停用的案例，是 AI 法規史上的里程碑</li>
+        <li>管制解除意味商務部與 Anthropic 完成了某種技術或流程驗證，具體條件未公開</li>
+        <li>Fable 5 是目前 Anthropic 最高階模型（Fable 5 > Opus 4.8），現在再次可用</li>
+      </ul>
+      <p><strong>Anthropic 的解法（新 Cybersecurity Classifier）：</strong></p>
+      <ul>
+        <li>Anthropic 訓練了針對該 jailbreak 技術的新安全分類器，攔截率 <strong>99%+</strong></li>
+        <li><strong>代價</strong>：更多無害的 coding / debugging 請求也可能被誤攔截——開發者使用 Fable 5 時可能遇到比管制前更多的拒絕回應</li>
+      </ul>
+      <div class="significance">若你此前計畫試用 Fable 5，現在可以重新存取。留意新 classifier 可能讓 Fable 5 在某些程式碼分析任務上比管制前更謹慎——若遇到意外拒絕，這是 trade-off 的一部分，不是 bug。Fable 5 需要 Max 或更高計畫。</div>
+    </div>
+
+    <!-- Card 3: GPT-5.6 -->
+    <div class="highlight-card">
+      <h3>3. OpenAI GPT-5.6 Sol / Terra / Luna 三層模型限量預覽（2026-06-26）</h3>
+      <p>OpenAI 在 <strong>2026-06-26</strong> 預告下一代模型系列 <strong>GPT-5.6</strong>，採三層架構：</p>
+
+      <table class="pricing-table" style="margin:10px 0">
+        <thead><tr><th>模型</th><th>定位</th><th>Input / Output（per 1M）</th><th>特點</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Sol</strong></td><td>旗艦</td><td>$5 / $30</td><td>最強，coding / biology / cybersecurity agentic 大幅強化</td></tr>
+          <tr><td><strong>Terra</strong></td><td>平衡</td><td>$2.50 / $15</td><td>GPT-5.5 同水準但便宜 2x</td></tr>
+          <tr><td><strong>Luna</strong></td><td>快速低成本</td><td>$1 / $6</td><td>最快、最便宜</td></tr>
+        </tbody>
+      </table>
+
+      <p><strong>新能力：</strong></p>
+      <ul>
+        <li>新增 <strong>max 推理強度</strong>（比現有 extended thinking 更深）</li>
+        <li><strong>Ultra 模式</strong>：使用 sub-agents 處理複雜任務（類似 Codex multi-agent delegation）</li>
+        <li>Sol 在 biology 和 cybersecurity 的 agentic 任務上超越前代</li>
+      </ul>
+
+      <p><strong>存取限制（目前）：</strong> 僅限約 <strong>20 家政府審批的合作機構</strong>，透過 API 和 Codex 存取，一般 ChatGPT 用戶暫無法使用。OpenAI 預計數週內擴大開放。</p>
+      <div class="significance">GPT-5.6 Terra（$2.50/$15）和 Claude Sonnet 5 標準價（$3/$15）將直接在中端市場競爭。GA 後值得做一次 benchmark 比較，確認哪個更適合你的 coding pipeline。</div>
+    </div>
+
+    <!-- Card 4: Claude apps gateway -->
+    <div class="highlight-card codex-card">
+      <h3>4. Claude apps gateway：企業版 Claude Code 的 SSO + RBAC 控制平面（2026-07-02）</h3>
+      <p>Anthropic 在 <strong>2026-07-02</strong> 推出 <strong>Claude apps gateway</strong>，針對在 Amazon Bedrock 和 Google Cloud 上部署 Claude Code 的企業用戶。</p>
+
+      <p><strong>解決的問題：</strong> 企業大規模部署 Claude Code 時，每個開發者需手動配置 API 憑證、無法集中管控用量和成本歸因。</p>
+
+      <p><strong>架構亮點：</strong></p>
+      <ul>
+        <li><strong>自架控制平面</strong>：單一無狀態容器（需 PostgreSQL），<strong>inference 流量不經 Anthropic</strong>（Bedrock / Google Cloud 路由），資料留在私有雲</li>
+        <li><strong>企業 SSO</strong>：相容 Google Workspace、Microsoft Entra ID、Okta 等 OIDC 標準</li>
+        <li><strong>RBAC</strong>：組織 / 群組 / 個人三層的每日 / 每週 / 每月用量上限</li>
+        <li><strong>人員管理</strong>：onboarding = 加入 IdP；offboarding = 從 IdP 移除，無需手動管理 API key</li>
+        <li><strong>開放協定</strong>：Anthropic 公開 gateway 協定規格，允許第三方（如 Cursor、Windsurf）建置相容實作</li>
+      </ul>
+      <div class="significance">個人用戶不影響，這是 B2B 企業功能。若你所在組織評估大規模 Claude Code 部署，這個 gateway 讓 IT 集中管控、資料不出私有雲。</div>
+    </div>
+
+    <!-- Card 5: Colorado AI Act + local updates -->
+    <div class="highlight-card amber-card">
+      <h3>5. Colorado AI 法案修正：歧視責任框架廢除，改為 ADMT 揭露制度（生效延至 2027-01-01）</h3>
+      <p><strong>SB24-205</strong>（美國第一部綜合州 AI 法，原訂 <strong>2026-06-30</strong> 生效）在生效日前就被立法機關廢除並替換：</p>
+      <ul>
+        <li>新法 <strong>SB26-189</strong>（2026-05-14 簽署）：廢除「演算法歧視禁止 + 注意義務（duty of care）」框架</li>
+        <li>改為管制「<strong>自動化決策技術（ADMT）在重大決策中的使用</strong>」——揭露義務取代主動稽核義務</li>
+        <li><strong>新生效日：2027-01-01</strong></li>
+        <li>背景：原法案受白宮批評仿效 EU AI Act 過於嚴苛，恐阻礙美國 AI 競爭力</li>
+      </ul>
+      <div class="significance">若你的產品在 Colorado 用戶中使用 AI 做重大決策（如信用核准、職位申請篩選），留意 2027-01-01 起的 ADMT 揭露要求。合規門檻比原法案大幅降低。</div>
+    </div>
+
+    <!-- Card 6: Local / Codex -->
+    <div class="highlight-card">
+      <h3>6. 本地模型 / Codex 生態更新</h3>
+      <p><strong>MiniMax M3（開源重量 SWE-bench Pro 第一）：</strong></p>
+      <ul>
+        <li><strong>SWE-bench Pro 59.0%</strong>，開源重量模型排行第一（本週確認榜首地位）</li>
+        <li>結合：前沿 coding 能力 + 1M context + 原生多模態</li>
+        <li>限制：weights 僅 API 和 MiniMax Agent 可用，尚未可在 Ollama 本地跑</li>
+      </ul>
+
+      <p><strong>Codex CLI 更新：</strong></p>
+      <ul>
+        <li><strong>v0.142.5（07-01）</strong>：trace log 安全修補——防止完整的 Responses WebSocket request payloads 被寫入 trace log</li>
+        <li><strong>v0.143.0-alpha.32（07-01）</strong>：alpha 測試版，穩定版尚未釋出</li>
+        <li><strong>Codex Remote 正式 GA</strong>：從 ChatGPT 手機 App 遙控 Mac / Windows 主機上的 Codex session，掃 QR 碼配對，手機端可審核進度並批准操作</li>
+      </ul>
+
+      <p><strong>Gemini 3.5 Live Translate（延續 W26 追蹤）：</strong></p>
+      <ul>
+        <li>支援 <strong>70+ 語言即時語音翻譯</strong>，保留講者語調和節奏</li>
+        <li>Android Listening Mode：把手機貼耳聆聽，私密聽取翻譯，不需耳機</li>
+        <li>Gemini Live API 和 Google AI Studio 已公開 preview；Google 翻譯 App 同步上線</li>
+      </ul>
+
+      <div class="two-col" style="margin-top:12px">
+        <div class="mini-card">
+          <h5>本地 coding agent（24GB+）</h5>
+          <ul>
+            <li>首選：<strong>Qwen 3.6 27B</strong>（Q4）</li>
+            <li>備選：Kimi K2.6（MoE INT4）</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h5>16GB 環境</h5>
+          <ul>
+            <li>首選：<strong>gpt-oss:20b</strong>（延續 W26）</li>
+            <li>備選：GLM-5.1</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 工具更新速覽 -->
+  <section>
+    <div class="section-title"><span>🛠</span> 工具更新速覽</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>工具</th><th>版本 / 日期</th><th>重點</th></tr></thead>
+        <tbody>
+          <tr class="new-row"><td><strong>Claude Sonnet 5</strong></td><td>2026-06-30</td><td>最具 agentic 能力 Sonnet，1M context，$2/$10 優惠 → $3/$15 標準</td></tr>
+          <tr class="new-row"><td><strong>Claude Fable 5 / Mythos 5</strong></td><td>2026-07-01 恢復</td><td>18 天出口管制解除，全球重新開放</td></tr>
+          <tr><td><strong>GPT-5.6 Sol/Terra/Luna</strong></td><td>2026-06-26 限量預覽</td><td>三層模型，ultra sub-agent 模式，約 20 機構限定存取</td></tr>
+          <tr class="new-row"><td><strong>Claude apps gateway</strong></td><td>2026-07-02</td><td>Bedrock/Google Cloud 企業 SSO + RBAC 控制平面，inference 不出私有雲</td></tr>
+          <tr><td><strong>Codex CLI stable</strong></td><td>v0.142.5（07-01）</td><td>trace log 安全修補</td></tr>
+          <tr class="new-row"><td><strong>Codex Remote</strong></td><td>GA（本週）</td><td>手機遙控電腦 Codex session，QR 碼配對，DigitalOcean plugin</td></tr>
+          <tr><td><strong>Colorado AI Act</strong></td><td>SB26-189（05-14 簽署）</td><td>廢除 duty of care → ADMT 揭露義務，延至 2027-01-01</td></tr>
+          <tr><td><strong>MiniMax M3</strong></td><td>SWE-bench Pro 59.0%</td><td>開源最強 coding（API only，無 Ollama）</td></tr>
+          <tr><td><strong>Gemini 3.5 Pro</strong></td><td>延至 2026-07 GA</td><td>仍在企業 preview；Sonnet 5 GA 後競爭壓力加大</td></tr>
+          <tr class="new-row"><td><strong>Gemini 3.5 Live Translate</strong></td><td>2026-06-09 Preview</td><td>70+ 語言即時語音翻譯，Android Listening Mode</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 依你背景的分類 -->
+  <section>
+    <div class="section-title"><span>🗂</span> 依你背景的分類</div>
+    <div class="cat-grid">
+      <div class="cat-card">
+        <h4>AI Coding Assistant</h4>
+        <ul>
+          <li><strong>Claude Sonnet 5 已是預設</strong>：直接受益，無需操作。注意 token 多 30% 的用量影響</li>
+          <li><strong>Fable 5 重新可用</strong>：Max 計畫可切換至 Fable 5 做最高階測試</li>
+          <li><strong>Codex Remote GA</strong>：手機掃 QR 碼遙控電腦 Codex session，適合外出時審核進度</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>Local LLM</h4>
+        <ul>
+          <li><strong>MiniMax M3 API</strong>：SWE-bench 最強開源，等 Ollama 支援後可做本地實測</li>
+          <li><strong>gpt-oss:20b</strong>（延續 W26）：16GB 環境穩定選項，Codex Remote GA 讓「本地主機 + 手機控制」成為可能</li>
+          <li>Qwen 3.6 27B 仍為 24GB+ 首選，短期無強力替代品出現</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>Agent 架構</h4>
+        <ul>
+          <li><strong>GPT-5.6 Ultra sub-agent 模式</strong> 和 Codex multi-agent delegation 方向相同：W26/W27 共同主線是「單 session 分裂子代理」</li>
+          <li><strong>Claude apps gateway 協定開放</strong>：可能催生 Cursor / Windsurf 等第三方相容控制平面</li>
+          <li><strong>Sonnet 5 的 agentic 能力躍進</strong>：原本需要 Opus 4.8 才能完成的多步驟任務，現在 Sonnet 5 可以用更低成本跑</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>法規 / 生態</h4>
+        <ul>
+          <li><strong>Colorado ADMT 揭露要求（2027-01-01）</strong>：比原本 duty of care 合規門檻大幅降低，但揭露義務仍存在</li>
+          <li><strong>Fable 5 出口管制解除</strong>：首個 jailbreak 觸發政府緊急停用、後又解除的案例，對 AI 出口法規框架影響深遠</li>
+          <li><strong>GPT-5.6 政府審批限量</strong>：延續出口管制趨勢，最新前沿模型優先由政府核批機構存取</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 下週觀察清單 -->
+  <section>
+    <div class="section-title"><span>📋</span> 下週觀察清單</div>
+    <ul class="checklist">
+      <li><strong>Claude Fable 5 實際體驗：</strong> 已恢復，可測試 Fable 5 vs Sonnet 5 在 coding 任務的差距（需 Max / Enterprise 計畫）</li>
+      <li><strong>GPT-5.6 Terra GA 時間：</strong> 預計數週內擴大開放；Terra（$2.50/$15）與 Sonnet 5 標準價直接競爭，GA 後做功能比較</li>
+      <li><strong>Gemini 3.5 Pro GA：</strong> 原預計 7 月，Sonnet 5 的壓力下看 Google 是否加快腳步</li>
+      <li><strong>MiniMax M3 Ollama 支援：</strong> weights 目前仍限 API，等 Ollama 上架後可做本地 coding 實測</li>
+      <li><strong>Colorado ADMT 揭露細則：</strong> SB26-189 的具體實施規則（rule-making 尚未完成）</li>
+    </ul>
+  </section>
+
+  <!-- 本週深入研究選項 -->
+  <section>
+    <div class="section-title"><span>🎯</span> 本週 3 個深入研究選項（擇一）</div>
+    <div class="deep-dive-grid">
+      <div class="deep-dive-card">
+        <div class="label">選項 A — Claude Sonnet 5</div>
+        <h4>Sonnet 5 Agentic 能力實測</h4>
+        <p>在 Claude Code 中執行一個平常需要多步 back-and-forth 的任務（如週報 pipeline 全程跑一次），記錄 Sonnet 5 vs Sonnet 4.6 的步驟數差異和中途需人工介入的次數——直接感受 agentic 效率是否提升，以及 30% token 增加對成本的實際影響。</p>
+      </div>
+      <div class="deep-dive-card">
+        <div class="label">選項 B — Fable 5 vs Sonnet 5</div>
+        <h4>Fable 5 vs Sonnet 5 Coding 對比</h4>
+        <p>選一個中等難度的 coding 任務（如改一個真實 bug 或設計新功能），分別用 Fable 5 和 Sonnet 5 各跑一次，比較：解法品質、token 用量、耗時、需人工澄清次數。確認 Fable 5 的溢價是否在你的使用情境中值得。</p>
+      </div>
+      <div class="deep-dive-card">
+        <div class="label">選項 C — 定價分析</div>
+        <h4>GPT-5.6 Terra GA 後 vs Claude Sonnet 5 成本分析</h4>
+        <p>當 GPT-5.6 Terra GA（$2.50/$15 input/output）後，對比 Sonnet 5 標準價（$3/$15）：在你目前的週報 pipeline 月用量下，哪個實際成本較低？涵蓋 context window 大小、API call 模式差異、30% token 計算差異的影響。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- YouTube 來源摘要 -->
+  <section>
+    <div class="section-title"><span>▶</span> 來源摘要（NotebookLM 繁中）</div>
+
+    <div class="yt-card">
+      <h4><span class="yt-label">YT</span>Claude Sonnet 5: No Hype Full Breakdown &amp; Testing</h4>
+      <p>Anthropic 最新推出 <strong>Claude Sonnet 5</strong>，能以一半的價格提供約 95% Opus 4.8 的效能。三大實測重點：<strong>Coding</strong>——複雜專案（如遊戲開發）仍由 Opus 4.8 勝出，但 Landing Page 設計上 Sonnet 5 媲美 Opus 4.8，成本大幅降低；<strong>Agentic Use</strong>——中低難度的電腦操作與搜尋任務表現優異，成為高性價比首選，極高難度任務仍依賴 Opus 4.8；<strong>Knowledge Work</strong>——Slide Deck 設計與 YouTube 腳本撰寫等知識工作表現甚至超越 Opus 4.8。</p>
+      <em>Keywords：Claude Sonnet 5、Agentic coding、benchmark 對比、knowledge work、Token 效率、Opus 4.8 對比</em>
+    </div>
+
+    <div class="yt-card">
+      <h4><span class="yt-label">YT</span>Claude Sonnet 5 Just Dropped (I have to be honest...)</h4>
+      <p>Sonnet 5 未追求技術極限，而是專注於降低中階任務成本並提升基礎能力。三個重點：<strong>高性價比</strong>——效能略遜於 Opus 4.8 但大幅超越 Sonnet 4.6，極適合應用於 co-work 及 sub-agents；<strong>限期優惠</strong>——初期定價 $2/$10 per MTok，2026-08-31 後調漲至 $3/$15，適合建立系統底層（plumbing）；<strong>安全妥協</strong>——為避開政府對 cybersecurity 的審查，官方刻意削弱了漏洞利用能力以確保順利發布（這也解釋了 Fable 5 出口管制的背景）。</p>
+      <em>Keywords：Claude Sonnet 5、sub-agents、token burn、cybersecurity 監管、Agentic workflow、plumbing</em>
+    </div>
+
+    <div class="yt-card">
+      <h4><span class="yt-label">YT</span>Claude Sonnet 5 IS OUT &amp; ITS HORRIBLE! Worst Model By Anthropic EVER? (Fully Tested)</h4>
+      <p>批判性評測：Sonnet 5 在 Agentic Coding benchmark 成績亮眼，能生成基本 Mac OS 介面，但複雜的前端設計與 SVG 繪圖表現極差，甚至不如 GLM 5.2。<strong>Token 效率關鍵問題</strong>：因採用 Opus 4.7 tokenizer，執行時消耗更多 tokens，帳面定價優惠在實際使用中大打折扣，被評為極度 token inefficient 的模型。<strong>結論</strong>：考量兩者極小的真實價差與顯著效能落差，建議繼續以 Opus 4.8 為主力，Sonnet 5 適合特定 sub-agent 場景。</p>
+      <em>Keywords：Claude Sonnet 5、token inefficiency、Opus 4.7 tokenizer、SVG 生成、批判性評測、Opus 4.8 比較</em>
+    </div>
+  </section>
+
+  <!-- Run Log -->
+  <div class="run-log">
+    <div class="run-log-title">Run Log</div>
+    <p>
+      <span class="done">✓</span> Claude WebSearch：完成<br>
+      <span class="done">✓</span> 撰寫 .md：完成（2026-W27.md）<br>
+      <span class="done">✓</span> 撰寫 .html：完成（2026-W27.html）<br>
+      <span class="done">✓</span> NotebookLM YouTube 來源：完成（3 支匯入，Notebook ID 39f99906）<br>
+      <span class="done">✓</span> NotebookLM Briefing Doc：完成（2026-W27-briefing.md）<br>
+      <span class="done">✓</span> QA：完成（3 處修正）
+    </p>
+  </div>
+
+</div>
+</body>
+</html>

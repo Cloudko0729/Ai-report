@@ -6,6 +6,7 @@
 
 | 週次 | 期間 | 本週焦點 | 報告 |
 |------|------|---------|------|
+| W27 | 2026-06-27 ~ 2026-07-03 | Claude Sonnet 5 發佈（agentic 躍進）、Fable 5 出口管制解除、GPT-5.6 Sol/Terra/Luna 限量預覽、Claude apps gateway | [.md](reports/2026-W27/2026-W27.md) ｜ [.html](reports/2026-W27/2026-W27.html) |
 | W26 | 2026-06-19 ~ 2026-06-26 | Claude Tag Slack Beta（頻道 AI 隊友）、Codex v0.142.0 Multi-Agent + Indexed Web Search、EUROPA 歐盟主權 AI 模型 | [.md](reports/2026-W26/2026-W26.md) ｜ [.html](reports/2026-W26/2026-W26.html) |
 | W25 | 2026-06-08 ~ 2026-06-19 | Claude Fable 5/Mythos 5 出口管制下架、Managed Agents Cron+Vault Beta、Codex 每週新功能追蹤 | [.md](reports/2026-W25/2026-W25.md) ｜ [.html](reports/2026-W25/2026-W25.html) |
 | W24 | 2026-06-01 ~ 2026-06-08 | Anthropic Agent SDK 計費分池、Dynamic Workflows 預設開啟、Anthropic IPO S-1 | [.md](reports/2026-W24/2026-W24.md) ｜ [.html](reports/2026-W24/2026-W24.html) |
