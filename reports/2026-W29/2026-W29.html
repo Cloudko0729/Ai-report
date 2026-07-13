@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 新知週報 2026-W29</title>
+<style>
+  :root {
+    --bg: #f8f9fa;
+    --surface: #ffffff;
+    --border: #e2e8f0;
+    --text: #1a202c;
+    --muted: #718096;
+    --accent: #3b82f6;
+    --accent-bg: #eff6ff;
+    --accent-border: #bfdbfe;
+    --green: #059669;
+    --green-bg: #ecfdf5;
+    --amber: #d97706;
+    --amber-bg: #fffbeb;
+    --purple: #7c3aed;
+    --purple-bg: #f5f3ff;
+    --red: #dc2626;
+    --red-bg: #fef2f2;
+    --red-border: #fecaca;
+    --code-bg: #1e293b;
+    --code-text: #e2e8f0;
+    --tag-bg: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 32px 24px 80px; }
+
+  .report-header {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 32px;
+  }
+  .report-header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; }
+  .meta-tag {
+    background: var(--tag-bg);
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .meta-tag strong { color: var(--text); }
+  .meta-tag.urgent {
+    background: var(--red-bg);
+    color: var(--red);
+    border: 1px solid var(--red-border);
+    font-weight: 600;
+  }
+  .meta-tag.info {
+    background: var(--accent-bg);
+    color: #1e40af;
+    border: 1px solid var(--accent-border);
+    font-weight: 600;
+  }
+  .meta-tag.success {
+    background: var(--green-bg);
+    color: var(--green);
+    border: 1px solid #a7f3d0;
+    font-weight: 600;
+  }
+
+  section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .highlight-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .highlight-card.urgent-card {
+    border-left-color: var(--red);
+    background: #fff8f8;
+  }
+  .highlight-card.new-card {
+    border-left-color: var(--green);
+    background: #f0fdf4;
+  }
+  .highlight-card.codex-card {
+    border-left-color: var(--purple);
+    background: var(--purple-bg);
+  }
+  .highlight-card.amber-card {
+    border-left-color: var(--amber);
+    background: var(--amber-bg);
+  }
+  .highlight-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 10px; }
+  .highlight-card p { margin-bottom: 8px; }
+  .highlight-card ul { padding-left: 20px; margin-bottom: 8px; }
+  .highlight-card li { margin-bottom: 4px; }
+  .significance {
+    background: var(--accent-bg);
+    border: 1px solid var(--accent-border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    margin-top: 12px;
+    color: #1e40af;
+  }
+  .significance::before { content: "💡 對你的意義："; font-weight: 600; }
+
+  .pricing-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: 13.5px;
+  }
+  .pricing-table th {
+    background: #f1f5f9;
+    padding: 7px 12px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  .pricing-table td {
+    padding: 7px 12px;
+    border: 1px solid var(--border);
+  }
+
+  .table-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); }
+  table { border-collapse: collapse; width: 100%; background: var(--surface); }
+  th {
+    background: #f1f5f9;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 14px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f8fafc; }
+  tr.urgent-row td { background: #fff8f8; }
+  tr.new-row td { background: #f0fdf4; }
+  code {
+    font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+    font-size: 12.5px;
+    background: #f1f5f9;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+    color: #d63384;
+  }
+
+  .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 600px) { .cat-grid { grid-template-columns: 1fr; } }
+  .cat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+  .cat-card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+  }
+  .cat-card ul { padding-left: 16px; }
+  .cat-card li { font-size: 13.5px; margin-bottom: 5px; }
+
+  .checklist { list-style: none; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+  .checklist li::before { content: "☐"; color: var(--muted); flex-shrink: 0; margin-top: 1px; }
+  .checklist li.urgent { border-color: var(--red); background: #fff8f8; }
+  .checklist li.urgent::before { content: "🔴"; }
+
+  .deep-dive-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .deep-dive-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+  }
+  .deep-dive-card .label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 6px;
+  }
+  .deep-dive-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .deep-dive-card p { font-size: 13.5px; color: #4a5568; }
+
+  .yt-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+  .yt-card h4 { font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .yt-card p { color: #4a5568; margin-bottom: 6px; }
+  .yt-card em { font-size: 12.5px; color: var(--muted); }
+  .yt-label {
+    background: #ff0000;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+    flex-shrink: 0;
+  }
+
+  .run-log {
+    background: #0f172a;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-top: 36px;
+  }
+  .run-log-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+  .run-log p {
+    font-family: "Cascadia Code", "Fira Code", "Consolas", monospace;
+    font-size: 12.5px;
+    color: #94a3b8;
+    line-height: 1.8;
+  }
+  .run-log p span.done { color: #34d399; }
+  .run-log p span.pending-log { color: #fbbf24; }
+  strong { font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="report-header">
+    <h1>AI 新知週報 2026-W29（部分週）</h1>
+    <div class="meta">
+      <span class="meta-tag"><strong>期間</strong> 2026-07-11 ~ 2026-07-13（本週尚未結束）</span>
+      <span class="meta-tag"><strong>焦點</strong> Claude Code 額度加碼今日到期 + OpenAI IPO/Apple 訴訟 + Gemini 3.5 Pro 洩漏</span>
+      <span class="meta-tag"><strong>蒐集</strong> Claude WebSearch</span>
+      <span class="meta-tag"><strong>撰寫</strong> Claude</span>
+      <span class="meta-tag urgent">🔴 Claude Code +50% 額度今晚到期</span>
+      <span class="meta-tag info">💰 OpenAI IPO 傳聞 $730B</span>
+    </div>
+  </div>
+
+  <!-- 本週最值得注意 -->
+  <section>
+    <div class="section-title"><span>🔥</span> 本週最值得注意</div>
+
+    <div class="highlight-card urgent-card">
+      <h3>1. 🔴 Claude Code 週用量 +50% 加碼「今天到期」（2026-07-13 PT 18:00）</h3>
+      <p>Anthropic 從 <strong>2026-05-13</strong> 起給 Pro / Max / Team / seat-based Enterprise 用戶加碼 <strong>50% 週用量上限</strong>，這是繼 5/6 五小時額度翻倍、6 月移除尖峰時段限制之後，5 週內第三次針對可用量的調整——背景是 OpenAI Codex 同等任務 token 消耗量僅約 Claude Code 的 1/4.2，Anthropic 用這一連串加碼正面迎戰。</p>
+      <p><strong>這波加碼將於今天美西時間 18:00 到期，之後回復原本額度。</strong></p>
+      <div class="significance">如果這幾天有大型 refactor 或高用量任務，建議在額度回復前（今天內）盡量跑完；到期後週用量會縮回加碼前水準。</div>
+    </div>
+
+    <div class="highlight-card">
+      <h3>2. OpenAI 機密送件 IPO：目標 2026 年 9 月上市，估值約 $730B</h3>
+      <p>OpenAI 正與高盛、摩根士丹利準備機密 IPO 申請，目標最快 <strong>2026 年 9 月</strong>公開上市，私募市場估值約 <strong>$7300 億美元</strong>——若成真將是史上規模最大的科技業 IPO。</p>
+      <div class="significance">若你有追蹤 AI 產業的資本動態，這是本季最大的結構性訊號；IPO 前的靜默期可能影響 OpenAI 未來幾個月的產品發佈節奏與公關口徑。</div>
+    </div>
+
+    <div class="highlight-card amber-card">
+      <h3>3. Apple 控告 OpenAI 竊取商業機密（2026-07-11）</h3>
+      <p>Apple 在北加州聯邦法院對 OpenAI 提告，指控竊取商業機密，並指出目前有 <strong>400 多名前 Apple 員工</strong>在 OpenAI 任職，多數來自 Apple 晶片設計、硬體、裝置端 AI 團隊。同日，OpenAI 安全主管 Heidecke 在一波人事改組後離職。</p>
+      <div class="significance">首起大型科技公司對 OpenAI 提起的商業機密訴訟，若進入實質審理，可能牽動 OpenAI 的裝置端 AI（硬體）野心與相關人才佈局。</div>
+    </div>
+
+    <div class="highlight-card">
+      <h3>4. OpenAI 關閉 Atlas 瀏覽器，功能併入 ChatGPT 桌面版與 Chrome 擴充套件</h3>
+      <p>OpenAI 宣布 sunset 其 2025-10 推出的 Atlas AI 瀏覽器，<strong>預計 2026-08-09 停用</strong>，上線不到 9 個月。取而代之：新的 <strong>ChatGPT Chrome 擴充套件</strong>（讀取頁面脈絡、回答頁面問題、啟動長任務）與 <strong>ChatGPT 桌面版</strong>強化瀏覽能力（瀏覽網站、登入帳號、下載檔案）。</p>
+      <p>背景：OpenAI 應用程式前 CEO Fidji Simo 先前要求團隊減少「side quest」，此前已關閉 Sora 影片生成工具，Atlas 是同一波收斂策略下的犧牲品。</p>
+      <div class="significance">功能沒有消失，只是重新分佈到 Chrome 擴充套件與桌面版；獨立瀏覽器產品線收斂，反映 OpenAI 正把資源集中到 agentic browsing 的核心能力而非獨立產品外殼。</div>
+    </div>
+
+    <div class="highlight-card new-card">
+      <h3>5. Google Search 結果頁全面由 Gemini 3.5 Flash 生成（2026-07-10）</h3>
+      <p>截至 2026-07-10，Google 搜尋結果頁已<strong>全面由 Gemini 3.5 Flash 生成答案</strong>，取代傳統十條藍色連結列表；來源引用改成嵌入在 AI 生成答案內文中，而非列在答案下方。</p>
+      <div class="significance">這是搜尋引擎史上最大的介面轉變之一，SEO/內容策略需要重新思考「被引用在 AI 答案內」而非「排名第一」。</div>
+    </div>
+
+    <div class="highlight-card new-card">
+      <h3>6. Gemini 3.5 Pro 洩漏資訊：預告 07-17 GA，200 萬 token context，Deep Think 推理模式</h3>
+      <p>多方洩漏資訊指向 Google 將於 <strong>2026-07-17</strong> 讓 Gemini 3.5 Pro GA：</p>
+      <ul>
+        <li><strong>200 萬 token</strong> context window</li>
+        <li><strong>Deep Think</strong> 推理模式，僅限 $250/月 Ultra 訂閱</li>
+        <li>API 定價約 <strong>$1.25 input / $10 output</strong> per 1M tokens</li>
+        <li>洩漏測試結果分歧：一說前端設計上超越 Fable 5，另一說推理與程式碼上仍落後 Fable 5 與 GPT-5.6</li>
+      </ul>
+      <div class="significance">若洩漏屬實，下週很可能是 Gemini 3.5 Pro 正式 GA 週，屆時可以做三大廠模型的完整定價/能力對比。</div>
+    </div>
+
+    <div class="highlight-card codex-card">
+      <h3>7. Claude Code 本週功能更新（2026-07-11）</h3>
+      <ul>
+        <li>Auto mode 在 <strong>Bedrock / Vertex AI / Foundry 預設開啟</strong></li>
+        <li><strong>Bedrock 更新至 Claude Opus 4.8</strong></li>
+        <li><strong>Chrome 整合正式脫離 preview</strong>，開放給直接向 Anthropic 訂閱的所有用戶</li>
+        <li><strong>Claude Desktop 登陸 Ubuntu 22.04+ / Debian 12+（beta）</strong>：x86_64 與 arm64 皆支援</li>
+        <li>Agent view 與 Remote Control 改善，修正凍結、當機、憑證問題與多個 worktree/plugin bug</li>
+        <li>Fable 5 免費存取期限延長至 07-12 23:59:59 PT（本報告產出時已過期）</li>
+      </ul>
+    </div>
+
+    <div class="highlight-card">
+      <h3>8. 補充：上週遺漏的模型發佈（07-08 ~ 07-09）</h3>
+      <p><strong>Grok 4.5</strong>（xAI，2026-07-08）、<strong>Meta Muse Spark 1.1</strong>（2026-07-09）——兩者釋出日期落在 W28 期間但當週未捕捉到，本週補記；細節仍在追蹤中，下週視討論熱度決定是否深入介紹。</p>
+    </div>
+  </section>
+
+  <!-- 工具更新速覽 -->
+  <section>
+    <div class="section-title"><span>🛠</span> 工具更新速覽</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>工具</th><th>版本 / 日期</th><th>重點</th></tr></thead>
+        <tbody>
+          <tr class="urgent-row"><td><strong>Claude Code 週用量 +50%</strong></td><td>到期 2026-07-13 18:00 PT</td><td>今天到期，把握最後額度</td></tr>
+          <tr><td><strong>OpenAI IPO（機密送件）</strong></td><td>目標 2026-09</td><td>估值約 $730B，史上最大科技 IPO 候選</td></tr>
+          <tr><td><strong>Apple v. OpenAI 訴訟</strong></td><td>2026-07-11</td><td>商業機密竊取指控，400+ 前 Apple 員工在 OpenAI</td></tr>
+          <tr><td><strong>ChatGPT Atlas 瀏覽器</strong></td><td>2026-08-09 停用</td><td>功能併入 Chrome 擴充套件 + 桌面版</td></tr>
+          <tr class="new-row"><td><strong>Google Search AI 化</strong></td><td>2026-07-10</td><td>結果頁全面由 Gemini 3.5 Flash 生成</td></tr>
+          <tr class="new-row"><td><strong>Gemini 3.5 Pro</strong></td><td>傳 2026-07-17 GA</td><td>200 萬 context、Deep Think、$1.25/$10 定價</td></tr>
+          <tr><td><strong>Claude Code Chrome 整合</strong></td><td>脫離 preview（本週）</td><td>直接訂閱用戶全面開放</td></tr>
+          <tr><td><strong>Claude Desktop（Ubuntu/Debian）</strong></td><td>Beta（本週）</td><td>新平台支援</td></tr>
+          <tr><td><strong>Grok 4.5</strong></td><td>2026-07-08</td><td>xAI 新模型，細節待補</td></tr>
+          <tr><td><strong>Meta Muse Spark 1.1</strong></td><td>2026-07-09</td><td>Meta 新模型，細節待補</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 依你背景的分類 -->
+  <section>
+    <div class="section-title"><span>🗂</span> 依你背景的分類</div>
+    <div class="cat-grid">
+      <div class="cat-card">
+        <h4>AI Coding Assistant</h4>
+        <ul>
+          <li><strong>今天內用完 Claude Code 額外週額度</strong>：50% 加碼今晚到期，有大任務要跑就趁現在</li>
+          <li><strong>Chrome 整合脫離 preview</strong>：可以正式把瀏覽器操作納入 Claude Code 工作流</li>
+          <li><strong>Claude Desktop 上 Linux</strong>：Ubuntu/Debian 開發機現在可以裝 beta 版測試</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>Local LLM</h4>
+        <ul>
+          <li>本週無重大 local model 進展，延續 W28 的 GLM-5.2 仍是最推薦的開源選項</li>
+          <li>Grok 4.5、Muse Spark 1.1 是否有開放權重版本待確認，列入下週追蹤</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>Agent 架構 / 產業</h4>
+        <ul>
+          <li><strong>三大廠 agentic browsing 收斂</strong>：OpenAI 關 Atlas 轉戰擴充套件、Claude Code Chrome 整合 GA，「瀏覽器操作」正變成內建能力而非獨立產品</li>
+          <li><strong>Google Search 的 AI 化</strong>：對任何依賴搜尋流量的產品/內容策略是結構性衝擊</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>資本市場 / 法規</h4>
+        <ul>
+          <li><strong>OpenAI IPO 動態、Apple 訴訟</strong>：顯示 AI 產業進入資本與法律戰的新階段</li>
+          <li>訴訟若進入實質審理，值得追蹤是否波及 OpenAI 硬體/裝置端 AI 團隊人才佈局</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 下週觀察清單 -->
+  <section>
+    <div class="section-title"><span>📋</span> 下週觀察清單</div>
+    <ul class="checklist">
+      <li><strong>Gemini 3.5 Pro 是否如傳言於 07-17 GA：</strong> 若成真，做三大廠模型完整對比</li>
+      <li><strong>Claude Code 額度回復後的實際影響：</strong> 50% 加碼結束，觀察是否有用戶抱怨或流失</li>
+      <li><strong>Apple v. OpenAI 訴訟後續：</strong> 是否有初步裁定或雙方聲明</li>
+      <li><strong>Grok 4.5 / Muse Spark 1.1 細節補完：</strong> 確認是否開放權重、benchmark 表現</li>
+      <li><strong>OpenAI IPO 是否正式送件：</strong> 目前僅機密籌備階段</li>
+    </ul>
+  </section>
+
+  <!-- 本週深入研究選項 -->
+  <section>
+    <div class="section-title"><span>🎯</span> 本週與你高度相關的項目</div>
+    <div class="deep-dive-grid">
+      <div class="deep-dive-card">
+        <div class="label">選項 A — 額度視窗</div>
+        <h4>把握 Claude Code 額度加碼最後一天</h4>
+        <p>今天額度加碼到期前，評估是否有適合現在跑的大型任務（如這次的雙週報 pipeline 本身），把握額度回復前的窗口。</p>
+      </div>
+      <div class="deep-dive-card">
+        <div class="label">選項 B — Chrome 整合</div>
+        <h4>Claude Code Chrome 整合實測</h4>
+        <p>既然已脫離 preview，找一個需要瀏覽器操作的任務（如登入某網站抓資料、填表單），實測 Claude in Chrome 的穩定性與速度。</p>
+      </div>
+      <div class="deep-dive-card">
+        <div class="label">選項 C — 搜尋習慣</div>
+        <h4>Google Search AI 化對你資訊蒐集習慣的影響</h4>
+        <p>留意這幾天用 Google 搜尋時的結果呈現方式是否已經改變，評估是否需要調整你平常查資料/驗證來源的習慣。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- YouTube 來源摘要 -->
+  <section>
+    <div class="section-title"><span>▶</span> 來源摘要（NotebookLM 繁中）</div>
+
+    <div class="yt-card">
+      <h4><span class="yt-label">YT</span>Weekly AI News: GPT-5.6 Launch, Atlas Browser Shuts Down &amp; The Open-Source Threat!</h4>
+      <p>摘要本週重大 AI 趨勢：GPT-5.6 系列強調在具備代理能力同時以更低成本超越競爭對手；Atlas 瀏覽器因競爭力不足終止，反映頂尖企業也面臨產品成敗考驗；行業核心競爭力從追求模型規模轉向更便宜更智能的系統；Anthropic、OpenAI、SpaceX 市場影響力已超越過去 25 年的科技公司，開源模型崛起將挑戰付費專利模型。</p>
+      <em>Keywords：GPT-5.6 系列發布、Atlas 瀏覽器關閉、AI 模型成本優化、開源模型威脅、三大科技巨頭</em>
+    </div>
+
+    <div class="yt-card">
+      <h4><span class="yt-label">YT</span>Gemini 3.5 Pro LEAKED: Deep Think, 2M Tokens &amp; Why It Changes Everything</h4>
+      <p>解析 Gemini 3.5 Pro 洩漏資訊：透過全新預訓練基礎展現實力，200 萬 token context 搭配 Deep Think 推理模式；策略從 benchmark 競賽轉向代理人導向的執行力，專注長工作流與視覺互動設計以補足程式碼開發劣勢；意圖利用軟硬體垂直整合優勢建構 AI 代理人生態系統。</p>
+      <em>Keywords：Gemini 3.5 Pro、兩百萬 token 上下文、Deep Think 模式、自主 AI 代理、模型預訓練更新</em>
+    </div>
+  </section>
+
+  <!-- Run Log -->
+  <div class="run-log">
+    <div class="run-log-title">Run Log</div>
+    <p>
+      <span class="done">✓</span> Claude WebSearch：完成（Anthropic/OpenAI/Google/資本市場/法律 5 個面向）<br>
+      <span class="done">✓</span> 撰寫 .md：完成（2026-W29.md，標註為部分週）<br>
+      <span class="done">✓</span> 撰寫 .html：完成（2026-W29.html）<br>
+      <span class="done">✓</span> NotebookLM YouTube 來源：完成（2 支全部匯入，Notebook ID e58af100；原先誤加入的 2 支已刪除重補）<br>
+      <span class="done">✓</span> NotebookLM Source Guide：完成（2026-W29-youtube.md）<br>
+      <span class="done">✓</span> NotebookLM Briefing Doc：完成（2026-W29-briefing.md）<br>
+      <span class="pending-log">…</span> Podcast 音檔：未生成（BlueMagpie-TTS，本輪未執行）<br>
+      <span class="done">✓</span> QA：完成
+    </p>
+  </div>
+
+</div>
+</body>
+</html>
