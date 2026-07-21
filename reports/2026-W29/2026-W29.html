@@ -132,26 +132,6 @@
   }
   .significance::before { content: "💡 對你的意義："; font-weight: 600; }
 
-  .pricing-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 10px 0;
-    font-size: 13.5px;
-  }
-  .pricing-table th {
-    background: #f1f5f9;
-    padding: 7px 12px;
-    text-align: left;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--muted);
-    border: 1px solid var(--border);
-  }
-  .pricing-table td {
-    padding: 7px 12px;
-    border: 1px solid var(--border);
-  }
-
   .table-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); }
   table { border-collapse: collapse; width: 100%; background: var(--surface); }
   th {
@@ -211,8 +191,6 @@
     font-size: 14px;
   }
   .checklist li::before { content: "☐"; color: var(--muted); flex-shrink: 0; margin-top: 1px; }
-  .checklist li.urgent { border-color: var(--red); background: #fff8f8; }
-  .checklist li.urgent::before { content: "🔴"; }
 
   .deep-dive-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
   .deep-dive-card {
@@ -243,6 +221,7 @@
   .yt-card h4 { font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
   .yt-card p { color: #4a5568; margin-bottom: 6px; }
   .yt-card em { font-size: 12.5px; color: var(--muted); }
+  .yt-note { font-size: 12.5px; color: var(--amber); background: var(--amber-bg); border-radius: 6px; padding: 6px 10px; margin-bottom: 6px; }
   .yt-label {
     background: #ff0000;
     color: white;
@@ -284,14 +263,14 @@
 
   <!-- Header -->
   <div class="report-header">
-    <h1>AI 新知週報 2026-W29（部分週）</h1>
+    <h1>AI 新知週報 2026-W29</h1>
     <div class="meta">
-      <span class="meta-tag"><strong>期間</strong> 2026-07-11 ~ 2026-07-13（本週尚未結束）</span>
-      <span class="meta-tag"><strong>焦點</strong> Claude Code 額度加碼今日到期 + OpenAI IPO/Apple 訴訟 + Gemini 3.5 Pro 洩漏</span>
+      <span class="meta-tag"><strong>期間</strong> 2026-07-11 ~ 2026-07-17</span>
+      <span class="meta-tag"><strong>焦點</strong> Gemini 3.5 Pro 三度跳票 + OpenAI 給政府 5% 股份提議 + Anthropic 教室/醫療落地</span>
       <span class="meta-tag"><strong>蒐集</strong> Claude WebSearch</span>
       <span class="meta-tag"><strong>撰寫</strong> Claude</span>
-      <span class="meta-tag urgent">🔴 Claude Code +50% 額度今晚到期</span>
-      <span class="meta-tag info">💰 OpenAI IPO 傳聞 $730B</span>
+      <span class="meta-tag urgent">🔻 Gemini 3.5 Pro 第三度延期</span>
+      <span class="meta-tag info">🏛 OpenAI 提議給美政府 5% 股份</span>
     </div>
   </div>
 
@@ -300,64 +279,71 @@
     <div class="section-title"><span>🔥</span> 本週最值得注意</div>
 
     <div class="highlight-card urgent-card">
-      <h3>1. 🔴 Claude Code 週用量 +50% 加碼「今天到期」（2026-07-13 PT 18:00）</h3>
-      <p>Anthropic 從 <strong>2026-05-13</strong> 起給 Pro / Max / Team / seat-based Enterprise 用戶加碼 <strong>50% 週用量上限</strong>，這是繼 5/6 五小時額度翻倍、6 月移除尖峰時段限制之後，5 週內第三次針對可用量的調整——背景是 OpenAI Codex 同等任務 token 消耗量僅約 Claude Code 的 1/4.2，Anthropic 用這一連串加碼正面迎戰。</p>
-      <p><strong>這波加碼將於今天美西時間 18:00 到期，之後回復原本額度。</strong></p>
-      <div class="significance">如果這幾天有大型 refactor 或高用量任務，建議在額度回復前（今天內）盡量跑完；到期後週用量會縮回加碼前水準。</div>
-    </div>
-
-    <div class="highlight-card">
-      <h3>2. OpenAI 機密送件 IPO：目標 2026 年 9 月上市，估值約 $730B</h3>
-      <p>OpenAI 正與高盛、摩根士丹利準備機密 IPO 申請，目標最快 <strong>2026 年 9 月</strong>公開上市，私募市場估值約 <strong>$7300 億美元</strong>——若成真將是史上規模最大的科技業 IPO。</p>
-      <div class="significance">若你有追蹤 AI 產業的資本動態，這是本季最大的結構性訊號；IPO 前的靜默期可能影響 OpenAI 未來幾個月的產品發佈節奏與公關口徑。</div>
-    </div>
-
-    <div class="highlight-card amber-card">
-      <h3>3. Apple 控告 OpenAI 竊取商業機密（2026-07-11）</h3>
-      <p>Apple 在北加州聯邦法院對 OpenAI 提告，指控竊取商業機密，並指出目前有 <strong>400 多名前 Apple 員工</strong>在 OpenAI 任職，多數來自 Apple 晶片設計、硬體、裝置端 AI 團隊。同日，OpenAI 安全主管 Heidecke 在一波人事改組後離職。</p>
-      <div class="significance">首起大型科技公司對 OpenAI 提起的商業機密訴訟，若進入實質審理，可能牽動 OpenAI 的裝置端 AI（硬體）野心與相關人才佈局。</div>
-    </div>
-
-    <div class="highlight-card">
-      <h3>4. OpenAI 關閉 Atlas 瀏覽器，功能併入 ChatGPT 桌面版與 Chrome 擴充套件</h3>
-      <p>OpenAI 宣布 sunset 其 2025-10 推出的 Atlas AI 瀏覽器，<strong>預計 2026-08-09 停用</strong>，上線不到 9 個月。取而代之：新的 <strong>ChatGPT Chrome 擴充套件</strong>（讀取頁面脈絡、回答頁面問題、啟動長任務）與 <strong>ChatGPT 桌面版</strong>強化瀏覽能力（瀏覽網站、登入帳號、下載檔案）。</p>
-      <p>背景：OpenAI 應用程式前 CEO Fidji Simo 先前要求團隊減少「side quest」，此前已關閉 Sora 影片生成工具，Atlas 是同一波收斂策略下的犧牲品。</p>
-      <div class="significance">功能沒有消失，只是重新分佈到 Chrome 擴充套件與桌面版；獨立瀏覽器產品線收斂，反映 OpenAI 正把資源集中到 agentic browsing 的核心能力而非獨立產品外殼。</div>
-    </div>
-
-    <div class="highlight-card new-card">
-      <h3>5. Google Search 結果頁全面由 Gemini 3.5 Flash 生成（2026-07-10）</h3>
-      <p>截至 2026-07-10，Google 搜尋結果頁已<strong>全面由 Gemini 3.5 Flash 生成答案</strong>，取代傳統十條藍色連結列表；來源引用改成嵌入在 AI 生成答案內文中，而非列在答案下方。</p>
-      <div class="significance">這是搜尋引擎史上最大的介面轉變之一，SEO/內容策略需要重新思考「被引用在 AI 答案內」而非「排名第一」。</div>
-    </div>
-
-    <div class="highlight-card new-card">
-      <h3>6. Gemini 3.5 Pro 洩漏資訊：預告 07-17 GA，200 萬 token context，Deep Think 推理模式</h3>
-      <p>多方洩漏資訊指向 Google 將於 <strong>2026-07-17</strong> 讓 Gemini 3.5 Pro GA：</p>
+      <h3>1. Gemini 3.5 Pro 第三度跳票：07-17 目標又落空，DeepMind 打掉重練基礎模型</h3>
+      <p>本週最大轉折：Google 傳聞的 <strong>07-17 Gemini 3.5 Pro GA 日期又沒兌現</strong>，成為第三次延期。</p>
       <ul>
-        <li><strong>200 萬 token</strong> context window</li>
-        <li><strong>Deep Think</strong> 推理模式，僅限 $250/月 Ultra 訂閱</li>
-        <li>API 定價約 <strong>$1.25 input / $10 output</strong> per 1M tokens</li>
-        <li>洩漏測試結果分歧：一說前端設計上超越 Fable 5，另一說推理與程式碼上仍落後 Fable 5 與 GPT-5.6</li>
+        <li>週初洩漏資訊指向 07-17 GA（200 萬 token context、Deep Think 推理、$1.25/$10 定價）</li>
+        <li><strong>Bloomberg 07-16 報導</strong>：發佈再次延後，模型未達 Google 自訂的品質門檻——問題出在<strong>幻覺率</strong>與真實場景可靠度</li>
+        <li>DeepMind 據報<strong>打掉原始基礎模型重練</strong>：複雜多層 SVG 場景佈局無法維持結構一致性、遞迴式 tool-calling 環境下會崩潰</li>
+        <li>截至 07-18，Gemini 3.5 Pro 仍未出現在 Google 公開 API 模型清單</li>
       </ul>
-      <div class="significance">若洩漏屬實，下週很可能是 Gemini 3.5 Pro 正式 GA 週，屆時可以做三大廠模型的完整定價/能力對比。</div>
+      <div class="significance">上週報告把 07-17 GA 列為觀察重點，現在答案揭曉：沒發生，而且是打掉重練等級的延期。三大廠中 Google 落後幅度比預期更大；下週不宜再預設 GA 日期，改為觀望重建後的實際成果。</div>
+    </div>
+
+    <div class="highlight-card info" style="border-left-color:var(--accent)">
+      <h3>2. OpenAI 提議把 5% 股份交給美國政府（估值約 $852B，對應約 $42.6B）</h3>
+      <p>延續上半週的 IPO 傳聞，OpenAI 本週再出一記震撼彈：<strong>Sam Altman 直接向 Trump 總統、商務部長 Lutnick、財政部長 Bessent 提議，把公司約 5% 股份交給美國政府</strong>——以近期 $8520 億估值計算，價值約 <strong>$426 億美元</strong>。</p>
+      <div class="significance">這是 AI 巨頭與政府關係前所未見的操作，牽動出口管制待遇、政府採購、監管立場；與上半週的機密 IPO 籌備（目標 9 月上市）疊在一起看，OpenAI 正同時佈局資本市場與政治靠攏。</div>
+    </div>
+
+    <div class="highlight-card new-card">
+      <h3>3. Anthropic 本週連發：Claude for Teachers、自助 HIPAA、對話中系統訊息、記憶升級</h3>
+      <ul>
+        <li><strong>Claude for Teachers（07-14）</strong>：免費提供全美 K-12 教師，含教學技能庫與對應全 50 州學術標準、實證課綱的直接連結</li>
+        <li><strong>自助 HIPAA 設定（07-15）</strong>：Enterprise / API 組織可自助審閱 BAA、下載實作指南、一鍵啟用，醫療場景落地門檻大幅降低</li>
+        <li><strong>對話中系統訊息（07-15~16）</strong>：Claude API、Bedrock、Google Cloud 上線，支援 Fable 5 / Mythos 5 / Opus 4.8——可在對話中途插入系統指令</li>
+        <li><strong>記憶升級（07-10 上線，07-16 報導）</strong>：以個別分類條目取代每日記憶摘要，提供更豐富的對話脈絡</li>
+      </ul>
+      <div class="significance">「對話中系統訊息」對你跑週報這類多階段 pipeline 特別有價值——可在中途調整 agent 行為而不必重開對話。記憶改成分類條目後，跨對話的脈絡連貫性會更好。</div>
+    </div>
+
+    <div class="highlight-card">
+      <h3>4. 🔻 Claude Code 週用量 +50% 加碼已到期（2026-07-13 18:00 PT）</h3>
+      <p>上半週最緊急的項目已成過去式：Anthropic 自 05-13 起提供的 <strong>50% 週用量加碼，已於 07-13 美西時間 18:00 到期</strong>，週用量回復到加碼前水準。這是一連串「反 Codex」加碼（5/6 五小時額度翻倍、6 月移除尖峰限制）的收尾——背景是 Codex 同等任務 token 消耗量僅約 Claude Code 的 1/4.2。</p>
+      <div class="significance">如果你這週感覺 Claude Code 週額度比上週緊，就是這個原因。目前沒有續期公告，規劃高用量任務時要以回復後的額度為準。</div>
+    </div>
+
+    <div class="highlight-card">
+      <h3>5. OpenAI 產品與硬體動態：統一搜尋、自訂指令擴容、無螢幕智慧音箱</h3>
+      <ul>
+        <li><strong>ChatGPT 統一搜尋（07-14）</strong>：web / iOS / Android 上跨 chats、projects、images、documents 的統一搜尋上線</li>
+        <li><strong>自訂指令擴容（07-15）</strong>：Enterprise / Business / Education 用戶 custom instructions 上限 1,500 → <strong>5,000 字</strong></li>
+        <li><strong>首款硬體曝光</strong>：OpenAI 首款消費裝置將是<strong>可移動、無螢幕的智慧音箱</strong>，定位家用「AI companion」（Bloomberg 07-14）——與 Apple 商業機密訴訟對照看，裝置端野心正浮上檯面</li>
+      </ul>
+    </div>
+
+    <div class="highlight-card">
+      <h3>6. 開源模型：Inkling（Thinking Machines）、Kimi K3（Moonshot）接力</h3>
+      <ul>
+        <li><strong>Inkling（Thinking Machines，約 07-15）</strong>：開放權重通用型 LLM，定位為可與主流封閉模型競爭的 coding 模型，權重可下載並提供 hosted API</li>
+        <li><strong>Kimi K3（Moonshot AI，07-16）</strong>：K2.7 之後的新一代，延續 Moonshot 密集的迭代節奏</li>
+        <li>延續 W28 判斷：GLM-5.2 仍是最推薦的開源 coding 主力，但 Inkling / Kimi K3 值得列入下一輪實測名單</li>
+      </ul>
     </div>
 
     <div class="highlight-card codex-card">
-      <h3>7. Claude Code 本週功能更新（2026-07-11）</h3>
+      <h3>7. Claude Code 平台更新（07-11）</h3>
       <ul>
-        <li>Auto mode 在 <strong>Bedrock / Vertex AI / Foundry 預設開啟</strong></li>
-        <li><strong>Bedrock 更新至 Claude Opus 4.8</strong></li>
-        <li><strong>Chrome 整合正式脫離 preview</strong>，開放給直接向 Anthropic 訂閱的所有用戶</li>
-        <li><strong>Claude Desktop 登陸 Ubuntu 22.04+ / Debian 12+（beta）</strong>：x86_64 與 arm64 皆支援</li>
-        <li>Agent view 與 Remote Control 改善，修正凍結、當機、憑證問題與多個 worktree/plugin bug</li>
-        <li>Fable 5 免費存取期限延長至 07-12 23:59:59 PT（本報告產出時已過期）</li>
+        <li>Auto mode 在 <strong>Bedrock / Vertex AI / Foundry 預設開啟</strong>、<strong>Bedrock 更新至 Claude Opus 4.8</strong></li>
+        <li><strong>Chrome 整合脫離 preview</strong>：直接向 Anthropic 訂閱的所有用戶開放</li>
+        <li><strong>Claude Desktop 登陸 Ubuntu 22.04+ / Debian 12+（beta）</strong>，x86_64 與 arm64 皆支援</li>
+        <li>Agent view 與 Remote Control 改善，修正凍結、當機、憑證與多個 worktree/plugin bug</li>
       </ul>
     </div>
 
     <div class="highlight-card">
       <h3>8. 補充：上週遺漏的模型發佈（07-08 ~ 07-09）</h3>
-      <p><strong>Grok 4.5</strong>（xAI，2026-07-08）、<strong>Meta Muse Spark 1.1</strong>（2026-07-09）——兩者釋出日期落在 W28 期間但當週未捕捉到，本週補記；細節仍在追蹤中，下週視討論熱度決定是否深入介紹。</p>
+      <p><strong>Grok 4.5</strong>（xAI，2026-07-08）、<strong>Meta Muse Spark 1.1</strong>（2026-07-09）——釋出日期落在 W28 期間但當週未捕捉到，於此補記。</p>
     </div>
   </section>
 
@@ -368,16 +354,19 @@
       <table>
         <thead><tr><th>工具</th><th>版本 / 日期</th><th>重點</th></tr></thead>
         <tbody>
-          <tr class="urgent-row"><td><strong>Claude Code 週用量 +50%</strong></td><td>到期 2026-07-13 18:00 PT</td><td>今天到期，把握最後額度</td></tr>
-          <tr><td><strong>OpenAI IPO（機密送件）</strong></td><td>目標 2026-09</td><td>估值約 $730B，史上最大科技 IPO 候選</td></tr>
-          <tr><td><strong>Apple v. OpenAI 訴訟</strong></td><td>2026-07-11</td><td>商業機密竊取指控，400+ 前 Apple 員工在 OpenAI</td></tr>
-          <tr><td><strong>ChatGPT Atlas 瀏覽器</strong></td><td>2026-08-09 停用</td><td>功能併入 Chrome 擴充套件 + 桌面版</td></tr>
-          <tr class="new-row"><td><strong>Google Search AI 化</strong></td><td>2026-07-10</td><td>結果頁全面由 Gemini 3.5 Flash 生成</td></tr>
-          <tr class="new-row"><td><strong>Gemini 3.5 Pro</strong></td><td>傳 2026-07-17 GA</td><td>200 萬 context、Deep Think、$1.25/$10 定價</td></tr>
-          <tr><td><strong>Claude Code Chrome 整合</strong></td><td>脫離 preview（本週）</td><td>直接訂閱用戶全面開放</td></tr>
-          <tr><td><strong>Claude Desktop（Ubuntu/Debian）</strong></td><td>Beta（本週）</td><td>新平台支援</td></tr>
-          <tr><td><strong>Grok 4.5</strong></td><td>2026-07-08</td><td>xAI 新模型，細節待補</td></tr>
-          <tr><td><strong>Meta Muse Spark 1.1</strong></td><td>2026-07-09</td><td>Meta 新模型，細節待補</td></tr>
+          <tr class="urgent-row"><td><strong>Gemini 3.5 Pro</strong></td><td>07-17 目標再落空</td><td>第三度延期，DeepMind 打掉重練（幻覺率/SVG/遞迴 tool-calling）</td></tr>
+          <tr class="new-row"><td><strong>OpenAI 給政府 5% 股份提議</strong></td><td>本週</td><td>估值 $852B，對應約 $42.6B，Altman 直接向白宮提案</td></tr>
+          <tr class="new-row"><td><strong>Claude for Teachers</strong></td><td>2026-07-14</td><td>免費，全美 K-12，對應 50 州課綱</td></tr>
+          <tr class="new-row"><td><strong>Claude 自助 HIPAA 設定</strong></td><td>2026-07-15</td><td>Enterprise/API 自助啟用 BAA + HIPAA</td></tr>
+          <tr class="new-row"><td><strong>Claude 對話中系統訊息</strong></td><td>2026-07-15~16</td><td>API/Bedrock/GCloud，支援 Fable5/Mythos5/Opus4.8</td></tr>
+          <tr><td><strong>Claude Code 週用量 +50%</strong></td><td>2026-07-13 到期</td><td>加碼結束，回復加碼前水準</td></tr>
+          <tr><td><strong>ChatGPT 統一搜尋</strong></td><td>2026-07-14</td><td>跨 chats/projects/images/documents</td></tr>
+          <tr><td><strong>ChatGPT 自訂指令擴容</strong></td><td>2026-07-15</td><td>1,500 → 5,000 字</td></tr>
+          <tr><td><strong>OpenAI 智慧音箱</strong></td><td>曝光（07-14）</td><td>無螢幕、可移動、家用 AI companion</td></tr>
+          <tr class="new-row"><td><strong>Inkling（Thinking Machines）</strong></td><td>約 2026-07-15</td><td>開放權重 coding 模型 + hosted API</td></tr>
+          <tr class="new-row"><td><strong>Kimi K3（Moonshot）</strong></td><td>2026-07-16</td><td>K2.7 後新一代</td></tr>
+          <tr><td><strong>Claude Code Chrome 整合</strong></td><td>脫離 preview（07-11）</td><td>直接訂閱用戶全面開放</td></tr>
+          <tr><td><strong>Grok 4.5 / Muse Spark 1.1</strong></td><td>07-08 / 07-09</td><td>上週補記</td></tr>
         </tbody>
       </table>
     </div>
@@ -390,30 +379,31 @@
       <div class="cat-card">
         <h4>AI Coding Assistant</h4>
         <ul>
-          <li><strong>今天內用完 Claude Code 額外週額度</strong>：50% 加碼今晚到期，有大任務要跑就趁現在</li>
-          <li><strong>Chrome 整合脫離 preview</strong>：可以正式把瀏覽器操作納入 Claude Code 工作流</li>
-          <li><strong>Claude Desktop 上 Linux</strong>：Ubuntu/Debian 開發機現在可以裝 beta 版測試</li>
+          <li><strong>對話中系統訊息</strong>：多階段 pipeline 可中途插入系統指令調整 agent 行為，不必重開對話</li>
+          <li><strong>Chrome 整合脫離 preview</strong>：可正式把瀏覽器操作納入工作流</li>
+          <li><strong>Claude Code 週額度回復</strong>：50% 加碼已結束，高用量任務改以回復後額度規劃</li>
+          <li><strong>Claude Desktop 上 Linux</strong>：Ubuntu/Debian 開發機可裝 beta 測試</li>
         </ul>
       </div>
       <div class="cat-card">
         <h4>Local LLM</h4>
         <ul>
-          <li>本週無重大 local model 進展，延續 W28 的 GLM-5.2 仍是最推薦的開源選項</li>
-          <li>Grok 4.5、Muse Spark 1.1 是否有開放權重版本待確認，列入下週追蹤</li>
+          <li><strong>Inkling、Kimi K3 加入實測名單</strong>：本週兩款新開源模型，搭配 W28 的 GLM-5.2 一起評估</li>
+          <li>Grok 4.5 / Muse Spark 1.1 是否有開放權重版本待確認</li>
         </ul>
       </div>
       <div class="cat-card">
         <h4>Agent 架構 / 產業</h4>
         <ul>
-          <li><strong>三大廠 agentic browsing 收斂</strong>：OpenAI 關 Atlas 轉戰擴充套件、Claude Code Chrome 整合 GA，「瀏覽器操作」正變成內建能力而非獨立產品</li>
-          <li><strong>Google Search 的 AI 化</strong>：對任何依賴搜尋流量的產品/內容策略是結構性衝擊</li>
+          <li><strong>Gemini 3.5 Pro 打掉重練</strong>：失敗模式（遞迴 tool-calling 崩潰、複雜 SVG）正是 agent workflow 的硬需求，留意 Google 重建後是否補上</li>
+          <li><strong>OpenAI 政治/資本雙線佈局</strong>：給政府 5% 股份 + 機密 IPO + 首款硬體，進入資本與政治博弈新階段</li>
         </ul>
       </div>
       <div class="cat-card">
-        <h4>資本市場 / 法規</h4>
+        <h4>垂直落地 / 法規</h4>
         <ul>
-          <li><strong>OpenAI IPO 動態、Apple 訴訟</strong>：顯示 AI 產業進入資本與法律戰的新階段</li>
-          <li>訴訟若進入實質審理，值得追蹤是否波及 OpenAI 硬體/裝置端 AI 團隊人才佈局</li>
+          <li><strong>Claude for Teachers、自助 HIPAA</strong>：大廠正把通用模型往受規管的教室/醫療垂直場景推</li>
+          <li>醫療場景現在可自助啟用 HIPAA，降低合規落地門檻</li>
         </ul>
       </div>
     </div>
@@ -423,11 +413,11 @@
   <section>
     <div class="section-title"><span>📋</span> 下週觀察清單</div>
     <ul class="checklist">
-      <li><strong>Gemini 3.5 Pro 是否如傳言於 07-17 GA：</strong> 若成真，做三大廠模型完整對比</li>
-      <li><strong>Claude Code 額度回復後的實際影響：</strong> 50% 加碼結束，觀察是否有用戶抱怨或流失</li>
-      <li><strong>Apple v. OpenAI 訴訟後續：</strong> 是否有初步裁定或雙方聲明</li>
-      <li><strong>Grok 4.5 / Muse Spark 1.1 細節補完：</strong> 確認是否開放權重、benchmark 表現</li>
-      <li><strong>OpenAI IPO 是否正式送件：</strong> 目前僅機密籌備階段</li>
+      <li><strong>Gemini 3.5 Pro 重建後何時再嘗試 GA：</strong> 已三度跳票，改為觀望實際成果而非預測日期</li>
+      <li><strong>OpenAI 給政府 5% 股份提議的後續：</strong> 白宮是否回應、對出口管制/監管的影響</li>
+      <li><strong>Inkling / Kimi K3 實測：</strong> 與 GLM-5.2 對比 coding 能力</li>
+      <li><strong>Claude 對話中系統訊息實作：</strong> 套用到週報 pipeline，測試中途調整 agent 行為</li>
+      <li><strong>OpenAI 智慧音箱細節：</strong> 規格、上市時間、與 Apple 訴訟的關聯</li>
     </ul>
   </section>
 
@@ -436,19 +426,19 @@
     <div class="section-title"><span>🎯</span> 本週與你高度相關的項目</div>
     <div class="deep-dive-grid">
       <div class="deep-dive-card">
-        <div class="label">選項 A — 額度視窗</div>
-        <h4>把握 Claude Code 額度加碼最後一天</h4>
-        <p>今天額度加碼到期前，評估是否有適合現在跑的大型任務（如這次的雙週報 pipeline 本身），把握額度回復前的窗口。</p>
+        <div class="label">選項 A — 對話中系統訊息</div>
+        <h4>把「對話中系統訊息」套進週報 pipeline</h4>
+        <p>週報 pipeline（WebSearch → NotebookLM → 撰寫）是多階段任務，試試在中途用 mid-conversation system message 調整 agent 行為（例如切換蒐集重點），評估是否比重開對話更有效率。</p>
       </div>
       <div class="deep-dive-card">
-        <div class="label">選項 B — Chrome 整合</div>
-        <h4>Claude Code Chrome 整合實測</h4>
-        <p>既然已脫離 preview，找一個需要瀏覽器操作的任務（如登入某網站抓資料、填表單），實測 Claude in Chrome 的穩定性與速度。</p>
+        <div class="label">選項 B — 開源實測</div>
+        <h4>Inkling vs GLM-5.2 coding 實測</h4>
+        <p>本週新開源的 Inkling 定位為可對抗封閉模型的 coding 模型，找一個中等難度任務跟 W28 推薦的 GLM-5.2 對比，看是否值得換。</p>
       </div>
       <div class="deep-dive-card">
-        <div class="label">選項 C — 搜尋習慣</div>
-        <h4>Google Search AI 化對你資訊蒐集習慣的影響</h4>
-        <p>留意這幾天用 Google 搜尋時的結果呈現方式是否已經改變，評估是否需要調整你平常查資料/驗證來源的習慣。</p>
+        <div class="label">選項 C — 校準預期</div>
+        <h4>重新校準對 Google 的預期</h4>
+        <p>Gemini 3.5 Pro 三度跳票且打掉重練，如果你原本規劃導入 Gemini，建議把時程假設往後拉，並以「重建後的實測」而非「洩漏規格」作為評估依據。</p>
       </div>
     </div>
   </section>
@@ -459,13 +449,14 @@
 
     <div class="yt-card">
       <h4><span class="yt-label">YT</span>Weekly AI News: GPT-5.6 Launch, Atlas Browser Shuts Down &amp; The Open-Source Threat!</h4>
-      <p>摘要本週重大 AI 趨勢：GPT-5.6 系列強調在具備代理能力同時以更低成本超越競爭對手；Atlas 瀏覽器因競爭力不足終止，反映頂尖企業也面臨產品成敗考驗；行業核心競爭力從追求模型規模轉向更便宜更智能的系統；Anthropic、OpenAI、SpaceX 市場影響力已超越過去 25 年的科技公司，開源模型崛起將挑戰付費專利模型。</p>
+      <p>摘要本週重大 AI 趨勢：GPT-5.6 系列強調在具備代理能力同時以更低成本超越競爭對手；Atlas 瀏覽器因競爭力不足終止；行業核心競爭力從追求模型規模轉向更便宜更智能的系統；Anthropic、OpenAI、SpaceX 市場影響力已超越過去 25 年的科技公司，開源模型崛起將挑戰付費專利模型。</p>
       <em>Keywords：GPT-5.6 系列發布、Atlas 瀏覽器關閉、AI 模型成本優化、開源模型威脅、三大科技巨頭</em>
     </div>
 
     <div class="yt-card">
       <h4><span class="yt-label">YT</span>Gemini 3.5 Pro LEAKED: Deep Think, 2M Tokens &amp; Why It Changes Everything</h4>
-      <p>解析 Gemini 3.5 Pro 洩漏資訊：透過全新預訓練基礎展現實力，200 萬 token context 搭配 Deep Think 推理模式；策略從 benchmark 競賽轉向代理人導向的執行力，專注長工作流與視覺互動設計以補足程式碼開發劣勢；意圖利用軟硬體垂直整合優勢建構 AI 代理人生態系統。</p>
+      <p>解析 Gemini 3.5 Pro 洩漏資訊：透過全新預訓練基礎展現實力，200 萬 token context 搭配 Deep Think 推理模式；策略從 benchmark 競賽轉向代理人導向的執行力，專注長工作流與視覺互動設計以補足程式碼開發劣勢。</p>
+      <div class="yt-note">📌 後續發展：影片預測的 07-17 GA 並未實現，模型於 07-16 傳出第三度延期並打掉重練，恰好印證「補足程式碼/視覺劣勢」正是 Google 尚未跨過的門檻。</div>
       <em>Keywords：Gemini 3.5 Pro、兩百萬 token 上下文、Deep Think 模式、自主 AI 代理、模型預訓練更新</em>
     </div>
   </section>
@@ -474,14 +465,14 @@
   <div class="run-log">
     <div class="run-log-title">Run Log</div>
     <p>
-      <span class="done">✓</span> Claude WebSearch：完成（Anthropic/OpenAI/Google/資本市場/法律 5 個面向）<br>
-      <span class="done">✓</span> 撰寫 .md：完成（2026-W29.md，標註為部分週）<br>
+      <span class="done">✓</span> Claude WebSearch：完成（前半週 07-11~13 + 後半週 07-14~17，共 5 個面向）<br>
+      <span class="done">✓</span> 撰寫 .md：完成（2026-W29.md，完整週版本）<br>
       <span class="done">✓</span> 撰寫 .html：完成（2026-W29.html）<br>
-      <span class="done">✓</span> NotebookLM YouTube 來源：完成（2 支全部匯入，Notebook ID e58af100；原先誤加入的 2 支已刪除重補）<br>
+      <span class="done">✓</span> NotebookLM YouTube 來源：完成（2 支，Notebook ID e58af100）<br>
       <span class="done">✓</span> NotebookLM Source Guide：完成（2026-W29-youtube.md）<br>
       <span class="done">✓</span> NotebookLM Briefing Doc：完成（2026-W29-briefing.md）<br>
       <span class="pending-log">…</span> Podcast 音檔：未生成（BlueMagpie-TTS，本輪未執行）<br>
-      <span class="done">✓</span> QA：完成
+      <span class="done">✓</span> QA：完成（07-21 由部分週補齊為完整週，高時效項目已改過去式）
     </p>
   </div>
 

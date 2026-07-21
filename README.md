@@ -6,7 +6,7 @@
 
 | 週次 | 期間 | 本週焦點 | 報告 |
 |------|------|---------|------|
-| W29（部分週） | 2026-07-11 ~ 2026-07-13 | Claude Code 週用量 +50% 加碼到期、OpenAI 機密送件 IPO（$730B）、Apple 控告 OpenAI、Atlas 瀏覽器關閉、Gemini 3.5 Pro 洩漏（傳 07-17 GA） | [.md](reports/2026-W29/2026-W29.md) ｜ [.html](reports/2026-W29/2026-W29.html) |
+| W29 | 2026-07-11 ~ 2026-07-17 | Gemini 3.5 Pro 第三度跳票（打掉重練）、OpenAI 提議給美政府 5% 股份、Anthropic 教室/醫療落地（Claude for Teachers + 自助 HIPAA + 對話中系統訊息）、Apple 控告 OpenAI、Atlas 瀏覽器關閉 | [.md](reports/2026-W29/2026-W29.md) ｜ [.html](reports/2026-W29/2026-W29.html) |
 | W28 | 2026-07-04 ~ 2026-07-10 | GPT-5.6 全球上線 + ChatGPT Work、Claude Sonnet 5 成為預設模型、Gemini 3.5 Pro 持續延遲、GLM-5.2 登頂開源模型 | [.md](reports/2026-W28/2026-W28.md) ｜ [.html](reports/2026-W28/2026-W28.html) |
 | W27 | 2026-06-27 ~ 2026-07-03 | Claude Sonnet 5 發佈（agentic 躍進）、Fable 5 出口管制解除、GPT-5.6 Sol/Terra/Luna 限量預覽、Claude apps gateway | [.md](reports/2026-W27/2026-W27.md) ｜ [.html](reports/2026-W27/2026-W27.html) |
 | W26 | 2026-06-19 ~ 2026-06-26 | Claude Tag Slack Beta（頻道 AI 隊友）、Codex v0.142.0 Multi-Agent + Indexed Web Search、EUROPA 歐盟主權 AI 模型 | [.md](reports/2026-W26/2026-W26.md) ｜ [.html](reports/2026-W26/2026-W26.html) |
