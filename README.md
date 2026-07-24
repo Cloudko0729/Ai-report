@@ -6,6 +6,7 @@
 
 | 週次 | 期間 | 本週焦點 | 報告 |
 |------|------|---------|------|
+| W30 | 2026-07-18 ~ 2026-07-24 | Claude Opus 5 發表（近 Fable 5、Opus 4.8 同價）、Gemini 3.5 Pro 第四度跳票（傳延 8 月）、OpenAI ChatGPT Health/Voice 擴張、Kimi K3 登頂開源（2.8T）、Devstral 2 領先本地 coding | [.md](reports/2026-W30/2026-W30.md) ｜ [.html](reports/2026-W30/2026-W30.html) |
 | W29 | 2026-07-11 ~ 2026-07-17 | Gemini 3.5 Pro 第三度跳票（打掉重練）、OpenAI 提議給美政府 5% 股份、Anthropic 教室/醫療落地（Claude for Teachers + 自助 HIPAA + 對話中系統訊息）、Apple 控告 OpenAI、Atlas 瀏覽器關閉 | [.md](reports/2026-W29/2026-W29.md) ｜ [.html](reports/2026-W29/2026-W29.html) |
 | W28 | 2026-07-04 ~ 2026-07-10 | GPT-5.6 全球上線 + ChatGPT Work、Claude Sonnet 5 成為預設模型、Gemini 3.5 Pro 持續延遲、GLM-5.2 登頂開源模型 | [.md](reports/2026-W28/2026-W28.md) ｜ [.html](reports/2026-W28/2026-W28.html) |
 | W27 | 2026-06-27 ~ 2026-07-03 | Claude Sonnet 5 發佈（agentic 躍進）、Fable 5 出口管制解除、GPT-5.6 Sol/Terra/Luna 限量預覽、Claude apps gateway | [.md](reports/2026-W27/2026-W27.md) ｜ [.html](reports/2026-W27/2026-W27.html) |
