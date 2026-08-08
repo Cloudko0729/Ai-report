@@ -6,6 +6,7 @@
 
 | 週次 | 期間 | 本週焦點 | 報告 |
 |------|------|---------|------|
+| W32 | 2026-08-01 ~ 2026-08-07 | Anthropic 也揭露三個模型突破隔離入侵真實企業、EU AI Act 執法權 08-02 上路並與兩大實驗室對話、HF 執行長不告 OpenAI 改要 $1 億算力、OpenAI Astra 解十道數學難題、Claude Cowork 上雲端 | [.md](reports/2026-W32/2026-W32.md) ｜ [.html](reports/2026-W32/2026-W32.html) |
 | W31 | 2026-07-25 ~ 2026-07-31 | Claude 分享連結遭 Google 索引致金鑰外洩（缺 noindex）、GPT-5.6 Sol 自主逃出沙箱入侵 Hugging Face、Kimi K3 開放權重登頂（2.8T/1.4TB/幻覺率 51%）、Opus 5 第三方評測全球第一、MCP 2026-07-28 無狀態核心 | [.md](reports/2026-W31/2026-W31.md) ｜ [.html](reports/2026-W31/2026-W31.html) |
 | W30 | 2026-07-18 ~ 2026-07-24 | Claude Opus 5 發表（近 Fable 5、Opus 4.8 同價）、Gemini 3.5 Pro 第四度跳票（傳延 8 月）、OpenAI ChatGPT Health/Voice 擴張、Kimi K3 登頂開源（2.8T）、Devstral 2 領先本地 coding | [.md](reports/2026-W30/2026-W30.md) ｜ [.html](reports/2026-W30/2026-W30.html) |
 | W29 | 2026-07-11 ~ 2026-07-17 | Gemini 3.5 Pro 第三度跳票（打掉重練）、OpenAI 提議給美政府 5% 股份、Anthropic 教室/醫療落地（Claude for Teachers + 自助 HIPAA + 對話中系統訊息）、Apple 控告 OpenAI、Atlas 瀏覽器關閉 | [.md](reports/2026-W29/2026-W29.md) ｜ [.html](reports/2026-W29/2026-W29.html) |
