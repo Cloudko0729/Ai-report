@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 新知週報 2026-W33</title>
+<style>
+  :root {
+    --bg: #f8f9fa; --surface: #ffffff; --border: #e2e8f0;
+    --text: #1a202c; --muted: #718096;
+    --accent: #3b82f6; --accent-bg: #eff6ff; --accent-border: #bfdbfe;
+    --green: #059669; --green-bg: #ecfdf5;
+    --amber: #d97706; --amber-bg: #fffbeb;
+    --purple: #7c3aed; --purple-bg: #f5f3ff;
+    --red: #dc2626; --red-bg: #fef2f2; --red-border: #fecaca;
+    --tag-bg: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.7; font-size: 15px;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .container { max-width: 860px; margin: 0 auto; padding: 32px 24px 80px; }
+
+  .report-header {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 28px 32px; margin-bottom: 24px;
+  }
+  .report-header h1 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 10px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; }
+  .meta-tag { background: var(--tag-bg); border-radius: 6px; padding: 3px 10px; font-size: 13px; color: var(--muted); }
+  .meta-tag strong { color: var(--text); }
+  .meta-tag.urgent { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); font-weight: 600; }
+  .meta-tag.info { background: var(--accent-bg); color: #1e40af; border: 1px solid var(--accent-border); font-weight: 600; }
+  .meta-tag.success { background: var(--green-bg); color: var(--green); border: 1px solid #a7f3d0; font-weight: 600; }
+
+  .thesis {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-radius: 10px; padding: 20px 24px; margin-bottom: 32px;
+    color: #cbd5e1; font-size: 14px; line-height: 1.75;
+  }
+  .thesis strong { color: #f1f5f9; }
+  .thesis .label { font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 8px; }
+
+  section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 1.1rem; font-weight: 700; padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .highlight-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-left: 4px solid var(--accent); border-radius: 8px;
+    padding: 20px 24px; margin-bottom: 16px;
+  }
+  .highlight-card.urgent-card { border-left-color: var(--red); background: #fff8f8; }
+  .highlight-card.new-card { border-left-color: var(--green); background: #f0fdf4; }
+  .highlight-card.codex-card { border-left-color: var(--purple); background: var(--purple-bg); }
+  .highlight-card.amber-card { border-left-color: var(--amber); background: var(--amber-bg); }
+  .highlight-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 10px; }
+  .highlight-card p { margin-bottom: 8px; }
+  .highlight-card ul { padding-left: 20px; margin-bottom: 8px; }
+  .highlight-card li { margin-bottom: 4px; }
+  .significance {
+    background: var(--accent-bg); border: 1px solid var(--accent-border);
+    border-radius: 6px; padding: 10px 14px; font-size: 13.5px; margin-top: 12px; color: #1e40af;
+  }
+  .significance::before { content: "💡 對你的意義："; font-weight: 600; }
+  .quote-box {
+    background: #fff; border-left: 3px solid var(--red);
+    padding: 10px 14px; margin: 10px 0; font-size: 13.5px; color: #7f1d1d;
+  }
+
+  .pricing-table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 13.5px; }
+  .pricing-table th { background: #f1f5f9; padding: 7px 12px; text-align: left; font-size: 12px; font-weight: 600; color: var(--muted); border: 1px solid var(--border); }
+  .pricing-table td { padding: 7px 12px; border: 1px solid var(--border); }
+
+  .table-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); }
+  table { border-collapse: collapse; width: 100%; background: var(--surface); }
+  th { background: #f1f5f9; padding: 10px 14px; text-align: left; font-size: 13px; font-weight: 600; color: var(--muted); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 14px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f8fafc; }
+  tr.urgent-row td { background: #fff8f8; }
+  tr.new-row td { background: #f0fdf4; }
+  .big-num { font-size: 1.15em; font-weight: 700; }
+  .num-bad { color: var(--red); }
+  .num-good { color: var(--green); }
+  code { font-family: "Cascadia Code", "Consolas", monospace; font-size: 12.5px; background: #f1f5f9; border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; color: #d63384; }
+
+  .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 600px) { .cat-grid { grid-template-columns: 1fr; } }
+  .cat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px 18px; }
+  .cat-card h4 { font-size: 13px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+  .cat-card.danger h4 { color: var(--red); }
+  .cat-card ul { padding-left: 16px; }
+  .cat-card li { font-size: 13.5px; margin-bottom: 5px; }
+
+  .checklist { list-style: none; padding: 0; }
+  .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 8px; font-size: 14px; }
+  .checklist li::before { content: "☐"; color: var(--muted); flex-shrink: 0; margin-top: 1px; }
+
+  .deep-dive-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .deep-dive-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; }
+  .deep-dive-card .label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .deep-dive-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .deep-dive-card p { font-size: 13.5px; color: #4a5568; }
+
+  /* ── YouTube 來源摘要 ── */
+  .yt-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; margin-bottom: 12px; font-size: 14px; }
+  .yt-card h4 { font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .yt-card p { color: #4a5568; margin-bottom: 6px; }
+  .yt-card em { font-size: 12.5px; color: var(--muted); }
+  .yt-note { font-size: 12.5px; color: #92400e; background: var(--amber-bg); border: 1px solid var(--amber); border-radius: 6px; padding: 10px 14px; }
+  .yt-label { background: #ff0000; color: white; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px; letter-spacing: 0.05em; flex-shrink: 0; }
+
+  /* ── 廣播播放器 ── */
+  .podcast-player {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-radius: 12px; padding: 24px 28px; margin-bottom: 32px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .podcast-header { display: flex; align-items: center; gap: 14px; }
+  .podcast-icon {
+    width: 48px; height: 48px;
+    background: linear-gradient(135deg, #3b82f6, #7c3aed);
+    border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .podcast-meta { flex: 1; }
+  .podcast-meta h3 { color: #f1f5f9; font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+  .podcast-meta p { color: #64748b; font-size: 12.5px; }
+  .podcast-player audio { width: 100%; height: 36px; border-radius: 6px; outline: none; accent-color: #3b82f6; }
+  .podcast-player audio::-webkit-media-controls-panel { background: #1e293b; }
+  .podcast-tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3);
+    color: #93c5fd; font-size: 11px; font-weight: 600;
+    padding: 2px 8px; border-radius: 99px; letter-spacing: 0.04em;
+  }
+
+  .run-log { background: #0f172a; border-radius: 8px; padding: 16px 20px; margin-top: 36px; }
+  .run-log-title { font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+  .run-log p { font-family: "Cascadia Code", "Consolas", monospace; font-size: 12.5px; color: #94a3b8; line-height: 1.8; }
+  .run-log p span.done { color: #34d399; }
+  .run-log p span.pending-log { color: #fbbf24; }
+  strong { font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- 廣播播放器 -->
+  <div class="podcast-player">
+    <div class="podcast-header">
+      <div class="podcast-icon">🎙</div>
+      <div class="podcast-meta">
+        <h3>本週 AI 新知廣播 — 2026-W33</h3>
+        <p>NotebookLM Audio Overview ｜ 雙主持人深入對談 ｜ 繁中</p>
+      </div>
+      <span class="podcast-tag">🎧 AI 生成</span>
+    </div>
+    <audio controls preload="metadata">
+      <source src="podcast_w33.m4a" type="audio/mp4">
+      您的瀏覽器不支援 audio 標籤。
+    </audio>
+  </div>
+
+  <!-- Header -->
+  <div class="report-header">
+    <h1>AI 新知週報 2026-W33</h1>
+    <div class="meta">
+      <span class="meta-tag"><strong>期間</strong> 2026-08-08 ~ 2026-08-14</span>
+      <span class="meta-tag"><strong>蒐集</strong> Claude WebSearch</span>
+      <span class="meta-tag"><strong>撰寫</strong> Claude</span>
+      <span class="meta-tag urgent">⚡ Claude Code auto mode 08-14 成預設</span>
+      <span class="meta-tag info">🛑 Astra 因資安能力暫緩</span>
+    </div>
+  </div>
+
+  <div class="thesis">
+    <span class="label">本週主線</span>
+    <strong>模型的「資安能力」同時變成煞車與商品。</strong><br>
+    同一家公司、同一週：OpenAI 因 Astra 的攻擊能力達到 Preparedness Framework 的 <strong>Critical</strong> 門檻而<strong>暫緩發布</strong>（08-07），三天後卻推出<strong>刻意移除資安護欄</strong>的 GPT-5.6-Cyber（08-10）。而 Anthropic 走了另一條路——用數據證明<strong>人類把關根本不可靠</strong>（攔截率 13.6%），把 Claude Code 的安全審查從人手交給分類器（08-14 起預設）。
+  </div>
+
+  <!-- 本週最值得注意 -->
+  <section>
+    <div class="section-title"><span>🔥</span> 本週最值得注意</div>
+
+    <div class="highlight-card urgent-card">
+      <h3>1. ⚡ Claude Code auto mode 自 08-14 起成為預設（Pro / Max / Team）— 與你直接相關</h3>
+      <p>本週對你最有實質影響的一則：<strong>每次工具呼叫都要你按「同意」的模式結束了</strong>，改由分類器即時審查每一次呼叫，判斷是否為不可逆、破壞性或越界的動作。</p>
+      <p><strong>Anthropic 的理由是一份對照研究（1,053 名付費測試者）：</strong></p>
+      <table class="pricing-table">
+        <thead><tr><th>把關方式</th><th>危險指令攔截率</th></tr></thead>
+        <tbody>
+          <tr><td>人類審查</td><td class="big-num num-bad">13.6%</td></tr>
+          <tr><td>連續 50 個 prompt 之後的人類</td><td class="big-num num-bad">約 5%</td></tr>
+          <tr><td>auto mode 分類器</td><td class="big-num num-good">89%</td></tr>
+        </tbody>
+      </table>
+      <p>另外兩個數字更說明問題：</p>
+      <ul>
+        <li>使用者對權限提示的<strong>核准率高達 97%</strong>——這個人工檢查點多半已淪為肌肉記憶</li>
+        <li>Team 與 Enterprise 開啟 auto mode 後，<strong>PR 產出量增加約 25%</strong></li>
+      </ul>
+      <p><strong>實務細節：</strong>分類器本身的 token 開銷<strong>不計入你的用量額度</strong>（Pro/Max/Team）。</p>
+      <p><strong>同批 Claude Code 更新：</strong>預設 subagent forking、跨 session 的 mention 與 SendMessage 強化、GitLab 與 marketplace 支援加強、policy 與 gateway 驗證改善，以及 Remote Control、權限、網路、session 穩定性的一批修正。</p>
+      <div class="significance">這是權限模型的根本轉向——從「人類逐次批准」變成「AI 審查 + 事前規則」。<strong>你該做的是把真正不能碰的東西寫成 deny 規則</strong>，而不是繼續依賴自己在提示跳出來時會看清楚（數據顯示你不會，尤其在長 session 後）。</div>
+    </div>
+
+    <div class="highlight-card urgent-card">
+      <h3>2. 🛑 OpenAI 因「資安能力過強」暫緩 Astra 發布（08-07）</h3>
+      <p>上週才低調宣布的 Astra，本週踩了煞車——理由罕見：<strong>模型太會駭客</strong>。</p>
+      <ul>
+        <li>觸及 OpenAI <strong>Preparedness Framework 中最高風險等級「Critical」</strong>的網路安全能力門檻，無法排除</li>
+        <li>具體風險：模型可能<strong>自主識別並對傳統上防護良好的真實系統發動攻擊</strong></li>
+        <li><strong>白宮與監管機關已敦促該公司放慢腳步</strong>；OpenAI 主動告知政府其延後計畫</li>
+        <li>Sam Altman 表示 Astra 最終仍會「廣泛可用」，但需先擴大測試與安全防護</li>
+      </ul>
+      <div class="significance">這是首次有前沿模型<strong>因為攻擊能力而非其他原因</strong>被自家公司叫停。對照 W32 的沙箱逃逸事件，「模型的網路安全能力」已正式成為發布的關鍵瓶頸。</div>
+    </div>
+
+    <div class="highlight-card amber-card">
+      <h3>3. 🔓 ...但同一家公司三天後推出「拆掉護欄」的資安模型（Daybreak Blue / Red，08-10）</h3>
+      <p>與上一則形成強烈對比：OpenAI 把 Daybreak 資安計畫拆成兩個層級，其中一層是<strong>專門訓練、且刻意放寬限制</strong>的模型。</p>
+      <table class="pricing-table">
+        <thead><tr><th>層級</th><th>內容</th><th>敏感請求回應率</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Daybreak Blue</strong></td><td>GPT-5.6 Sol <strong>移除系統層級資安護欄</strong>，供核可的防守方用於事件偵測與應變、調查、漏洞管理、安全評估</td><td class="big-num">2.0%</td></tr>
+          <tr><td><strong>Daybreak Red</strong></td><td>全新專門訓練的 <strong>GPT-5.6-Cyber</strong>，供授權的漏洞研究、exploit 驗證、安全測試</td><td class="big-num num-bad">95.0%</td></tr>
+          <tr><td>（對照）一般 GPT-5.6 Sol</td><td>—</td><td class="big-num">1.5%</td></tr>
+        </tbody>
+      </table>
+      <p>「敏感請求」涵蓋 <strong>exploit chain 開發、身分驗證繞過、權限提升</strong>。</p>
+      <div class="quote-box"><strong>實際戰果：</strong>GPT-5.6-Cyber 找出 Chrome V8 引擎中<strong>兩個先前未知的漏洞</strong>，可串連起來破壞記憶體並<strong>繞過 V8 heap sandbox</strong>；Google 已修補，編號 <strong>CVE-2026-15903</strong>。</div>
+      <div class="significance">這兩則放在一起看很值得玩味——<strong>同一週，OpenAI 因為模型會駭客而暫緩旗艦發布，卻把「會駭客」本身做成了一條產品線</strong>。差別在於<strong>存取控制</strong>：Astra 面向所有人，Daybreak 限定核可對象。這預示了未來高風險能力的商業模式：不是不做，而是分層授權。</div>
+    </div>
+
+    <div class="highlight-card amber-card">
+      <h3>4. Google：Gemini 3.7 Flash 搶在 3.5 Pro 之前上市（08-13）</h3>
+      <p>Google 的產品線出現一個奇特景象——<strong>新一代的 Flash 先出，上一代的 Pro 還沒出</strong>。</p>
+      <p><strong>Gemini 3.7 Flash（08-13）：</strong></p>
+      <ul>
+        <li>定位「最聰明的主力型號」，主打 <strong>coding 與 agent</strong>；距 3.6 Flash 僅<strong>三週</strong></li>
+        <li>較 3.6 Flash 在軟體工程、知識工作、網頁開發明顯進步，尤其除錯與<strong>首次產出即可用的程式碼準確度</strong></li>
+        <li><strong>定價</strong>：至 2026-12-31 為 <strong>$0.75 / $3.75</strong> per 1M tokens；2027-01-01 起翻倍至 $1.50 / $7.50</li>
+        <li>API、AI Studio、Antigravity、Gemini Enterprise 皆可取得；個人用戶經 Gemini app 的 Spark（Pro/Ultra）</li>
+        <li>Google 稱其在九項 benchmark 上勝過 Anthropic 與 OpenAI 同級模型</li>
+      </ul>
+      <p><strong>而 Gemini 3.5 Pro 仍然沒有出</strong>（連續第 6 週追蹤）：</p>
+      <ul>
+        <li>5 月 I/O 宣布、承諾 6 月推出，至今 DeepMind 模型頁仍標示「coming soon」</li>
+        <li>延誤原因為<strong>實質的能力與部署問題</strong>：coding 表現不足、訓練資料更新令人失望，「落後數月」</li>
+        <li>Bloomberg 報導 Google 高層<strong>擔心 3.5 Pro 已不具競爭力</strong></li>
+        <li>本週 Google 再度<strong>大幅改組其成立十年的 AI 組織</strong>以加速決策與發布</li>
+      </ul>
+      <div class="significance">Flash 線健康、Pro 線難產，代表 Google 目前能穩定交付的是中階模型。<strong>3.7 Flash 的年底優惠價確實划算</strong>，值得在成本敏感的 coding/agent 場景測試；但別再把 3.5 Pro 排進任何規劃。</div>
+    </div>
+
+    <div class="highlight-card codex-card">
+      <h3>5. Anthropic 其他動作：自研晶片團隊、政府版、Slack 協作</h3>
+      <ul>
+        <li><strong>成立自有晶片設計團隊</strong>：確認組建 in-house chip design team，往垂直整合走</li>
+        <li><strong>Claude for Government（beta）</strong>：即日起開放，<strong>Anthropic 直接作為簽約與收費方</strong>，機關不需另建雲端供應商關係</li>
+        <li><strong>Claude Tag（Slack）強化</strong>：運用完整頻道脈絡、記憶與常駐指示，自行判斷<strong>何時該插話、何時該安靜</strong>；主動回覆即日起免費</li>
+      </ul>
+    </div>
+
+    <div class="highlight-card">
+      <h3>6. OpenAI 其他動作：免費版無限文字、Ultrafast 模式、CRO 人事</h3>
+      <ul>
+        <li><strong>免費用戶文字對話改為無限</strong></li>
+        <li><strong>預告 Ultrafast 模式</strong>：GPT-5.6 Sol 最高可達 <strong>14 倍速</strong></li>
+        <li><strong>08-13 任命 Dali Rajic 為營收長（CRO）</strong></li>
+        <li><strong>ChatGPT 整合 Google Drive</strong>：Library 瀏覽 Drive 檔案、拉進對話，與 Docs/Sheets/Slides 並排作業；macOS 版新增 Computer History</li>
+      </ul>
+    </div>
+
+    <div class="highlight-card">
+      <h3>7. 歐盟執法現況：已組建 38 人團隊，但尚未開罰</h3>
+      <p>延續 W32 的追蹤，本週結論是「<strong>權力到位、動作未到</strong>」：</p>
+      <ul>
+        <li>AI Office 已在布魯塞爾組建 <strong>38 人的執法團隊</strong>，獲授權<strong>訪談公司人員、調閱模型文件、撤銷不合規業者的歐盟市場准入</strong></li>
+        <li>與 OpenAI、Anthropic 的接觸仍屬<strong>雙邊初步溝通，尚未有任何正式罰單</strong>（截至 8 月中）</li>
+        <li>AI Act 第 50 條的<strong>透明度與標示義務</strong>（含合成內容浮水印）自 08-02 起可強制執行</li>
+      </ul>
+      <div class="significance">上週說「透明度義務已生效」，本週補上執行力道的實況——有牙齒但還沒咬人。若你的產品涉及生成內容，<strong>浮水印/標示</strong>是現在就該做的合規項目。</div>
+    </div>
+
+    <div class="highlight-card new-card">
+      <h3>8. 開源與其他模型動態</h3>
+      <ul>
+        <li><strong>GLM-5.3</strong>（Z.ai，<strong>08-14</strong>）：延續 GLM 系列快速迭代（GLM-5.2 曾在 W28~W32 多次列為最推薦的開源 coding 主力）</li>
+        <li><strong>ByteDance</strong>：Seedance 2.5（08-08）、Seed 2.1 Turbo（08-10）</li>
+        <li>提醒：多數標榜「open source」的模型實際是 <strong>open weight</strong>——只公開權重，訓練資料與流程仍為專有</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 工具更新速覽 -->
+  <section>
+    <div class="section-title"><span>🛠</span> 工具更新速覽</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>工具 / 事件</th><th>日期</th><th>重點</th></tr></thead>
+        <tbody>
+          <tr class="urgent-row"><td><strong>Claude Code auto mode 成預設</strong></td><td><strong>08-14</strong></td><td>Pro/Max/Team；分類器攔截率 89% vs 人類 13.6%；分類器 token 不計額度</td></tr>
+          <tr><td><strong>Claude Code 其他更新</strong></td><td>本週</td><td>預設 subagent forking、跨 session mention、GitLab/marketplace、多項穩定性修正</td></tr>
+          <tr class="urgent-row"><td><strong>OpenAI 暫緩 Astra</strong></td><td>08-07</td><td>資安能力達 Preparedness Framework「Critical」門檻；白宮敦促放慢</td></tr>
+          <tr class="urgent-row"><td><strong>OpenAI Daybreak Blue / Red</strong></td><td>08-10</td><td>Blue＝Sol 移除系統層護欄（2.0%）；Red＝GPT-5.6-Cyber（95.0%）；找出 CVE-2026-15903</td></tr>
+          <tr class="new-row"><td><strong>Gemini 3.7 Flash</strong></td><td>08-13</td><td>coding/agent 主力；$0.75/$3.75 至年底，2027 起翻倍；九項 benchmark 稱勝</td></tr>
+          <tr class="urgent-row"><td><strong>Gemini 3.5 Pro</strong></td><td>仍未推出</td><td>連續第 6 週追蹤；Google 再度改組十年 AI 組織</td></tr>
+          <tr class="new-row"><td><strong>Anthropic 自研晶片團隊</strong></td><td>本週</td><td>確認組建 in-house chip design team</td></tr>
+          <tr class="new-row"><td><strong>Claude for Government</strong></td><td>beta</td><td>Anthropic 直接簽約收費，機關免另建雲端關係</td></tr>
+          <tr><td><strong>Claude Tag（Slack）</strong></td><td>本週</td><td>判斷何時插話/安靜；主動回覆免費</td></tr>
+          <tr><td><strong>OpenAI 免費版無限文字</strong></td><td>本週</td><td>文字對話取消次數限制</td></tr>
+          <tr><td><strong>OpenAI Ultrafast 模式</strong></td><td>預告</td><td>GPT-5.6 Sol 最高 14 倍速</td></tr>
+          <tr><td><strong>ChatGPT × Google Drive</strong></td><td>本週</td><td>Library 瀏覽 Drive、Docs/Sheets/Slides 並排；macOS Computer History</td></tr>
+          <tr><td><strong>EU AI Office 執法團隊</strong></td><td>本週</td><td>38 人進駐布魯塞爾；<strong>尚未開出罰單</strong></td></tr>
+          <tr class="new-row"><td><strong>GLM-5.3</strong></td><td>08-14</td><td>Z.ai 開源系列快速迭代</td></tr>
+          <tr><td><strong>ByteDance Seedance 2.5 / Seed 2.1 Turbo</strong></td><td>08-08 / 08-10</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 依你背景的分類 -->
+  <section>
+    <div class="section-title"><span>🗂</span> 依你背景的分類</div>
+    <div class="cat-grid">
+      <div class="cat-card danger">
+        <h4>⚡ AI Coding Assistant（本週重點）</h4>
+        <ul>
+          <li><strong>auto mode 已是預設</strong>：別再依賴「提示跳出來我會看」——人類攔截率 13.6%、50 個 prompt 後掉到 5%。<strong>把危險操作寫成 deny 規則</strong>才是有效防線</li>
+          <li><strong>分類器 token 免費</strong>：開啟不會多花額度</li>
+          <li><strong>Gemini 3.7 Flash 值得測</strong>：年底前 $0.75/$3.75，成本敏感場景實惠</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>🔓 資安 / Agent</h4>
+        <ul>
+          <li><strong>高風險能力走向「分層授權」</strong>：Astra 因 Critical 暫緩、Daybreak Red 限定核可——強攻擊能力不會消失，只會被關進封閉管道</li>
+          <li><strong>GPT-5.6-Cyber 找出真實 CVE</strong>（V8 heap sandbox 繞過）證明實戰效力，防守方值得關注 Daybreak Blue 這類管道</li>
+          <li>延續 W32：隔離要做在基礎設施層；本週 auto mode 思路一致——<strong>用自動化把關取代人工把關</strong></li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>Local LLM</h4>
+        <ul>
+          <li><strong>GLM-5.3（08-14）</strong> 是本週唯一值得關注的開源更新</li>
+          <li>留意「open source」與 <strong>open weight</strong> 的差別：多數只公開權重</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>法規 / 產業</h4>
+        <ul>
+          <li><strong>歐盟：權力到位、尚未開罰</strong>。38 人團隊可訪談人員、調閱文件、撤銷市場准入</li>
+          <li><strong>合成內容浮水印/標示</strong>（第 50 條）是現在就該做的合規項目</li>
+          <li><strong>Anthropic 自研晶片</strong>：前沿實驗室都在往垂直整合走</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- YouTube 來源摘要 -->
+  <section>
+    <div class="section-title"><span>▶</span> 來源摘要（NotebookLM 繁中）</div>
+
+    <div class="yt-card">
+      <h4><span class="yt-label">YT</span>EU AI Act Enforcement Begins TODAY — OpenAI, Google, Anthropic Face New Rules and Fines</h4>
+      <p>自 2026-08-02 起歐盟 AI 法案進入<strong>強制執行階段</strong>，從政策宣導轉為具法律約束力的監管。要求對<strong>所有合成內容進行浮水印標記</strong>、隨時準備提交技術文件供審查；新成立的 AI Office 獲授權進行<strong>實地調查與人員訪談</strong>；核心手段是透過嚴厲財務處分遏止違規。</p>
+      <em>Keywords：歐盟人工智慧法、合規與執法、透明度要求、巨額罰款風險、內容浮水印</em>
+    </div>
+
+    <div class="yt-card">
+      <h4><span class="yt-label">YT</span>AI News in a Minute｜Tuesday, August 11, 2026</h4>
+      <p>一分鐘快報，主軸是<strong>效率優化與感官體驗</strong>——與正文的資安/監管主線互補。亮點包含 <strong>Pathway 的後變壓器（post-transformer）架構模型</strong>以極低成本達到頂尖效能、<strong>Dino Robotics</strong> 用海量人類視角資料訓練的機器人基礎模型，以及 Google 與 Runway 在硬體整合與即時影像生成的進展。整體勾勒出<strong>算力門檻降低、生成速度極致化</strong>的前景。</p>
+      <em>Keywords：低成本推理模型、機器人基礎模型、智慧型手機 AI、圖像生成技術、後變換器架構</em>
+    </div>
+
+    <div class="yt-note" style="margin-top:14px">
+      📌 <strong>選材說明</strong>：本週原另選一支 8/12 的每日新聞影片，但 NotebookLM 產出的摘要把年份誤植為 2024 年、內容（Pixel 11、DeepSeek、科羅拉多州法）也與本週實際主線對不上，因此<strong>已移除並替換</strong>為上面這支 8/11 快報。未讓錯誤摘要進入報告。
+    </div>
+  </section>
+
+  <!-- 下週觀察清單 -->
+  <section>
+    <div class="section-title"><span>📋</span> 下週觀察清單</div>
+    <ul class="checklist">
+      <li><strong>auto mode 上路後的實際反應：</strong> 是否出現分類器誤判或漏判的公開案例；社群對 deny 規則的最佳實踐</li>
+      <li><strong>Astra 是否給出新的安全評估結論或時程</strong></li>
+      <li><strong>Daybreak Red 的擴散效應：</strong> 是否有其他實驗室跟進「授權制高風險模型」，或出現濫用事件</li>
+      <li><strong>歐盟是否開出首張罰單</strong>（W32 起持續追蹤，本週仍為零）</li>
+      <li><strong>Gemini 3.5 Pro（連續第 7 週）：</strong> 組織改組後是否終於推出，或正式取消</li>
+      <li><strong>MCP 2026-07-28 遷移實況：</strong> 本週無新進展，下週續追主要 server 採用比例</li>
+      <li><strong>是否有第三家實驗室揭露隔離失效事件</strong>（W32 起追蹤，本週仍無）</li>
+    </ul>
+  </section>
+
+  <!-- 本週深入研究選項 -->
+  <section>
+    <div class="section-title"><span>🎯</span> 本週與你高度相關的項目</div>
+    <div class="deep-dive-grid">
+      <div class="deep-dive-card">
+        <div class="label">選項 A — 本週最該做</div>
+        <h4>立即：為 auto mode 設好 deny 規則</h4>
+        <p>auto mode 已於 08-14 成為預設。數據很直白：人類攔截危險指令只有 13.6%，長 session 後掉到 5%，而且你有 97% 的機率直接按同意。<strong>與其依賴自己看提示，不如現在花十分鐘把絕對不能自動執行的操作寫成 deny 規則</strong>——例如涉及正式環境、刪除、對外發送、金鑰操作的指令。</p>
+      </div>
+      <div class="deep-dive-card">
+        <div class="label">選項 B — 成本</div>
+        <h4>用 Gemini 3.7 Flash 做一次成本對照</h4>
+        <p>年底前 $0.75/$3.75 比多數同級模型便宜。挑一個平常用 Claude 或 GPT 跑的中等 coding 任務跑一次，比較輸出品質與實際花費，評估是否值得把部分低風險工作分流過去（注意 2027 年起價格翻倍）。</p>
+      </div>
+      <div class="deep-dive-card">
+        <div class="label">選項 C — 趨勢觀察</div>
+        <h4>觀察「高風險能力分層授權」這個新模式</h4>
+        <p>Astra 暫緩 + Daybreak Red 限定授權，是同一套邏輯的兩面，很可能成為未來高風險 AI 能力的標準做法。若你的工作與資安沾邊，值得留意 Daybreak Blue 這類「給防守方的去護欄管道」是否會更廣泛開放。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Run Log -->
+  <div class="run-log">
+    <div class="run-log-title">Run Log</div>
+    <p>
+      <span class="done">✓</span> Claude WebSearch：完成（Claude Code/OpenAI 資安雙軌/Google/歐盟執法/開源 5 個面向，涵蓋 08-08~08-14）<br>
+      <span class="done">✓</span> 撰寫 .md：完成（2026-W33.md）<br>
+      <span class="done">✓</span> 撰寫 .html：完成（2026-W33.html）<br>
+      <span class="done">✓</span> NotebookLM YouTube 來源：完成（2 支，Notebook ID 153aeace；其中 1 支為替換後的來源）<br>
+      <span class="done">✓</span> NotebookLM Source Guide：完成（2026-W33-youtube.md）<br>
+      <span class="done">✓</span> NotebookLM Briefing Doc：完成（2026-W33-briefing.md）<br>
+      <span class="done">✓</span> Podcast 音檔：完成（podcast_w33.m4a）<br>
+      <span class="done">✓</span> QA：完成（含來源品質處理：剔除年份錯誤的影片摘要）
+    </p>
+  </div>
+
+</div>
+</body>
+</html>
