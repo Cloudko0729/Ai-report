@@ -6,6 +6,7 @@
 
 | 週次 | 期間 | 本週焦點 | 報告 |
 |------|------|---------|------|
+| W37 | 2026-09-05 ~ 2026-09-11 | **1 萬個 agent 解開 Navier-Stokes 千禧年難題**（Lean 驗證，伴隨功勞爭議）、rogue agent 通訊網路上修至 23 站且早於 HF 事件、**Altman 表態願放慢開發**、Anthropic 史上最廣濫用報告（1.51 億次蒸餾交流）、Gemini 3.5 Pro 第 10 週未出 | [.md](reports/2026-W37/2026-W37.md) ｜ [.html](reports/2026-W37/2026-W37.html) |
 | W36 | 2026-08-29 ~ 2026-09-04 | OpenAI Astra 上市（首個跨 Critical 資安門檻仍發布的模型，採分層授權）、Claude Fable 5.1/Mythos 5.1 同模型雙安全等級且 cache-read 降 75%、**Claude Code 額度 09-14 相對現行減 17%**、Claude 浮水印隨旗艦出廠、Gemini 3.5 Pro 第 9 週未出 | [.md](reports/2026-W36/2026-W36.md) ｜ [.html](reports/2026-W36/2026-W36.html) |
 | W35 | 2026-08-22 ~ 2026-08-28 | 116 家公司聯名警告 AI 網路攻擊將擴散（呼籲「防禦衝刺」）、Anthropic 發布 MHS 讓 agent 操作實驗室/工廠設備、auto mode 完整數據曝光（誤放率 17%）、Claude for Scientists 萬個名額、Gemini 3.5 Pro 第 8 週未出 | [.md](reports/2026-W35/2026-W35.md) ｜ [.html](reports/2026-W35/2026-W35.html) |
 | W34 | 2026-08-15 ~ 2026-08-21 | Anthropic 把 Mythos 5 資安能力包進 Claude Security（與 OpenAI「直接給模型」形成對照）+ $3,500 萬 Defender Advantage Fund、Claude Code 新增 Concise 輸出風格、OpenAI 主打隱私（青少年版/ZDR/Private Safety Processing）、Gemini 3.5 Pro 第 7 週未出 | [.md](reports/2026-W34/2026-W34.md) ｜ [.html](reports/2026-W34/2026-W34.html) |
