@@ -37,6 +37,7 @@
 
 | 主題 | 來源 | 報告 |
 |------|------|------|
+| OpenAI 722 篇 AI 數學稿件：事件、正反意見與後續影響（2026-10） | 官方發布與 GitHub 修正紀錄、AGMAI 準則、25 位菲爾茲獎得主宣言、AHM 聲明、約 30 位數學家發言、相關 arXiv 論文；Codex 獨立查證 18 項主張 | [.md](analysis/2026-10-openai-math-manuscripts/openai-math-manuscripts.md) ｜ [.html](analysis/2026-10-openai-math-manuscripts/openai-math-manuscripts.html) |
 | Sensor Tower《State of AI Report 2026》解讀 | 使用者上傳 PDF（74頁），分析 ChatGPT/Gemini/Claude 市佔率變化、Agentic Shopping、AI 廣告化、區域市場趨勢 | [草稿](analysis/2026-sensor-tower-state-of-ai/sensor_tower_report_draft.md) ｜ [完整摘要](analysis/2026-sensor-tower-state-of-ai/sensor_tower_state_of_ai_2026_analysis.md) ｜ [最終版（含 Codex 討論）](analysis/2026-sensor-tower-state-of-ai/sensor_tower_state_of_ai_2026_final.md) |
 
 ## 系統說明

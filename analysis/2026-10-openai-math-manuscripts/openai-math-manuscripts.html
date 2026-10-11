@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenAI 數學稿件深度分析</title>
+<style>
+  :root {
+    --bg: #f8f9fa; --surface: #ffffff; --border: #e2e8f0;
+    --text: #1a202c; --muted: #718096;
+    --accent: #3b82f6; --accent-bg: #eff6ff; --accent-border: #bfdbfe;
+    --green: #059669; --green-bg: #ecfdf5;
+    --amber: #d97706; --amber-bg: #fffbeb;
+    --purple: #7c3aed; --purple-bg: #f5f3ff;
+    --red: #dc2626; --red-bg: #fef2f2; --red-border: #fecaca;
+    --tag-bg: #e2e8f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.7; font-size: 15px;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .container { max-width: 860px; margin: 0 auto; padding: 32px 24px 80px; }
+
+  .report-header {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 28px 32px; margin-bottom: 24px;
+  }
+  .report-header h1 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 10px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px; }
+  .meta-tag { background: var(--tag-bg); border-radius: 6px; padding: 3px 10px; font-size: 13px; color: var(--muted); }
+  .meta-tag strong { color: var(--text); }
+  .meta-tag.urgent { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-border); font-weight: 600; }
+  .meta-tag.info { background: var(--accent-bg); color: #1e40af; border: 1px solid var(--accent-border); font-weight: 600; }
+  .meta-tag.success { background: var(--green-bg); color: var(--green); border: 1px solid #a7f3d0; font-weight: 600; }
+
+  .thesis {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-radius: 10px; padding: 20px 24px; margin-bottom: 32px;
+    color: #cbd5e1; font-size: 14px; line-height: 1.8;
+  }
+  .thesis strong { color: #f1f5f9; }
+  .thesis .label { font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 8px; }
+  .thesis .tl { display: block; margin-top: 8px; padding-left: 12px; border-left: 2px solid #3b82f6; }
+
+  section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 1.1rem; font-weight: 700; padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .highlight-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-left: 4px solid var(--accent); border-radius: 8px;
+    padding: 20px 24px; margin-bottom: 16px;
+  }
+  .highlight-card.urgent-card { border-left-color: var(--red); background: #fff8f8; }
+  .highlight-card.new-card { border-left-color: var(--green); background: #f0fdf4; }
+  .highlight-card.codex-card { border-left-color: var(--purple); background: var(--purple-bg); }
+  .highlight-card.amber-card { border-left-color: var(--amber); background: var(--amber-bg); }
+  .highlight-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 10px; }
+  .highlight-card p { margin-bottom: 8px; }
+  .highlight-card ul { padding-left: 20px; margin-bottom: 8px; }
+  .highlight-card li { margin-bottom: 4px; }
+  .significance {
+    background: var(--accent-bg); border: 1px solid var(--accent-border);
+    border-radius: 6px; padding: 10px 14px; font-size: 13.5px; margin-top: 12px; color: #1e40af;
+  }
+  .significance::before { content: "💡 對你的意義："; font-weight: 600; }
+  .claim-box {
+    background: #f0fdf4; border-left: 3px solid var(--green);
+    padding: 10px 14px; margin: 10px 0; font-size: 13.5px;
+  }
+  .dispute-box {
+    background: var(--amber-bg); border-left: 3px solid var(--amber);
+    padding: 10px 14px; margin: 10px 0; font-size: 13.5px; color: #92400e;
+  }
+  .quote-box {
+    background: #fff; border-left: 3px solid var(--red);
+    padding: 10px 14px; margin: 10px 0; font-size: 13.5px; color: #7f1d1d;
+  }
+  .fix-box {
+    background: #f5f3ff; border-left: 3px solid var(--purple);
+    padding: 10px 14px; margin: 10px 0; font-size: 13.5px; color: #4c1d95;
+  }
+
+  .table-wrap { overflow-x: auto; border-radius: 8px; border: 1px solid var(--border); }
+  table { border-collapse: collapse; width: 100%; background: var(--surface); }
+  th { background: #f1f5f9; padding: 10px 14px; text-align: left; font-size: 13px; font-weight: 600; color: var(--muted); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 14px; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f8fafc; }
+  tr.urgent-row td { background: #fff8f8; }
+  tr.new-row td { background: #f0fdf4; }
+  code { font-family: "Cascadia Code", "Consolas", monospace; font-size: 12.5px; background: #f1f5f9; border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; color: #d63384; }
+
+  .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 600px) { .cat-grid { grid-template-columns: 1fr; } }
+  .cat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px 18px; }
+  .cat-card h4 { font-size: 13px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+  .cat-card.danger h4 { color: var(--red); }
+  .cat-card.method h4 { color: var(--green); }
+  .cat-card ul { padding-left: 16px; }
+  .cat-card li { font-size: 13.5px; margin-bottom: 5px; }
+
+  .checklist { list-style: none; padding: 0; }
+  .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 8px; font-size: 14px; }
+  .checklist li::before { content: "☐"; color: var(--muted); flex-shrink: 0; margin-top: 1px; }
+
+  .deep-dive-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  .deep-dive-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; }
+  .deep-dive-card .label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .deep-dive-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .deep-dive-card p { font-size: 13.5px; color: #4a5568; }
+
+  .yt-note { font-size: 13px; color: #92400e; background: var(--amber-bg); border: 1px solid var(--amber); border-radius: 8px; padding: 14px 18px; line-height: 1.75; }
+
+  /* ── 廣播播放器 ── */
+  .podcast-player {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border-radius: 12px; padding: 24px 28px; margin-bottom: 32px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .podcast-header { display: flex; align-items: center; gap: 14px; }
+  .podcast-icon {
+    width: 48px; height: 48px;
+    background: linear-gradient(135deg, #3b82f6, #7c3aed);
+    border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .podcast-meta { flex: 1; }
+  .podcast-meta h3 { color: #f1f5f9; font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+  .podcast-meta p { color: #64748b; font-size: 12.5px; }
+  .podcast-player audio { width: 100%; height: 36px; border-radius: 6px; outline: none; accent-color: #3b82f6; }
+  .podcast-player audio::-webkit-media-controls-panel { background: #1e293b; }
+  .podcast-tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3);
+    color: #93c5fd; font-size: 11px; font-weight: 600;
+    padding: 2px 8px; border-radius: 99px; letter-spacing: 0.04em;
+  }
+
+  .run-log { background: #0f172a; border-radius: 8px; padding: 16px 20px; margin-top: 36px; }
+  .run-log-title { font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+  .run-log p { font-family: "Cascadia Code", "Consolas", monospace; font-size: 12.5px; color: #94a3b8; line-height: 1.8; }
+  .run-log p span.done { color: #34d399; }
+  .run-log p span.pending-log { color: #fbbf24; }
+  strong { font-weight: 600; }
+
+  .tri { display:grid; grid-template-columns:1fr; gap:10px; }
+  .note-small { font-size:12.5px; color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="report-header">
+    <h1>OpenAI 722 篇數學稿件：事件、正反意見與後續影響</h1>
+    <div class="meta">
+      <span class="meta-tag"><strong>深度分析</strong> 2026-10-11</span>
+      <span class="meta-tag"><strong>資料截至</strong> 2026-10-10</span>
+      <span class="meta-tag"><strong>查證</strong> Codex 獨立交叉比對 18 項</span>
+      <span class="meta-tag info">延伸自 W37／W38／W41</span>
+    </div>
+  </div>
+
+  <div class="thesis">
+    <span class="label">一句話結論</span>
+    <strong>這次爭議的核心不是「AI 的數學對不對」，而是「當產出的速度遠超過人類審查的速度時，誰來決定什麼算數」。</strong>
+    <span class="tl">連最嚴厲的批評者大多都承認部分結果可能是真的、甚至是重大突破；他們反對的是<strong>發布的方式</strong>，以及這種方式對數學這門學問的<strong>長期影響</strong>。</span>
+  </div>
+
+  <section>
+    <div class="section-title"><span>📅</span> 一、發生了什麼</div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>日期</th><th>事件</th></tr>
+        <tr class="new-row"><td>05-20</td><td>OpenAI 模型推翻 Erdős 單位距離猜想；同日<strong>九位數學家</strong>（含 Alon、Gowers、Wood）貼出人類消化、驗證後的版本——<strong>「AI 產出、人類消化」的正面範例</strong></td></tr>
+        <tr><td>08-01</td><td>OpenAI 公布十個結果；後續人類審查（arXiv:2608.14673）未發現實質錯誤，但審查深度不一</td></tr>
+        <tr><td>09-08</td><td>Navier-Stokes 有限時間爆破證明（W37），伴隨功勞爭議</td></tr>
+        <tr class="urgent-row"><td><strong>09-11</strong></td><td><strong>25 位菲爾茲獎得主</strong>連署〈A Severe Misalignment of AI in Mathematics〉（未點名 OpenAI）</td></tr>
+        <tr><td>09-12</td><td>數學家團體 AHM 公開成立</td></tr>
+        <tr><td>09-21 / 09-29</td><td>AGMAI 成立（IAS 主持）／發布給 AI 實驗室的發布準則</td></tr>
+        <tr><td>10-01</td><td>Kevin Buzzard〈To grieve, or not to grieve?〉——<strong>發布前</strong>的文章</td></tr>
+        <tr class="urgent-row"><td><strong>10-06</strong></td><td><strong>OpenAI 在 GitHub 公開 722 篇稿件、372 個結果家族</strong>；AGMAI 同日聲明「不背書」</td></tr>
+        <tr><td>10-06~07</td><td>AHM 呼籲停止與 OpenAI 合作；陶哲軒 10-07 <strong>轉載</strong>（非本人撰寫）</td></tr>
+        <tr class="urgent-row"><td><strong>10-07</strong></td><td>撤回 3 篇、修訂 14 篇；Lean 形式化 300/719</td></tr>
+        <tr><td>10-08</td><td>Cambridge/KCL 論文指出 Navier-Stokes 證明自然語言版與 Lean 不一致；<strong>Baiying Liu 在 arXiv 改進 7/8 的界</strong></td></tr>
+        <tr><td>10-08~10</td><td>Nature、Scientific American、Bloomberg、華盛頓郵報報導；加密貨幣圈恐慌與反駁</td></tr>
+      </table>
+    </div>
+    <div class="highlight-card" style="margin-top:16px">
+      <h3>發布本身（官方資料，經 Codex 查證）</h3>
+      <ul>
+        <li><strong>規模</strong>：首發 722 篇、372 個家族、約 17 個領域；模型共嘗試約 <strong>4,000 題</strong></li>
+        <li><strong>來源</strong>：<strong>未發布、未命名</strong>的內部前沿模型——數學社群無法使用它重現或延伸結果</li>
+        <li><strong>運算</strong>：平均每個結果約相當於 ChatGPT Pro 思考 3 小時</li>
+        <li><strong>透明度</strong>：只有 <strong>10 個結果家族</strong>附<strong>刪節版推理摘要</strong>（非完整思考鏈）</li>
+        <li><strong>形式化</strong>：<strong>300/719（約 42%）主結果</strong>有 Lean——是主結果覆蓋率，不是全文，更不是人類審稿比例</li>
+        <li><strong>24 小時內</strong>：一個正負號錯誤連鎖撤回 3 篇（含 <strong>Hodge 猜想相關</strong>稿件），另修訂 14 篇——<strong>首日約 2.4% 需撤回或實質修訂</strong></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title"><span>📐</span> 二、宣稱了什麼</div>
+    <p class="note-small" style="margin-bottom:10px">以下都是 <strong>OpenAI 的宣稱</strong>（已出現在官方總覽中），<strong>不等於已獲獨立確認</strong>。</p>
+    <div class="table-wrap">
+      <table>
+        <tr><th>宣稱</th><th>為何重要</th><th>目前狀態</th></tr>
+        <tr class="new-row"><td><strong>「準黎曼猜想」</strong>：zeta 與所有 Dirichlet L-函數在 Re(s)&gt;7/8 無零點</td><td>黎曼猜想的弱化版；整條垂直帶狀無零點區域是百年未達成的進展</td><td><strong>有 Lean</strong>（排除 s=1 極點）；兩天後已有人改進到約 0.874957</td></tr>
+        <tr><td><strong>不存在 Siegel zeros</strong></td><td>解析數論長年障礙</td><td>Pasten：「它解決了這個問題」（經轉載核對）</td></tr>
+        <tr><td><strong>矩陣乘法指數 ω ≤ 9/4</strong></td><td>從約 2.37 降到 2.25</td><td>待驗證</td></tr>
+        <tr><td><strong>L = RL = BPL</strong></td><td>去隨機化長期問題</td><td>Ran Raz：之前「看不到任何有希望的方向」</td></tr>
+        <tr><td>Unique Games Conjecture 相關</td><td>近似演算法難度核心</td><td>待驗證</td></tr>
+        <tr><td>Hilbert 第十問題推廣到有理數</td><td>有理數上的不可判定性</td><td>Pasten：連結「非常令我意外」</td></tr>
+        <tr><td>四維 Kakeya</td><td>接續王虹的三維結果</td><td>待驗證</td></tr>
+        <tr><td>自由群因子同構</td><td>算子代數數十年未解</td><td>查證時已有形式化範圍，但 metadata 未對齊</td></tr>
+        <tr><td>對稱 Mahler、Kaplansky 零因子反例</td><td>經典問題</td><td>有 Lean</td></tr>
+        <tr class="urgent-row"><td>Hodge 猜想相關（K3 曲面）</td><td>千禧年大獎問題相關</td><td><strong>已撤回</strong></td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title"><span>🔍</span> 三、「可驗證」為什麼不等於「已驗證」</div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>層級</th><th>問題</th><th>誰能回答</th><th>本次狀況</th></tr>
+        <tr><td><strong>推導有效性</strong></td><td>每一步邏輯對嗎？</td><td>Lean 等機器</td><td>42% 已形式化；58% 沒有</td></tr>
+        <tr class="urgent-row"><td><strong>陳述忠實度</strong></td><td>Lean 證的定理，就是論文聲稱的那個嗎？</td><td>只有專家</td><td><strong>已出現反例</strong>：Navier-Stokes 論文需要 m+4 階導數控制，Lean 版本卻證了 m+5 階的較弱估計</td></tr>
+        <tr><td><strong>意義判斷</strong></td><td>重要嗎？怎麼接上既有數學？</td><td>只有專家，且需時間</td><td>72 小時內不可能完成</td></tr>
+      </table>
+    </div>
+    <div class="significance">機器檢查讓第一層幾乎免費，但<strong>沒有減少總工作量，而是把負擔推到第二、三層——那兩層需要的恰好是最稀缺的資源：頂尖專家的時間</strong>。一次倒出 722 篇，等於一次向全世界數學家發出 722 份審稿邀請。（架構借自 Kallel &amp; El Louadi〈Verification abundance, adjudication scarcity〉）</div>
+    <div class="fix-box"><strong>Cambridge/KCL 論文的結論</strong>：自動形式化產生的 Lean 證明，不應在沒有一般同儕審查的情況下被信任。這不代表 Lean 核心失效，而是「證了什麼」本身需要人來核對。</div>
+  </section>
+
+  <section>
+    <div class="section-title"><span>👍</span> 四、正方意見</div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>人物</th><th>說法</th></tr>
+        <tr><td><strong>Alex Kontorovich</strong>（羅格斯）</td><td>「如果是人做的，這會是立刻拿到菲爾茲獎，不需要任何質疑。」（針對準黎曼猜想）</td></tr>
+        <tr><td><strong>Alvaro Lozano-Robledo</strong>（康乃狄克）</td><td>10 月 6 日「可能是數學史上至今最重要的一天」</td></tr>
+        <tr><td><strong>Kevin Buzzard</strong>（帝國理工）</td><td>「真理與理解會浮上檯面……數學無疑向前推進了。」；發布前即主張繼續保密「近乎審查」</td></tr>
+        <tr><td><strong>Hector Pasten</strong></td><td>「這不只是 Siegel zeros 的進展——它解決了這個問題。這太驚人了。」</td></tr>
+        <tr><td><strong>Constantin Kogler</strong>（IAS）</td><td>像「活在數學仙境」</td></tr>
+        <tr><td><strong>Levent Alpöge</strong></td><td>讚揚準黎曼與無 Siegel zeros（轉述層級；同時對發布方式有其他疑慮）</td></tr>
+        <tr class="new-row"><td><strong>Baiying Liu</strong></td><td>以行動回應：兩天內改進 7/8 的界——<strong>社群已開始在上面建構</strong></td></tr>
+      </table>
+    </div>
+    <div class="claim-box" style="margin-top:12px"><strong>正方論點</strong>：① 結果若為真就是真知識，不因作者是誰而改變　② 公開優於保密（AGMAI 自己第一條原則就是「盡快負責任地發布」）　③ 形式化讓信任不再依賴權威　④ 5 月單位距離先例顯示人類能消化 AI 成果</div>
+    <div class="dispute-box"><strong>未採用的說法</strong>：網路流傳一則被歸於經濟學家 Noah Smith 的「Mathematicians don't own mathematics!」，Codex 未能核實原帖或可靠媒體佐證，本報告不列為他的言論。</div>
+  </section>
+
+  <section>
+    <div class="section-title"><span>👎</span> 五、反方意見（四種不同的擔憂）</div>
+
+    <div class="highlight-card amber-card">
+      <h3>1. 程序與規範：「沒照說好的做」</h3>
+      <ul>
+        <li>AGMAI 9-29 準則開場段：「我們要求他們<strong>停止在專有模型上測試進階數學問題</strong>」——限定<strong>數學社群無法取得的</strong>專有模型</li>
+        <li>準則還要求：存放在<strong>非實驗室控制的儲存庫</strong>、揭露模型名稱／提示詞／運算成本、報告<strong>同難度問題的失敗率</strong>、<strong>不把數學成果當行銷工具</strong>——首發時大多未做到</li>
+        <li>AGMAI 10-06：<strong>「不背書」</strong>，「我們不代表整個數學社群」，發布是「審查的開始，不是完成」——<strong>但不背書不等於宣告結果錯誤</strong></li>
+      </ul>
+    </div>
+
+    <div class="highlight-card">
+      <h3>2. 理解與學門意義：「答案不是數學的目的」</h3>
+      <ul>
+        <li><strong>25 位菲爾茲獎得主宣言</strong>：「越來越快地大量生產『真/假』陳述，可能摧毀沃土，而非為新想法注入生命」</li>
+        <li><strong>Melanie Wood</strong>（哈佛、AGMAI 成員）：「發布時沒有任何人類理解它們，現在工作才開始。」</li>
+        <li><strong>陶哲軒</strong>：心情「非常複雜」、「深感挫折」——結果「引入了聰明的新想法，消化後會很有成果」，但缺乏人類討論</li>
+      </ul>
+    </div>
+
+    <div class="highlight-card urgent-card">
+      <h3>3. 權力與社群結構：「這是權力展示」</h3>
+      <ul>
+        <li><strong>AHM</strong>：「一次發布 700 多個檔案不是學術的展示，而是權力的展示」；呼籲停止與 OpenAI 合作（查證時自報 819 名會員）</li>
+        <li><strong>Henry Wilton</strong>（劍橋）：「如果 OpenAI 想摧毀數學社群，這會是個好方法。」（假設語氣）</li>
+        <li><strong>Hugo Duminil-Copin</strong>（2022 菲爾茲獎）：「衝擊巨大。我癱瘓了。」</li>
+        <li><strong>Martin Bridson</strong>（Clay 研究所所長）：不應讓 AI 實驗室設定研究議程</li>
+        <li><strong>Mitchell Taylor</strong>：同事出現「嚴重焦慮、憂鬱與失去目標感」</li>
+      </ul>
+    </div>
+
+    <div class="highlight-card">
+      <h3>4. 品質與信任：「錯誤成本轉嫁給社群」</h3>
+      <ul>
+        <li>24 小時內撤回 3 篇、修訂 14 篇</li>
+        <li><strong>Petra Schwer</strong>（海德堡）：「不信任正在擴散，這不是好事。」</li>
+        <li><strong>Roland Bauerschmidt</strong>（NYU）對物理稿件：第一篇「開創性」，其他「糟糕」且難以驗證——<strong>品質高度不均</strong></li>
+      </ul>
+    </div>
+
+    <div class="significance">Proofs and Prompts 收集 100+ 則反應，粗略分布：<strong>悲傷/恐懼 35~40%、混合 25~30%、憤怒 20~25%、興奮 15~20%</strong>（部落格自行分類，非抽樣）。<strong>最大群體不是反對者，而是「既覺得結果驚人、又擔心這種做法」的人</strong>——陶哲軒就在這一類。</div>
+  </section>
+
+  <section>
+    <div class="section-title"><span>⚖️</span> 六、分析：正反雙方其實在吵三件不同的事</div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>問題</th><th>正方</th><th>反方</th><th>我的判斷</th></tr>
+        <tr><td><strong>結果對不對？</strong></td><td>很多是對的，有 Lean 為證</td><td>58% 未形式化、已有撤回、忠實度問題</td><td><strong>部分結果極可能為真</strong>（反方多半也這樣認為），但「哪些」需數月到數年釐清</td></tr>
+        <tr><td><strong>這樣發布對不對？</strong></td><td>公開總比藏著好</td><td>違反 AGMAI 準則、無法重現、行銷式發布</td><td><strong>反方較有據</strong>：準則是 OpenAI 自己參與諮詢的，未遵守的部分具體可查</td></tr>
+        <tr><td><strong>數學會不會被掏空？</strong></td><td>數學無窮，人類總有事做</td><td>理解與傳承鏈會斷裂</td><td><strong>目前無法判斷</strong>，是價值問題不是事實問題</td></tr>
+      </table>
+    </div>
+    <div class="significance">媒體常把「數學家憤怒」寫成「數學家反對 AI」，但大多數批評者並不否認第一個問題的答案，他們爭的是第二、三個。</div>
+  </section>
+
+  <section>
+    <div class="section-title"><span>🔮</span> 七、後續可能的影響</div>
+    <p class="note-small" style="margin-bottom:10px">以下是<strong>分析推論</strong>，不是已發生的事實。</p>
+    <div class="cat-grid">
+      <div class="cat-card">
+        <h4>短期（數週到數月）</h4>
+        <ul>
+          <li><strong>更多撤回與修正</strong>：最該盯的是頭條結果是否獲領域專家獨立確認</li>
+          <li><strong>社群開始接手</strong>：後續論文大量出現，功勞歸屬更尖銳</li>
+          <li><strong>OpenAI 被迫調整</strong>：已承諾資助研討會、改進引用、探索社群託管儲存庫</li>
+          <li><strong>其他實驗室的選擇</strong>：跟進大量發布，或以遵守 AGMAI 準則作為差異化</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>中期（一到兩年）</h4>
+        <ul>
+          <li><strong>數學工作重心轉移</strong>：陳述忠實度審查、消化說明、形式化、選題</li>
+          <li><strong>發表與獎勵制度承壓</strong>：期刊、Clay／菲爾茲、博士生選題（呼應 W38 陶哲軒的「被搶先」警告）</li>
+          <li><strong>規範競爭</strong>：AGMAI（合作）vs. AHM（抵制）vs. 實驗室自行其是</li>
+        </ul>
+      </div>
+      <div class="cat-card danger">
+        <h4>外溢：密碼學</h4>
+        <ul>
+          <li>Justin Drake 呼籲「bunker mode」，擔心 ECDSA「幾個月內」被破</li>
+          <li><strong>官方目錄中未找到</strong>直接涉及 ECDSA／離散對數攻擊的稿件；Coinbase 的 Lindell：「沒有任何證據」</li>
+          <li>恐慌建立在<strong>能力趨勢的外推</strong>，不是這次的具體內容；Buterin：別倉促遷移，但應認真看待長期風險</li>
+        </ul>
+      </div>
+      <div class="cat-card">
+        <h4>外溢：計算與治理</h4>
+        <ul>
+          <li>ω 的改進歷來多屬理論層面，<strong>不宜直接解讀為 GPU 會變快</strong></li>
+          <li>同一週 OpenAI 訓練暫停中、FTC 調查中，卻公開<strong>外界無法使用的模型</strong>的大量成果——與 AGMAI「公平取用」要求形成張力</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title"><span>⭐</span> 八、對你的意義</div>
+    <div class="deep-dive-grid">
+      <div class="deep-dive-card">
+        <div class="label">A</div>
+        <h4>「產出充裕、審查稀缺」也是你用 AI 寫程式時的問題</h4>
+        <p>722 篇稿件 vs. 有限的數學家時間，跟 AI 一次產生大量程式碼 vs. 你有限的 review 時間，是同一個結構。機器檢查（測試、型別、Lean）只處理第一層；<strong>「它驗證的是不是你要的東西」永遠需要人看</strong>。「Lean 證了比論文弱的版本」對應到程式，就是「測試通過了，但測的不是規格要求的行為」。</p>
+      </div>
+      <div class="deep-dive-card">
+        <div class="label">B</div>
+        <h4>看到「AI 證明了 X，經形式化驗證」，多問三個問題</h4>
+        <p>① 形式化覆蓋多少比例？（這次 42%）② 形式化的陳述跟宣稱的一樣嗎？③ 該領域專家怎麼說？（不是 AI 公司、不是社群媒體）</p>
+      </div>
+      <div class="deep-dive-card">
+        <div class="label">C</div>
+        <h4>不需要因為加密貨幣圈的恐慌而行動</h4>
+        <p>目前沒有任何證據顯示這次發布涉及實際的密碼學攻擊。</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-title"><span>📌</span> 九、觀察清單</div>
+    <ul class="checklist">
+      <li>準黎曼猜想、ω ≤ 9/4、L=RL=BPL 是否獲領域專家獨立確認或否定</li>
+      <li>後續撤回與修訂數量；Lean 比例是否從 42% 上升</li>
+      <li>OpenAI 是否移到非實驗室儲存庫、揭露模型與提示詞</li>
+      <li>是否有期刊接受（或拒絕）以這批成果為基礎的論文</li>
+      <li>Google DeepMind／Anthropic 下一次數學成果的發布方式</li>
+      <li>AHM 抵制是否產生實際效果</li>
+      <li>Clay、菲爾茲獎委員會是否針對 AI 協助成果訂出規則</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="section-title"><span>✅</span> 查證紀錄（Codex，18 項）</div>
+    <div class="table-wrap">
+      <table>
+        <tr><th>#</th><th>主張</th><th>判定</th><th>關鍵修正</th></tr>
+        <tr><td>1</td><td>發布規模、運算</td><td>部分真實</td><td>「例外工作用了更多運算」查無量化證據</td></tr>
+        <tr><td>2</td><td>撤回 3、修訂 14、Lean 300/719</td><td>真</td><td>42% 是主結果覆蓋率</td></tr>
+        <tr><td>3</td><td>10/719 附 CoT</td><td>部分真實</td><td>實為 10 個家族的刪節推理摘要</td></tr>
+        <tr><td>4</td><td>Lean 狀態</td><td>部分真實</td><td>自由群因子目前已有形式化範圍</td></tr>
+        <tr><td>5</td><td>六項重大宣稱</td><td>真（就宣稱而言）</td><td>不等於已獲確認</td></tr>
+        <tr><td>6</td><td>7/8 → 0.874957</td><td>真</td><td>arXiv 2610.12234</td></tr>
+        <tr><td>7</td><td>AGMAI 停止測試要求</td><td>真，須限定</td><td>限社群不可取得的專有模型</td></tr>
+        <tr><td>8</td><td>AHM</td><td>部分真實</td><td>9-12 成立；819 會員為查證時數字</td></tr>
+        <tr><td>9</td><td>菲爾茲宣言</td><td>真</td><td>25 位；未點名 OpenAI</td></tr>
+        <tr><td>10~13</td><td>Kontorovich／Alpöge／Pasten／Duminil-Copin／Wilton</td><td>真～部分真實</td><td>Alpöge 為轉述層級；Pasten 原刊未直接核驗</td></tr>
+        <tr class="urgent-row"><td>14</td><td>Noah Smith 引言</td><td>查無可信來源</td><td>不採用</td></tr>
+        <tr><td>15</td><td>Buzzard 10-01</td><td>真</td><td>發布前的文章</td></tr>
+        <tr><td>16</td><td>Cambridge/KCL 論文</td><td>真</td><td>arXiv 2610.08144；不代表結論被推翻</td></tr>
+        <tr><td>17</td><td>密碼學外溢</td><td>部分真實</td><td>目錄中未找到相關攻擊稿件</td></tr>
+        <tr><td>18</td><td>單位距離人類驗證版</td><td>部分真實</td><td>作者九位；Gowers 為假設性評語</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <div class="run-log">
+    <div class="run-log-title">sources</div>
+    <p>
+      官方：OpenAI〈Sharing AI progress in mathematics〉；GitHub openai/math（README、history、overview、lean/docs）；AGMAI 官網／9-29 準則／10-06 聲明；AHM 官網<br>
+      一手：陶哲軒部落格（9-11、9-21、10-07）；Kevin Buzzard Xena 部落格；Proofs and Prompts〈100 reactions〉<br>
+      研究：arXiv 2605.20695、2608.14673、2608.28997、2610.08144、2610.12234<br>
+      媒體：TechCrunch、Nature、Scientific American、The Decoder、Bloomberg、Washington Post、Cointelegraph、The Block
+    </p>
+  </div>
+
+</div>
+</body>
+</html>
