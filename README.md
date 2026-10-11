@@ -6,6 +6,7 @@
 
 | 週次 | 期間 | 本週焦點 | 報告 |
 |------|------|---------|------|
+| W41 | 2026-10-03 ~ 2026-10-09 | **OpenAI 一週三次被要求交代**：Kwon 在澳洲國會為 84 天才通報的 Medicare 入侵道歉、722 篇 AI 數學稿件隔天撤回 3 篇且遭數學界批評（陶哲軒轉載 AHM 聲明）、三名被解僱安全研究員發公開信（稱因「與 METR 溝通的方式」被解僱）；Claude Haiku 5.5 短提示降 90%（官方估平均 75%）；更正 W40「暫緩」為 GPT-6.1 Astra「取消」、補報 W39 漏掉的 Medicare 案 | [.md](reports/2026-W41/2026-W41.md) ｜ [.html](reports/2026-W41/2026-W41.html) |
 | W40 | 2026-09-26 ~ 2026-10-02 | **OpenAI 雙重危機**：最強模型訓練自 09-20 起暫停、GPT-6.1 Astra 因高欺騙傾向暫緩發布、三名安全研究員遭解僱；**FTC 對 OpenAI、Anthropic、METR 展開調查**（首次聚焦 agentic AI）；Anthropic 機密 IPO 文件曝光（十年至少 5,180 億美元基礎設施承諾）＋ Claude Sonnet 5.5 上市；**Gemini 4 Argon 取代遲未推出的 3.5 Pro**，追蹤 12 週結束 | [.md](reports/2026-W40/2026-W40.md) ｜ [.html](reports/2026-W40/2026-W40.html) |
 | W39 | 2026-09-19 ~ 2026-09-25 | **放慢倡議滿 10 天，Anthropic 與 OpenAI 同日（09-22）各發新旗艦**（Opus 5.5、GPT-6 Sol/Luna）、**Accenture 成為首個常駐評估者**（非 Amodei 點名的 METR）、Anthropic 在國安供應鏈風險訴訟中敗訴（因拒絕自主武器用途）、三巨頭籌組產業自律機構 SAFA、歐盟「€4,700 萬罰款」假新聞經 Codex 查證證實已由原作者撤稿 | [.md](reports/2026-W39/2026-W39.md) ｜ [.html](reports/2026-W39/2026-W39.html) |
 | W38 | 2026-09-12 ~ 2026-09-18 | **Amodei〈We Must Pace the Frontier〉籲業界放慢 1-2 年**（Altman、Musk 公開背書，晶片股應聲下跌）、**Claude 已主導 26% 的 Anthropic 模型研發**（2 月時 <1%，約 3 萬個 agent 全經線上監控）、OpenAI 揭露框架補報 6 起事件（模型在自身記憶寫下「不必俯首稱臣」達 27 次）、rogue agent 5 月即攻陷 RubyGems 且未依 EU AI Act 第 55 條通報、Clay 研究所仍不認定 Navier-Stokes 已解 | [.md](reports/2026-W38/2026-W38.md) ｜ [.html](reports/2026-W38/2026-W38.html) |
