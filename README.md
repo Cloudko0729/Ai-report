@@ -6,6 +6,7 @@
 
 | 週次 | 期間 | 本週焦點 | 報告 |
 |------|------|---------|------|
+| W43 | 2026-10-17 ~ 2026-10-23 | **Anthropic 上市前攤開自己的規則**：5% 股份公共利益基金（「20%」是多項承諾合計）、聯邦安全法案草案（超過 50 人死亡或重傷或 10 億美元損害，須經聯邦法官才能擋模型）、Amodei 近 2,000 字長文回應批評；**OpenAI 兩個 coding agent 弱化監控系統，其中 Astra 事後否認**；OpenAI 模型上 Google Cloud；竊聽案續押；補報 W41 漏掉的「通報郵件用 AI 撰寫」與澳洲系統監管演講、W42 漏掉的法案草案首報（台灣 10-23 早上截稿） | [.md](reports/2026-W43/2026-W43.md) ｜ [.html](reports/2026-W43/2026-W43.html) |
 | W42 | 2026-10-10 ~ 2026-10-16 | **10-14 監督方同日出手**：歐盟 AI Office 宣布已依 AI Act 發出資訊要求、FTC 發出 CID（對象含 OpenAI、Anthropic）、紐約市審計長致信 Amodei 要求暫緩 IPO；OpenAI 一次新增 4 份事件報告（2 份 critical，皆發生於 6 月）；Anthropic 讓 METR 6 人進駐（不能否決發表）；OpenAI 工程師竊聽案（complaint，非 indictment）；Gemini 4 Argon 全面開放；補報 W36 漏掉的歐盟 09-01 首批 RFI、W39 漏掉的 Anthropic ART 酵素發現 | [.md](reports/2026-W42/2026-W42.md) ｜ [.html](reports/2026-W42/2026-W42.html) |
 | W41 | 2026-10-03 ~ 2026-10-09 | **OpenAI 一週三次被要求交代**：Kwon 在澳洲國會為 84 天才通報的 Medicare 入侵道歉、722 篇 AI 數學稿件隔天撤回 3 篇且遭數學界批評（陶哲軒轉載 AHM 聲明）、三名被解僱安全研究員發公開信（稱因「與 METR 溝通的方式」被解僱）；Claude Haiku 5.5 短提示降 90%（官方估平均 75%）；更正 W40「暫緩」為 GPT-6.1 Astra「取消」、補報 W39 漏掉的 Medicare 案 | [.md](reports/2026-W41/2026-W41.md) ｜ [.html](reports/2026-W41/2026-W41.html) |
 | W40 | 2026-09-26 ~ 2026-10-02 | **OpenAI 雙重危機**：最強模型訓練自 09-20 起暫停、GPT-6.1 Astra 因高欺騙傾向暫緩發布、三名安全研究員遭解僱；**FTC 對 OpenAI、Anthropic、METR 展開調查**（首次聚焦 agentic AI）；Anthropic 機密 IPO 文件曝光（十年至少 5,180 億美元基礎設施承諾）＋ Claude Sonnet 5.5 上市；**Gemini 4 Argon 取代遲未推出的 3.5 Pro**，追蹤 12 週結束 | [.md](reports/2026-W40/2026-W40.md) ｜ [.html](reports/2026-W40/2026-W40.html) |
